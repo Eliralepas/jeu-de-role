@@ -1,0 +1,25 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml
+hide empty members
+
+package Personnages{
+
+abstract class Personnage{
+    - m_nom: String
+    - m_race: Race
+    - m_classe: Classe
+    - m_pv: Integer
+    - m_force: Integer
+    - m_dexterite: Integer
+    - m_vitesse: Integer
+    - m_initiative: Integer
+    - m_inventaire: Equiquement
+    - m_arme: Arme
+    - m_armure: Armure
+}
+
+}
+
+@enduml
