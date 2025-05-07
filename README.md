@@ -97,7 +97,7 @@ Les armures lourdes lorsqu'elles sont équipées par un personnage diminuent de 
 
 
 
-#### Les classes
+#### Les personnages.classes
 - les Clercs possèdent à leur création:
   - 16 points de vie
   - un équipement de base contenant une masse d'armes, une armure d'écailles et une arbalète légère
@@ -287,7 +287,7 @@ Le dernier rendu sera évalué en tant que rendu final.
 Chaque rendu doit contenir :
 
 - un programme qui compile dont les sources sont dans le répertoire `src/`,
-- un diagramme de classes à jour placé dans le répertoire `uml/` ayant pour nom `semaine<numero>.puml`,
+- un diagramme de personnages.classes à jour placé dans le répertoire `uml/` ayant pour nom `semaine<numero>.puml`,
 
 La structure du dépôt git doit être la suivante :
 ```bash
@@ -308,7 +308,7 @@ La structure du dépôt git doit être la suivante :
 
 Seront évalués :
 
-- Diagramme de classes complet de la phase 1
+- Diagramme de personnages.classes complet de la phase 1
   - respect des conventions UML
 - Code
   - cohérence avec l'UML
