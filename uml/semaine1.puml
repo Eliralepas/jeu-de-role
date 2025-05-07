@@ -3,23 +3,159 @@ skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
 skinparam style strictuml
 hide empty members
+package personnages{
+abstract class Personnage <<abstract>> {
+	- m_nom: String
+	- m_pv: Integer
+	- m_maxPv: Integer
+	- m_force: Integer
+	- m_dexterite: Integer
+	- m_vitesse: Integer
+	- m_initiative: Integer
+	+ <<create>> Personnage(nom: String, race: Race, classe: Classe)
+	+ toString(): String
+}
 
-package Personnages{
+package classes{
+abstract class Classe <<abstract>> {
+	- m_nom: String
+	- m_pv: Integer
+	- m_equipements: Equipement
 
-abstract class Personnage{
-    - m_nom: String
-    - m_race: Race
-    - m_classe: Classe
-    - m_pv: Integer
-    - m_force: Integer
-    - m_dexterite: Integer
-    - m_vitesse: Integer
-    - m_initiative: Integer
-    - m_inventaire: Equiquement
-    - m_arme: Arme
-    - m_armure: Armure
+	+ <<create>> Classe(nom: String, pv: Integer, équipements: Equipement[*])
+	+ setAttributs(pv: Integer, équipements: Equipement[*])
+	+ toString(): String
+}
+
+class Clerc extends Classe{
+	- {static} m_equipements: Equipement[*]
+	+ <<create>> Clerc()
+}
+
+class Guerrier extends Classe{
+    - {static} m_equipements: Equipement[*]
+	+ <<create>> Guerrier()
+}
+
+class Magicien extends Classe{
+    - {static} m_equipements: Equipement[*]
+	+ <<create>> Magicien()
+}
+
+class Roublard extends Classe{
+    - {static} m_equipements: Equipement[*]
+	+ <<create>> Roublard()
+}
+}
+
+
+package Equipements{
+abstract class Equipement <<abstract>> {
+	- m_nom: String
+	+ <<create>> Equipement(nom: String)
+	+ toString(): String
+}
+
+package Armes{
+class Arme{
+	- m_amplitudeDegats: Integer
+	- m_portee: Integer
+	- m_estLourde: Boolean
+	+ <<create>> Arme(nom: String, amplitudeDegats: Integer, portee: Integer, estLourde: Boolean)
+	+ attaque(degatsBase): Integer
+	+ getPortee(): Integer
+	+ estArmeDistance(): Boolean
+	+ estLourde(): Boolean
+}
+
+class Arc extends Arme{
+	+ <<create>> Arc()
+}
+class Arbalete extends Arme{
+	+ <<create>> Arbalete()
+}
+class Baton extends Arme{
+	+ <<create>> Baton()
+}
+class EpeeLongue extends Arme{
+	+ <<create>> EpeeLongue()
+}
+class Fronde extends Arme{
+	+ <<create>> Fronde()
+}
+class Masse extends Arme{
+	+ <<create>> Masse()
+}
+class Rapiere extends Arme{
+	+ <<create>> Rapiere()
 }
 
 }
 
+package Armures{
+class Armure {
+	- m_classeArmure: Integer
+	- m_estLourde: Boolean
+	+ <<create>> Armure(nom: String, classeArmure: Integer, estLourde: Boolean)
+	+ estLourde(): Boolean
+}
+
+class ArmureEcailles extends Armure{
+	+ <<create>> ArmureEcailles()
+}
+class CotteDeMailles extends Armure{
+	+ <<create>> CotteDeMailles()
+}
+class DemiPlate extends Armure{
+	+ <<create>> DemiPlate()
+}
+class Harnois extends Armure{
+	+ <<create>> Harnois()
+}
+
+}
+}
+
+
+package Races{
+abstract class Race <<abstract>>{
+	- m_nom: String
+	- m_pv: Integer
+	- m_force: Integer
+	- m_dexterite: Integer
+	- m_vitesse: Integer
+	- m_initiative: Integer
+
+	+ <<create>> Race(nom: String, pv: Integer, dexterite: Integer, vitesse: Integer, initiative: Integer)
+	+ setAttributs(pv: Integer, force: Integer, dexterite: Integer, vitesse: Integer, initiative: Integer)
+	+ toString(): String
+}
+
+class Elf extends Race{
+	+ <<create>> Elf()
+}
+class Halfelin extends Race{
+	+ <<create>> Halfelin()
+}
+
+class Humain extends Race{
+	+ <<create>> Humain()
+}
+
+class Nain extends Race{
+	+ <<create>> Nain()
+}
+
+}
+}
+
+Personnage o---> "*\n -m_inventaire" Equipement: possède >
+Personnage *---> "1\n -m_race" Race: est >
+Personnage *---> "1\n -m_arme" Arme: est équipé >
+Personnage *---> "1\n -m_armure" Armure: est équipé >
+
+Clerc o---> "*\n -m_equipements" Equipement: possède >
+Guerrier o---> "*\n -m_equipements" Equipement: possède >
+Magicien o---> "*\n -m_equipements" Equipement: possède >
+Roublard o---> "*\n -m_equipements" Equipement: possède >
 @enduml
