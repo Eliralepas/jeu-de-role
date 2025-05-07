@@ -18,6 +18,7 @@ public abstract class Race {
     }
 
     public void setAttributs(int pv, int force, int dexterite, int vitesse, int initiative){
+        //Met à jour les attributs du personnage qui est de cette race.
         pv = m_pv;
         force = m_force;
         dexterite = m_dexterite;

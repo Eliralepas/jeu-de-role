@@ -12,7 +12,13 @@ public class Armure extends Equipement {
         m_estLourde = estLourde;
     }
 
+    public int getClasseArmure(){
+        //Renvoie la classe d'armure.
+        return m_classeArmure;
+    }
+
     public boolean estLourde(){
+        //Renvoie vrai si l'armure est une armure lourde, faux sinon.
         return m_estLourde;
     }
 }

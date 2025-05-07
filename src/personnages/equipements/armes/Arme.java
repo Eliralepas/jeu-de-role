@@ -7,23 +7,27 @@ import java.util.Random;
 public class Arme extends Equipement {
     private final int m_amplitudeDegats;
     private final int m_portee;
+    private final boolean m_estLourde;
 
-    public Arme(String nom, int amplitudeDegats, int portee){
+    public Arme(String nom, int amplitudeDegats, int portee, boolean estLourde){
         super(nom);
         m_amplitudeDegats = amplitudeDegats;
         m_portee = portee;
+        m_estLourde = estLourde;
     }
 
-    public int attaque(int degatsBase)
-    {
-        return new Random().nextInt(m_amplitudeDegats) + 1 + degatsBase;
-    }
-
-    public int getPortee(){
-        return m_portee;
+    public int attaque() {
+        //Renvoyer les dégâts de l'arme
+        return new Random().nextInt(m_amplitudeDegats) + 1;
     }
 
     public boolean estArmeDistance(){
+        //Renvoie vrai si l'arme est une arme à distance, faux sinon.
         return m_portee > 1;
+    }
+
+    public boolean estLourde(){
+        //Renvoie vrai si l'arme est lourde, faux sinon.
+        return m_estLourde;
     }
 }
