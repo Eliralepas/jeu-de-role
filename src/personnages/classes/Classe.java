@@ -16,9 +16,14 @@ public abstract class Classe {
         m_equipements.addAll(equipements);
     }
 
-    public void setAttributs(int pv, ArrayList<Equipement> equipements){
-        pv = m_pv;
-        equipements.addAll(m_equipements);
+    public int getPv(){
+        //Renvoie les points de vie.
+        return m_pv;
+    }
+
+    public ArrayList<Equipement> getEquipements(){
+        //Renvoie la liste des équipements.
+        return m_equipements;
     }
 
     @Override
