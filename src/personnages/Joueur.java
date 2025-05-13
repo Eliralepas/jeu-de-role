@@ -35,7 +35,7 @@ public class Joueur extends Personnage{
         dexterite += 3;
         vitesse += 3;
         initiative += 3;
-        super(nom, pv, force, dexterite, vitesse, initiative, new Arme("", 0, 0, false), new Armure("", 0, false));
+        super(nom, nom.substring(0, 3), pv, force, dexterite, vitesse, initiative, new Arme("", 0, 0, false), new Armure("", 0, false));
     }
 
     public String getRace(){

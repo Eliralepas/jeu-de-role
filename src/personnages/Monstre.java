@@ -8,8 +8,8 @@ import java.util.Random;
 public class Monstre extends Personnage{
     private final int m_numero;
 
-    public Monstre(String espece, int numero, int pv, int force, int dexterite, int vitesse, int initiative, int amplitudeDegats, int portee, int classeArmure){
-        super(espece, pv, force, dexterite, vitesse, initiative, new Arme("", amplitudeDegats, portee, false), new Armure("", classeArmure, false));
+    public Monstre(String espece, String symbol, int numero, int pv, int force, int dexterite, int vitesse, int initiative, int amplitudeDegats, int portee, int classeArmure){
+        super(espece, symbol, pv, force, dexterite, vitesse, initiative, new Arme("", amplitudeDegats, portee, false), new Armure("", classeArmure, false));
         m_numero = numero;
     }
 

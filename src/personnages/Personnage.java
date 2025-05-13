@@ -1,5 +1,6 @@
 package personnages;
 
+import donjon.pions.Pion;
 import personnages.equipements.armes.Arme;
 import personnages.equipements.armures.Armure;
 
@@ -13,8 +14,10 @@ public abstract class Personnage {
     protected int m_initiative;
     protected Arme m_arme;
     protected Armure m_armure;
+    protected final String m_symbol;
+    protected final Pion m_pion;
 
-    public Personnage(String nom, int pv, int force, int dexterite, int vitesse, int initiative, Arme arme, Armure armure){
+    public Personnage(String nom, String symbol, int pv, int force, int dexterite, int vitesse, int initiative, Arme arme, Armure armure){
         m_nom = nom;
         m_pv = pv;
         m_pvMax = pv;
@@ -24,6 +27,8 @@ public abstract class Personnage {
         m_initiative = initiative;
         m_arme = arme;
         m_armure = armure;
+        m_symbol = symbol;
+        m_pion = new Pion(0, 0, symbol);
     }
 
     public void attaque(Personnage perso){
@@ -57,5 +62,9 @@ public abstract class Personnage {
     public int getClasseArmure(){
         //Renvoyer la classe d'armure de l'armure équipée.
         return m_armure.getClasseArmure();
+    }
+
+    public Pion getPion(){
+        return m_pion;
     }
 }
