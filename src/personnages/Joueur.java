@@ -50,7 +50,7 @@ public class Joueur extends Personnage{
 
     @Override
     public String toString() {
-        String chaine = m_nom + "\n"
+        String chaine = m_nom + " (" + m_race.toString() + ", " + m_classe.toString() + ")\n"
                 + "Vie: " + m_pv + "/" + m_pvMax + "\n"
                 + "Armure: ";
         if (m_armure != null){

@@ -6,6 +6,7 @@ import personnages.Personnage;
 import java.util.ArrayList;
 
 public class Donjon {
+    private final int m_numero;
     private String[][] m_plateau;
     private int m_longueur;
     private int m_largeur;
@@ -13,7 +14,8 @@ public class Donjon {
     private ArrayList<Pion> m_equipements;
     private ArrayList<Pion> m_personnages;
 
-    public Donjon(int longueur, int largeur){
+    public Donjon(int numero, int longueur, int largeur){
+        m_numero = numero;
         m_longueur = longueur;
         m_largeur = largeur;
         m_plateau = new String[longueur][largeur];
