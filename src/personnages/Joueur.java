@@ -38,6 +38,16 @@ public class Joueur extends Personnage{
         super(nom, pv, force, dexterite, vitesse, initiative, new Arme("", 0, 0, false), new Armure("", 0, false));
     }
 
+    public String getRace(){
+        //Renvoyer le nom de la race.
+        return m_race.toString();
+    }
+
+    public String getClasse(){
+        //Renvoyer le nom de la classe.
+        return m_classe.toString();
+    }
+
     @Override
     public String toString() {
         String chaine = m_nom + "\n"
