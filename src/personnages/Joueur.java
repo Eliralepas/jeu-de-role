@@ -72,4 +72,9 @@ public class Joueur extends Personnage{
         chaine += "Vitesse: " + m_vitesse + "\n";
         return chaine;
     }
+
+    @Override
+    public boolean estJoueur(){
+        return true;
+    }
 }

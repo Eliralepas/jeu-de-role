@@ -31,7 +31,13 @@ public abstract class Personnage {
         m_pion = new Pion(0, 0, symbol);
     }
 
+    public void seDeplacer(int x, int y){
+        //Se déplacer vers les coordonnées x,y
+        m_pion.setPosition(x, y);
+    }
+
     public String getNom(){
+        //Renvoyer le nom.
         return m_nom;
     }
 
@@ -69,7 +75,17 @@ public abstract class Personnage {
     }
 
     public Pion getPion(){
+        //Renvoyer le pion associé au personnage.
         return m_pion;
+    }
+
+    public int getInitiative(){
+        //Renvoyer l'initiative.
+        return m_initiative;
+    }
+
+    public boolean estJoueur(){
+        return false;
     }
 
     public String getPvAffichage(){
