@@ -63,4 +63,8 @@ public class Donjon {
     public int getLargeur(){
         return m_largeur;
     }
+
+    public int getNumero(){
+        return m_numero;
+    }
 }

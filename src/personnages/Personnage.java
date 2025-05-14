@@ -31,6 +31,10 @@ public abstract class Personnage {
         m_pion = new Pion(0, 0, symbol);
     }
 
+    public String getNom(){
+        return m_nom;
+    }
+
     public void attaque(Personnage perso){
         //Attaquer un personnage.
         int degats = getDegats() + getAttribut(); //Calcul des dégâts totaux de l'attaque
@@ -66,5 +70,9 @@ public abstract class Personnage {
 
     public Pion getPion(){
         return m_pion;
+    }
+
+    public String getPvAffichage(){
+        return m_pv+"/"+m_pvMax;
     }
 }

@@ -11,11 +11,17 @@ public class Jeu {
     private final ArrayList<Joueur> m_joueurs;
     private final ArrayList<Donjon> m_donjons;
     private int m_donjonActuel;
+    private int m_numeroTour;
+    private Joueur m_joueurActuel;
+    private int m_indexJoueur;
 
     public Jeu(){
         m_joueurs = new ArrayList<Joueur>();
         m_donjons = new ArrayList<Donjon>();
         m_donjonActuel = 0;
+        m_numeroTour = 0;
+        m_indexJoueur=0;
+        m_joueurActuel = m_joueurs.getFirst();
     }
 
     public void creerJoueur(){
@@ -83,5 +89,30 @@ public class Jeu {
             System.out.println( "/!\\ " + msgErreur + " /!\\");
         }
         return entier;
+    }
+
+    public ArrayList<Joueur> getJoueurs(){
+        return m_joueurs;
+    }
+
+    public int getNumeroTour(){
+        return m_numeroTour;
+    }
+
+    public Joueur getJoueurActuel(){
+        return m_joueurActuel;
+    }
+
+    public void JoueurSuivant(){
+        int nb_joueur = m_joueurs.size();
+        if (m_indexJoueur==nb_joueur){
+            m_indexJoueur = 0;
+            m_joueurActuel = m_joueurs.getFirst();
+            m_numeroTour++;
+        }
+        else {
+            m_indexJoueur++;
+            m_joueurActuel = m_joueurs.get(m_indexJoueur);
+        }
     }
 }
