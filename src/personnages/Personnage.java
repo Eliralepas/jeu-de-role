@@ -32,7 +32,13 @@ public abstract class Personnage {
     }
 
     public void seDeplacer(int x, int y){
+        //Se déplacer vers les coordonnées x,y
         m_pion.setPosition(x, y);
+    }
+
+    public String getNom(){
+        //Renvoyer le nom.
+        return m_nom;
     }
 
     public void attaque(Personnage perso){
@@ -80,5 +86,9 @@ public abstract class Personnage {
 
     public boolean estJoueur(){
         return false;
+    }
+
+    public String getPvAffichage(){
+        return m_pv+"/"+m_pvMax;
     }
 }

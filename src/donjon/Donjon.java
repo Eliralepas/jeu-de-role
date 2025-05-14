@@ -259,4 +259,20 @@ public class Donjon {
         }
         return chaine;
     }
+
+    public String[][] getPlateau(){
+        return m_plateau;
+    }
+
+    public int getLongueur(){
+        return m_longueur;
+    }
+
+    public int getLargeur(){
+        return m_largeur;
+    }
+
+    public int getNumero(){
+        return m_numero;
+    }
 }
