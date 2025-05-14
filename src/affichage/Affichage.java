@@ -59,7 +59,7 @@ public class Affichage {
         String affiche = "*********************************************************************************\n" +
              "\t\t\tDonjon "+m_donjon.getNumero()+":\n";
         affiche+="\t\t";
-        Joueur joueurActuelle = m_jeu.getJoueurActuelle();
+        Joueur joueurActuelle = m_jeu.getJoueurActuel();
         affiche+=joueurActuelle.getNom()+" ("+joueurActuelle.getRace()+" "+joueurActuelle.getClasse().toLowerCase()+")\n";
         affiche+= "*********************************************************************************\n\n";
 
@@ -77,7 +77,7 @@ public class Affichage {
     }
 
     public String afficheJoueurDetails(){
-        return m_jeu.getJoueurActuelle().toString();
+        return m_jeu.getJoueurActuel().toString();
     }
 
 }
