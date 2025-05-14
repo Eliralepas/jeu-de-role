@@ -19,6 +19,11 @@ public class Pion {
         return m_y;
     }
 
+    public void setPosition(int x, int y){
+        m_x = x;
+        m_y = y;
+    }
+
     @Override
     public String toString() {
         return m_symbol;

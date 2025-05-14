@@ -31,6 +31,10 @@ public abstract class Personnage {
         m_pion = new Pion(0, 0, symbol);
     }
 
+    public void seDeplacer(int x, int y){
+        m_pion.setPosition(x, y);
+    }
+
     public void attaque(Personnage perso){
         //Attaquer un personnage.
         int degats = getDegats() + getAttribut(); //Calcul des dégâts totaux de l'attaque
@@ -65,6 +69,16 @@ public abstract class Personnage {
     }
 
     public Pion getPion(){
+        //Renvoyer le pion associé au personnage.
         return m_pion;
+    }
+
+    public int getInitiative(){
+        //Renvoyer l'initiative.
+        return m_initiative;
+    }
+
+    public boolean estJoueur(){
+        return false;
     }
 }
