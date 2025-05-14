@@ -51,4 +51,16 @@ public class Donjon {
             m_plateau[x][y] = p.toString();
         }
     }
+
+    public String[][] getPlateau(){
+        return m_plateau;
+    }
+
+    public int getLongueur(){
+        return m_longueur;
+    }
+
+    public int getLargeur(){
+        return m_largeur;
+    }
 }
