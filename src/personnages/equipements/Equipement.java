@@ -1,10 +1,10 @@
 package personnages.equipements;
 
-import donjon.pions.Pion;
+import donjon.pion.Pion;
 
 public abstract class Equipement {
     private final String m_nom;
-    private Pion m_pion;
+    private final Pion m_pion;
 
     public Equipement(String nom){
         m_nom = nom;

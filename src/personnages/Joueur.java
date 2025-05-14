@@ -9,6 +9,8 @@ import personnages.races.Race;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static affichage.Demande.demandeEntier;
+
 public class Joueur extends Personnage{
     private final Race m_race;
     private final Classe m_classe;
@@ -35,7 +37,11 @@ public class Joueur extends Personnage{
         dexterite += 3;
         vitesse += 3;
         initiative += 3;
-        super(nom, nom.substring(0, 3), pv, force, dexterite, vitesse, initiative, new Arme("", 0, 0, false), new Armure("", 0, false));
+        String symbol = nom;
+        if (nom.length() > 3){
+            symbol = nom.substring(0, 3);
+        }
+        super(nom, symbol, pv, force, dexterite, vitesse, initiative, new Arme("", 0, 0, false), new Armure("", 0, false));
     }
 
     public String getRace(){
@@ -48,28 +54,59 @@ public class Joueur extends Personnage{
         return m_classe.toString();
     }
 
+    public String contenuInventaire(){
+        String chaine = "";
+        for (Equipement equipement : m_inventaire) {
+            chaine += "\t › " + equipement.toString() + "\n";
+        }
+        return chaine;
+    }
+
+    @Override
+    public String sePresenter() {
+        return m_nom + " (" + m_race + " " + m_classe.toString().toLowerCase() + ")";
+    }
+
+    @Override
+    public String getInfos() {
+        return  m_nom + " (" + m_race + m_classe + ", " + m_pv + "/" + m_pvMax + ")";
+    }
+
+    @Override
+    public int getAction() {
+        String msgAction =
+                m_nom + " il vous reste " + m_initiative + " actions, que souhaitez-vous faire ?\n" +
+                """
+                Attaquer:    1
+                Se déplacer: 2
+                S'équiper:   3
+                
+                """;
+        return demandeEntier(1, 3, msgAction);
+    }
+
     @Override
     public String toString() {
         String chaine = m_nom + " (" + m_race.toString() + ", " + m_classe.toString() + ")\n"
-                + "Vie: " + m_pv + "/" + m_pvMax + "\n"
-                + "Armure: ";
+                + "\tVie: " + m_pv + "/" + m_pvMax + "\n"
+                + "\tArmure: ";
         if (m_armure != null){
-            chaine += m_armure.toString() + "\n";
+            chaine += m_armure + "\n";
         }
         else {
             chaine += "aucune\n";
         }
-        chaine += "Arme: ";
+        chaine += "\tArme: ";
         if (m_arme != null){
-            chaine += m_arme.toString() + "\n";
+            chaine += m_arme + "\n";
         }
         else {
             chaine += "aucune\n";
         }
-        chaine += "Inventaire: [" + m_inventaire.size() + "]\n";
-        chaine += "Force: " + m_force + "\n";
-        chaine += "Dextérité: " + m_dexterite + "\n";
-        chaine += "Vitesse: " + m_vitesse + "\n";
+        chaine += "\tInventaire: [" + m_inventaire.size() + "]\n" + contenuInventaire();
+        chaine += "\tForce: " + m_force + "\n";
+        chaine += "\tDextérité: " + m_dexterite + "\n";
+        chaine += "\tVitesse: " + m_vitesse + "\n";
         return chaine;
     }
 

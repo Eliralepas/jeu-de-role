@@ -1,6 +1,7 @@
 package donjon;
 
-import donjon.pions.Pion;
+import donjon.casePlateau.CasePlateau;
+import donjon.pion.Pion;
 import personnages.Joueur;
 import personnages.Monstre;
 import personnages.Personnage;
@@ -10,28 +11,32 @@ import personnages.equipements.armures.ArmureEcailles;
 import personnages.equipements.armures.CotteDeMailles;
 import personnages.equipements.armures.DemiPlate;
 import personnages.equipements.armures.Harnois;
-import personnages.races.*;
 
 import java.util.ArrayList;
 
+import static affichage.Demande.demandeEntier;
+import static affichage.Demande.demandeString;
+
 public class Donjon {
     private final int m_numero;
-    private String[][] m_plateau;
-    private int m_longueur;
-    private int m_largeur;
-    private ArrayList<Pion> m_pionsObstacle;
-    private ArrayList<Equipement> m_equipements;
-    private ArrayList<Personnage> m_personnages;
+    private final String[][] m_plateau;
+    private final int m_colonnes;
+    private final int m_lignes;
+    private final ArrayList<Pion> m_pionsObstacle;
+    private final ArrayList<Equipement> m_equipements;
+    private final ArrayList<Personnage> m_personnages;
+    private int m_tour;
 
-    public Donjon(int numero, int longueur, int largeur, ArrayList<Joueur> listeJoueurs){
+    public Donjon(int numero, int colonnes, int lignes, ArrayList<Joueur> listeJoueurs){
         m_numero = numero;
-        m_longueur = longueur;
-        m_largeur = largeur;
-        m_plateau = new String[longueur][largeur];
+        m_colonnes = colonnes;
+        m_lignes = lignes;
+        m_plateau = new String[lignes][colonnes];
         m_pionsObstacle = new ArrayList<Pion>();
         m_equipements = new ArrayList<Equipement>();
         m_personnages = new ArrayList<Personnage>();
         m_personnages.addAll(listeJoueurs);
+        m_tour = 0;
         remplir();
         creerObstacles();
         creerMonstres();
@@ -41,30 +46,32 @@ public class Donjon {
     }
 
     public void remplir(){
-        for(int i=0; i<m_longueur; i++){
-            for (int j=0; j<m_largeur; j++){
+        for(int i = 0; i< m_lignes; i++){
+            for (int j = 0; j< m_colonnes; j++){
                 m_plateau[i][j] = " . ";
             }
         }
     }
 
     private int demanderNombreCreation(String objectACreer){
-        int max = (m_longueur * m_largeur)/4; //Arbitrairement, on définit le nombre max de création au quart des cases du plateau
+        int max = (m_lignes * m_colonnes)/4; //Arbitrairement, on définit le nombre max de création au quart des cases du plateau
         return demandeEntier(0, max, "Combien " + objectACreer + " souhaitez-vous créer ?");
     }
 
     private void creerObstacles(){
+        System.out.println(afficherPlateau());
         int nbObstacles = demanderNombreCreation("d'obstacles");
         for (int i=0; i<nbObstacles; i++){
-            String caseChoisie = "";
-            while (caseChoisie.isEmpty()){
+            CasePlateau caseChoisie = null;
+            while (caseChoisie == null){
                 caseChoisie = choisirCase("l'obstacle");
             }
-            ajouterObstacle(caseChoisie.charAt(0)-65, caseChoisie.charAt(1)-49);
+            ajouterObstacle(caseChoisie);
         }
     }
 
     private void creerMonstres(){
+        System.out.println(afficherPlateau());
         int nbMonstres = demanderNombreCreation("de monstres");
         for (int i=0; i<nbMonstres; i++){
             String espece = demandeString("Entrez l'espèce du monstre: ", 15);
@@ -78,133 +85,203 @@ public class Donjon {
             int portee = demandeEntier(1, 100, "Entrez la portee du montre");
             int classeArmure = demandeEntier(0, 100, "Entrez la classe d'armure du montre");
             Monstre m = new Monstre(espece, symbol, i, pv, force, dexterite, vitesse, initiative, amplitudeDegats, portee, classeArmure);
-            String caseChoisie = "";
-            while (caseChoisie.isEmpty()){
-                caseChoisie = choisirCase("le monstre");
+            CasePlateau caseChoisie = null;
+            while (caseChoisie == null){
+                caseChoisie = choisirCase("sur laquelle ajouter le monstre");
             }
-            ajouterPersonnage(m, caseChoisie.charAt(0)-65, caseChoisie.charAt(1)-49);
+            ajouterPersonnage(m, caseChoisie);
+            m_personnages.add(m);
         }
     }
 
     private void creerEquipements(){
+        System.out.println(afficherPlateau());
         int nbEquipements = demanderNombreCreation("d'equipements");
         for (int i=0; i<nbEquipements; i++){
             String msgEquipement =
-                    "Entrez le numéro correspondant à l'équipement à ajouter:\n" +
-                    "------ Armes ------\n" +
-                    "Arbalète:           0\n" +
-                    "Arc:                1\n" +
-                    "Bâton:              2\n" +
-                    "Epée Longue:        3\n" +
-                    "Fronde:             4\n" +
-                    "Masse:              5\n" +
-                    "Rapière:            6\n" +
-                    "----- Armures -----\n" +
-                    "Armure d'écailles:  7\n" +
-                    "Cotte de mailles:   8\n" +
-                    "Demi plate:         9\n" +
-                    "Harnois:            10\n";
-            Equipement equipementChoisi = switch (demandeEntier(0, 10, msgEquipement)) {
-                case 0 -> new Arbalete();
-                case 1 -> new Arc();
-                case 2 -> new Baton();
-                case 3 -> new EpeeLongue();
-                case 4 -> new Fronde();
-                case 5 -> new Masse();
-                case 6 -> new Rapiere();
-                case 7 -> new ArmureEcailles();
-                case 8 -> new CotteDeMailles();
-                case 9 -> new DemiPlate();
-                case 10 -> new Harnois();
+                """
+                Entrez le numéro correspondant à l'équipement à ajouter:
+                ------ Armes ------
+                Arbalète:           1
+                Arc:                2
+                Bâton:              3
+                Epée Longue:        4
+                Fronde:             5
+                Masse:              6
+                Rapière:            7
+                ----- Armures -----
+                Armure d'écailles:  8
+                Cotte de mailles:   9
+                Demi plate:         10
+                Harnois:            11
+                """;
+            Equipement equipementChoisi = switch (demandeEntier(1, 11, msgEquipement)) {
+                case 1 -> new Arbalete();
+                case 2 -> new Arc();
+                case 3 -> new Baton();
+                case 4 -> new EpeeLongue();
+                case 5 -> new Fronde();
+                case 6 -> new Masse();
+                case 7 -> new Rapiere();
+                case 8 -> new ArmureEcailles();
+                case 9 -> new CotteDeMailles();
+                case 10 -> new DemiPlate();
+                case 11 -> new Harnois();
                 default -> null;
             };
-            String caseChoisie = "";
-            while (caseChoisie.isEmpty()){
-                caseChoisie = choisirCase("l'équipement");
+            CasePlateau caseChoisie = null;
+            while (caseChoisie == null){
+                caseChoisie = choisirCase("sur laquelle ajouter l'équipement");
             }
-            ajouterEquipement(equipementChoisi, caseChoisie.charAt(0)-65, caseChoisie.charAt(1)-49);
+            ajouterEquipement(equipementChoisi, caseChoisie);
         }
     }
 
     private void positionnerJoueurs(){
         for(Personnage perso: m_personnages){
             if(perso.estJoueur()){
-                String caseChoisie = "";
-                while (caseChoisie.isEmpty()){
-                    caseChoisie = choisirCase("le joueur");
+                CasePlateau caseChoisie = null;
+                while (caseChoisie == null){
+                    caseChoisie = choisirCase("sur laquelle ajouter le joueur");
                 }
-                perso.seDeplacer(caseChoisie.charAt(0)-65, caseChoisie.charAt(1)-49);
+                ajouterPersonnage(perso, caseChoisie);
             }
         }
     }
 
-    private String choisirCase(String element){
-        String caseChoisie = "";
-        while(caseChoisie.isEmpty()) {
-            System.out.println("Entrez la case sur laquelle ajouter " + element + ": ");
-            caseChoisie = System.console().readLine();
-            if (!estCaseValide(caseChoisie)){
-                caseChoisie = "";
+    private CasePlateau choisirCase(String element){
+        boolean caseNonChoisie = true;
+        CasePlateau caseChoisie = null;
+        while(caseNonChoisie) {
+            System.out.println("Entrez la case " + element + ": ");
+            caseChoisie = new CasePlateau(System.console().readLine());
+            if (estCaseValide(caseChoisie)){
+                caseNonChoisie = false;
             }
         }
         return caseChoisie;
     }
 
-    private boolean estCaseValide(String caseChoisie){
-        int n = caseChoisie.length();
-        if (!(2 <= n && n <= 3)){
-            System.out.println("Mauvais format de case.");
+    private boolean estCaseValide(CasePlateau caseChoisie){
+        if (!caseChoisie.estValide()){
             return false;
         }
-        int x = caseChoisie.charAt(0) - 65; // On veut que la lettre A représente l'index 0 et 'A' = 65 donc index = lettre - 65
-        if (x < 0 || x > m_longueur-1){
+        caseChoisie.convertirString();
+        int x = caseChoisie.getColonne();
+        int y = caseChoisie.getLigne();
+        if (x > m_colonnes -1 || y > m_lignes -1){
             System.out.println("Cette case n'existe pas.");
             return false;
         }
-        int y = -1;
-        if (n == 2){
-            y = caseChoisie.charAt(1) - 49; // On veut que le chiffre 1 représente l'index 0 et '1' = 49 donc index = lettre - 49
-        }
-        else{ //Si n == 3
-            y = (caseChoisie.charAt(1)-48)* 10 + (caseChoisie.charAt(2)-49);
-        }
-        if (y < 0 || y > m_largeur-1){
-            System.out.println("Cette case n'existe pas.");
-            return false;
-        }
-        if (!(m_plateau[x][y].equals(" . "))){
+        if (!(m_plateau[y][x].equals(" . "))){
             System.out.println("La case n'est pas vide");
             return false;
         }
         return true;
     }
 
-    public void ajouterObstacle(int x, int y){
-        m_plateau[x][y] = "[ ]";
+    public void ajouterObstacle(CasePlateau caseChoisie){
+        int x = caseChoisie.getColonne();
+        int y = caseChoisie.getLigne();
+        m_plateau[y][x] = "[ ]";
         m_pionsObstacle.add(new Pion(x, y, "[ ]"));
+        System.out.println(afficherPlateau());
     }
 
-    public void ajouterEquipement(Equipement equip, int x, int y){
-        m_plateau[x][y] = " * ";
+    public void ajouterEquipement(Equipement equip, CasePlateau caseChoisie){
+        int x = caseChoisie.getColonne();
+        int y = caseChoisie.getLigne();
+        m_plateau[y][x] = " * ";
         m_equipements.add(equip);
+        System.out.println(afficherPlateau());
     }
 
-    public void ajouterPersonnage(Personnage perso, int x, int y){
+    public void ajouterPersonnage(Personnage perso, CasePlateau caseChoisie){
+        int x = caseChoisie.getColonne();
+        int y = caseChoisie.getLigne();
+        String symbol = perso.getSymbol();
+        if (symbol.length() < 3){ //Ajouter un espace au début si la taille du symbol est < 3
+            symbol = " " + symbol;
+        }
+        if (symbol.length() < 3){ //Ajouter un espace à la fin si la taille du symbol est encore < 3
+            symbol += " ";
+        }
+        m_plateau[y][x] = symbol;
         perso.seDeplacer(x, y);
-        m_personnages.add(perso);
+        System.out.println(afficherPlateau());
     }
 
     public void supprimerPersonnage(Personnage perso){
         m_personnages.remove(perso);
     }
 
-    private void afficherPersonnages(){
+    private void mettreAJourPositions(){
         for(Personnage perso: m_personnages){
             Pion p = perso.getPion();
             int x = p.getX();
             int y = p.getY();
-            m_plateau[x][y] = p.toString();
+            m_plateau[y][x] = p.toString();
         }
+    }
+
+    public void gestionTour(){
+        m_tour++;
+        triParInitiative();
+        Personnage persoActuel = m_personnages.getFirst();
+        System.out.println(affichageTour(persoActuel));
+        //Faire l'action choisie par l'utilisateur tant qu'il reste des actions à faire.
+        int initiative = persoActuel.getInitiative();
+        while(initiative > 0){
+            boolean resultat = switch (persoActuel.getAction()){
+                case 1 -> tryAttaque(persoActuel);
+                case 2 -> tryDeplacement(persoActuel);
+                case 3 -> tryEquiper(persoActuel);
+                default -> false;
+            };
+            if (resultat){
+                initiative--;
+            }
+        }
+    }
+
+    public boolean tryAttaque(Personnage perso){
+        CasePlateau caseChoisie = null;
+        while (caseChoisie == null){
+            caseChoisie = choisirCase("à attaquer");
+        }
+        Pion p = perso.getPion();
+        if (perso.getPortee() < p.getDistance(caseChoisie.getColonne(), caseChoisie.getLigne())){
+            System.out.println("La case est hors de portée.");
+            return false;
+        }
+        Personnage persoCible = null;
+        int i = 1;
+        int n = m_personnages.size();
+        while(i<n && persoCible == null) {
+            Personnage p2 = m_personnages.get(i);
+            Pion pionP2 = p2.getPion();
+            if (caseChoisie.getColonne() == pionP2.getX() && caseChoisie.getLigne() == pionP2.getY()){
+                persoCible = p2;
+            }
+            i++;
+        }
+        if (i<n || persoCible == null){
+            System.out.println("Aucun personnage n'est sur cette case.");
+            return false;
+        }
+        perso.attaquer(persoCible);
+        if(persoCible.estMort()){
+            m_personnages.remove(persoCible);
+        }
+        return true;
+    }
+
+    public boolean tryDeplacement(Personnage perso){
+        return false;
+    }
+
+    public boolean tryEquiper(Personnage perso){
+        return false;
     }
 
     public void triParInitiative(){
@@ -230,49 +307,72 @@ public class Donjon {
         m_personnages.addAll(listeTriee);
     }
 
-    public int demandeEntier(int min, int max, String msgDemande) throws NumberFormatException{
-        int entier = min - 1;
-        String msgErreur = "/!\\ Vous devez entrer un nombre entier entre " + min + " et " + max + ". /!\\";
-        while (!(min <= entier && entier <= max)) {
-            System.out.println(msgDemande);
-            String reponse = System.console().readLine();
-            try {
-                entier = Integer.parseInt(reponse);
-                if(!(min <= entier && entier <= max)){
-                    System.out.println(msgErreur);
-                }
-            } catch (NumberFormatException e) {
-                System.out.println(msgErreur);
-            }
+    public String afficherPlateau(){
+        StringBuilder affichage = new StringBuilder("      ");
+        //Le haut de l'affichage avec les lettres de l'alphabet
+        for (int i = 0; i< m_colonnes; i++) {
+            affichage.append((char) (i + 65)).append("  ");
         }
-        return entier;
+        affichage.append("\n   ┌─");
+        String ligne= "───";
+        affichage.append(ligne.repeat(m_colonnes));
+        affichage.append("─┐\n");
+        //Chaque ligne du plateau
+        for (int i = 1; i< m_lignes +1; i++){
+            affichage.append(i);
+            if (i < 10){ //Un espace de plus pour combler le caractère manquant des nombres à 1 chiffre
+                affichage.append(" ");
+            }
+            affichage.append(" │ ");
+            for (int j = 0; j< m_colonnes; j++){
+                affichage.append(m_plateau[i - 1][j]);
+            }
+            affichage.append(" │\n");
+        }
+        affichage.append("   └─");
+        affichage.append(ligne.repeat(m_colonnes));
+        affichage.append("─┘\n");
+        //Affichage de la légende
+        affichage.append("    * Equipement   │   [ ] Obstacle  │\n");
+        return affichage.toString();
     }
 
-    public String demandeString(String msgDemande, int tailleMax){
-        String chaine = "";
-        while(chaine.isEmpty()){
-            System.out.println(msgDemande);
-            chaine = System.console().readLine();
-            if (chaine.length() > tailleMax){
-                chaine = "";
+    public String affichageTour(Personnage perso){
+        //Affichage du numéro du Donjon et le joueur
+        StringBuilder affiche = new StringBuilder(
+                """
+                *********************************************************************************
+                Donjon \s""" + m_numero + """
+                
+                """ + perso.sePresenter() + """
+                
+                *********************************************************************************
+                
+                """);
+        //Affichage du tour et de l'ordre des personnages
+        affiche.append("Tour ").append(m_tour).append(":\n");
+        for(Personnage p: m_personnages){
+            if (p.equals(perso)) {
+                affiche.append("->");
             }
+            affiche.append("\t" + p.getSymbol() + "\t" + p.getInfos() + "\n\n");
         }
-        return chaine;
+        //Affichage du plateau
+        affiche.append(afficherPlateau());
+        //Affichage de la totalité du personnage
+        affiche.append(perso);
+        return affiche+"\n";
     }
 
     public String[][] getPlateau(){
         return m_plateau;
     }
 
-    public int getLongueur(){
-        return m_longueur;
+    public int getColonnes(){
+        return m_colonnes;
     }
 
-    public int getLargeur(){
-        return m_largeur;
-    }
-
-    public int getNumero(){
-        return m_numero;
+    public int getLignes(){
+        return m_lignes;
     }
 }
