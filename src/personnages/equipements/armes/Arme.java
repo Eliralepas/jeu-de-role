@@ -21,6 +21,16 @@ public class Arme extends Equipement {
         return new Random().nextInt(m_amplitudeDegats) + 1;
     }
 
+    public int getPortee(){
+        //Renovie la portee
+        return m_portee;
+    }
+
+    public int getAmplitudeDegats(){
+        //Renvoie le nombre de faces du dé d'attaque.
+        return m_amplitudeDegats;
+    }
+
     public boolean estArmeDistance(){
         //Renvoie vrai si l'arme est une arme à distance, faux sinon.
         return m_portee > 1;
@@ -29,5 +39,10 @@ public class Arme extends Equipement {
     public boolean estLourde(){
         //Renvoie vrai si l'arme est lourde, faux sinon.
         return m_estLourde;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " (dégâts: 1d" + m_amplitudeDegats + ", portee: " + m_portee + ")";
     }
 }

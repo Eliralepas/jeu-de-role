@@ -1,9 +1,9 @@
-package donjon.pions;
+package donjon.pion;
 
 public class Pion {
     private int m_x;
     private int m_y;
-    private String m_symbol;
+    private final String m_symbol;
 
     public Pion(int x, int y, String symbol){
         m_x = x;
@@ -22,6 +22,10 @@ public class Pion {
     public void setPosition(int x, int y){
         m_x = x;
         m_y = y;
+    }
+
+    public int getDistance(int x, int y){
+        return Math.max(Math.abs(m_x - x),Math.abs(m_y - y));
     }
 
     @Override

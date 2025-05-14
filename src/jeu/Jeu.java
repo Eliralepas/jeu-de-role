@@ -7,13 +7,13 @@ import personnages.races.*;
 
 import java.util.ArrayList;
 
+import static affichage.Demande.demandeEntier;
+import static affichage.Demande.demandeString;
+
 public class Jeu {
     private final ArrayList<Joueur> m_joueurs;
     private final ArrayList<Donjon> m_donjons;
-    private int m_donjonActuel;
-    private int m_numeroTour;
-    private Joueur m_joueurActuel;
-    private int m_indexJoueur;
+    private final int m_donjonActuel;
 
     public Jeu(){
         m_joueurs = new ArrayList<Joueur>();
@@ -21,94 +21,57 @@ public class Jeu {
         m_donjonActuel = 0;
         creerJoueur();
         creerDonjon();
-        m_numeroTour = 0;
-        m_indexJoueur=0;
-        m_joueurActuel = m_joueurs.getFirst();
     }
 
     public void creerJoueur(){
-        String nom = "";
-        while(nom.isEmpty()){
-            System.out.println("Entrez le nom du personnage: ");
-            nom = System.console().readLine();
+        System.out.println("▬▬▬▬▬▬▬▬ Création de joueurs ▬▬▬▬▬▬▬▬");
+        int nbJoueurs = demandeEntier(1, 20, "Combien de joueurs souhaitez-vous créer ?"); //Max 20 joueurs par défaut
+        for (int i=0; i<nbJoueurs; i++){
+            String nom = demandeString("Entrez le nom du personnage: ", 15);
+            String msgRace =
+                    """
+                    Entrez le numéro correspondant à la race du personnage:
+                    Elf:      1
+                    Halfelin: 2
+                    Humain:   3
+                    Nain:     4
+                    """;
+            Race raceJoueur = switch (demandeEntier(1, 4, msgRace)) {
+                case 1 -> new Elf();
+                case 2 -> new Halfelin();
+                case 3 -> new Humain();
+                case 4 -> new Nain();
+                default -> null;
+            };
+            String msgClasse =
+                    """
+                    Entrez le numéro correspondant à la classe du personnage:
+                    Clerc:    1
+                    Guerrier: 2
+                    Magicien: 3
+                    Roublard: 4
+                    """;
+            Classe classeJoueur = switch (demandeEntier(1, 4, msgClasse)){
+                case 1 -> new Clerc();
+                case 2 -> new Guerrier();
+                case 3 -> new Magicien();
+                case 4 -> new Roublard();
+                default -> null;
+            };
+            Joueur j = new Joueur(nom, raceJoueur, classeJoueur);
+            m_joueurs.add(j);
+            System.out.println("Joueur n°" + m_joueurs.size() +" a été créé !\n" + j.toString());
         }
-        String msgRace =
-                "Entrez le numéro correspondant à la race du personnage:\n" +
-                "Elf:      0\n" +
-                "Halfelin: 1\n" +
-                "Humain:   2\n" +
-                "Nain:     3\n";
-        Race raceJoueur = switch (demandeEntier(0, 3, msgRace)) {
-            case 0 -> new Elf();
-            case 1 -> new Halfelin();
-            case 2 -> new Humain();
-            case 3 -> new Nain();
-            default -> null;
-        };
-        String msgClasse =
-                "Entrez le numéro correspondant à la classe du personnage:\n" +
-                "Clerc:    0\n" +
-                "Guerrier: 1\n" +
-                "Magicien: 2\n" +
-                "Roublard: 3\n";
-        Classe classeJoueur = switch (demandeEntier(0, 3, msgClasse)){
-            case 0 -> new Clerc();
-            case 1 -> new Guerrier();
-            case 2 -> new Magicien();
-            case 3 -> new Roublard();
-            default -> null;
-        };
-        Joueur j = new Joueur(nom, raceJoueur, classeJoueur);
-        m_joueurs.add(j);
-        System.out.println("Joueur n°" + m_joueurs.size() +" a été créé !\n" + j.toString());
     }
 
     public void creerDonjon(){
-        int longueur = demandeEntier(15, 25, "Entrez la longueur du donjon: ");
-        int largeur = demandeEntier(15, 25, "Entrez la largeur du donjon: ");
-        m_donjons.add(new Donjon(m_donjons.size(), longueur, largeur, m_joueurs));
-    }
-
-    public int demandeEntier(int min, int max, String msgDemande) throws NumberFormatException{
-        int entier = min - 1;
-        String msgErreur = "/!\\ Vous devez entrer un nombre entier entre " + min + " et " + max + ". /!\\";
-        while (!(min <= entier && entier <= max)) {
-            System.out.println(msgDemande);
-            String reponse = System.console().readLine();
-            try {
-                entier = Integer.parseInt(reponse);
-                if(!(min <= entier && entier <= max)){
-                    System.out.println(msgErreur);
-                }
-            } catch (NumberFormatException e) {
-                System.out.println(msgErreur);
-            }
-        }
-        return entier;
+        System.out.println("▬▬▬▬▬▬▬▬ Création du donjon ▬▬▬▬▬▬▬▬");
+        int colonnes = demandeEntier(15, 25, "Entrez le nombre de colonnes du donjon: ");
+        int lignes = demandeEntier(15, 25, "Entrez le nombre de lignes du donjon: ");
+        m_donjons.add(new Donjon(m_donjons.size(), colonnes, lignes, m_joueurs));
     }
 
     public ArrayList<Joueur> getJoueurs(){
         return m_joueurs;
-    }
-
-    public int getNumeroTour(){
-        return m_numeroTour;
-    }
-
-    public Joueur getJoueurActuel(){
-        return m_joueurActuel;
-    }
-
-    public void JoueurSuivant(){
-        int nb_joueur = m_joueurs.size();
-        if (m_indexJoueur==nb_joueur){
-            m_indexJoueur = 0;
-            m_joueurActuel = m_joueurs.getFirst();
-            m_numeroTour++;
-        }
-        else {
-            m_indexJoueur++;
-            m_joueurActuel = m_joueurs.get(m_indexJoueur);
-        }
     }
 }
