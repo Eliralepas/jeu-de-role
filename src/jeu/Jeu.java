@@ -20,7 +20,7 @@ public class Jeu {
 
     public void creerJoueur(){
         String nom = "";
-        while(nom == ""){
+        while(nom.isEmpty()){
             System.out.println("Entrez le nom du personnage: ");
             nom = System.console().readLine();
         }
@@ -32,7 +32,7 @@ public class Jeu {
                 "Humain:   2\n" +
                 "Nain:     3\n";
         while(raceJoueur == null){
-            raceJoueur = switch (demandeEntier(msgRace, "Vous devez entrer un nombre entier entre 0 et 3 inclu.")) {
+            raceJoueur = switch (demandeEntier(0, 3, msgRace)) {
                 case 0 -> new Elf();
                 case 1 -> new Halfelin();
                 case 2 -> new Humain();
@@ -48,7 +48,7 @@ public class Jeu {
                 "Magicien: 2\n" +
                 "Roublard: 3\n";
         while(classeJoueur == null){
-            classeJoueur = switch (demandeEntier(msgClasse, "Vous devez entrer un nombre entier entre 0 et 3 inclu.")) {
+            classeJoueur = switch (demandeEntier(0, 3, msgClasse)){
                 case 0 -> new Clerc();
                 case 1 -> new Guerrier();
                 case 2 -> new Magicien();
@@ -62,25 +62,22 @@ public class Jeu {
     }
 
     public void creerDonjon(){
-        int longueur = 0;
-        while(longueur == -1 || longueur == 0){
-            longueur = demandeEntier("Entrez la longueur du donjon: ", "Vous devez entrer un nombre entier positif non nul.");
-        }
-        int largeur = 0;
-        while(largeur == -1 || largeur == 0){
-            largeur = demandeEntier("Entrez la largeur du donjon: ", "Vous devez entrer un nombre entier positif non nul.");
-        }
+        int longueur = demandeEntier(15, 25, "Entrez la longueur du donjon: ");
+        int largeur = demandeEntier(15, 25, "Entrez la largeur du donjon: ");
         m_donjons.add(new Donjon(m_donjons.size(), longueur, largeur));
     }
 
-    public int demandeEntier(String msgDemande, String msgErreur) throws NumberFormatException{
-        int entier = -1;
-        System.out.println(msgDemande);
-        String reponse = System.console().readLine();
-        try {
-            entier = Integer.parseInt(reponse);
-        } catch (NumberFormatException e) {
-            System.out.println( "/!\\ " + msgErreur + " /!\\");
+    public int demandeEntier(int min, int max, String msgDemande) throws NumberFormatException{
+        int entier = min - 1;
+        String msgErreur = "/!\\ Vous devez entrer un nombre entier entre " + min + " et " + max + ". /!\\";
+        while (!(min < entier && entier < max)) {
+            System.out.println(msgDemande);
+            String reponse = System.console().readLine();
+            try {
+                entier = Integer.parseInt(reponse);
+            } catch (NumberFormatException e) {
+                System.out.println(msgErreur);
+            }
         }
         return entier;
     }
