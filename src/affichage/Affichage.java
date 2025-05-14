@@ -1,14 +1,19 @@
 package affichage;
 import donjon.Donjon;
+import jeu.Jeu;
+import personnages.Joueur;
+import personnages.Personnage;
 
 public class Affichage {
     private Donjon m_donjon;
+    private Jeu m_jeu;
     private static String[] indexPlato = new String[]{
         "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
     };
 
-    public Affichage(Donjon donjon){
+    public Affichage(Donjon donjon, Jeu jeu){
         m_donjon = donjon;
+        m_jeu = jeu;
     }
 
     public String afficherPlato(){
@@ -46,6 +51,33 @@ public class Affichage {
         //Affichage de la légende
         affichage+="    * Equipement   |   [ ] Obstacle  |";
         return affichage;
+    }
+
+    //A refaire
+    public String affichageTour(){
+        //Affichage du numéro du Donjon et le joueur
+        String affiche = "*********************************************************************************\n" +
+             "\t\t\tDonjon "+m_donjon.getNumero()+":\n";
+        affiche+="\t\t";
+        Joueur joueurActuelle = m_jeu.getJoueurActuelle();
+        affiche+=joueurActuelle.getNom()+" ("+joueurActuelle.getRace()+" "+joueurActuelle.getClasse().toLowerCase()+")\n";
+        affiche+= "*********************************************************************************\n\n";
+
+        //Affichage de la n-ième tour et l'ordre des personnages
+        affiche+="\t\tTour "+m_jeu.getNumeroTour()+":\n";
+        for(Joueur joueur: m_jeu.getJoueurs()){
+            if (joueur.equals(joueurActuelle)) {
+                affiche += "\t->\t" + joueur.getPion().toString() + "\t" + joueur.getNom() + " (" + joueur.getRace() + " " + joueur.getClasse().toLowerCase() + ", "+joueur.getPvAffichage()+")\n";
+            }
+            else{
+                affiche += "\t\t" + joueur.getPion().toString() + "\t" + joueur.getNom() + " (" + joueur.getRace() + " " + joueur.getClasse().toLowerCase() + ", "+joueur.getPvAffichage()+")\n";
+            }
+        }
+         return affiche+"\n";
+    }
+
+    public String afficheJoueurDetails(){
+        return m_jeu.getJoueurActuelle().toString();
     }
 
 }
