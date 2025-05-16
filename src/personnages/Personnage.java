@@ -57,6 +57,11 @@ public abstract class Personnage {
         return m_arme.attaque();
     }
 
+    public int getVitesse(){
+        //Renvoyer la vitesse du personnage
+        return m_vitesse;
+    }
+
     public void infligerDegats(Personnage perso, int degats){
         //Infliger les dégats à la cible si les dégâts sont supérieurs à la classe d'armure de la cible
         int classeArmureCible = perso.getClasseArmure();

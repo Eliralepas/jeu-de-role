@@ -169,7 +169,7 @@ public class Donjon {
         caseChoisie.convertirString();
         int x = caseChoisie.getColonne();
         int y = caseChoisie.getLigne();
-        if (x > m_colonnes -1 || y > m_lignes -1){
+        if (x > m_colonnes -1 || y > m_lignes -1 || y == -1){
             System.out.println("Cette case n'existe pas.");
             return false;
         }
@@ -277,7 +277,39 @@ public class Donjon {
     }
 
     public boolean tryDeplacement(Personnage perso){
-        return false;
+        //chocsir une case
+        CasePlateau caseChoisie = null;
+        while (caseChoisie == null){
+            caseChoisie = choisirCase("de destination");
+        }
+        int x = caseChoisie.getColonne();
+        int y = caseChoisie.getLigne();
+        Pion pion = perso.getPion();
+        //si ce n'est pas une case avec équipement ou case vide
+        if ((!m_plateau[y][x].equals(" . ")) || !(m_plateau[y][x].equals(" * "))){
+            System.out.println("La case n'est pas vide.");
+            return false;
+        }
+
+        //si la distance max a été dépassé
+        int distance = pion.getDistance(x, y);
+        if (distance > (perso.getVitesse()/3)) {
+            System.out.println("Déplacement trop éloigné.");
+            return false;
+        }
+
+        //déplacer le personnage dans le tableau 2D
+        //si le perso est sur une case avec équipement et que celui-ci n'est pas pris alors remettre équipement
+        m_plateau[pion.getY()][pion.getX()] = " . ";
+        for (Equipement equip : m_equipements) {
+            if ((equip.getPion().getX() == x) && (equip.getPion().getY() == y)) {
+                m_plateau[pion.getY()][pion.getX()] = " * ";
+            }
+        }
+        perso.seDeplacer(x, y);
+        m_plateau[y][x] = perso.getSymbol();
+        System.out.println(afficherPlateau());
+        return true;
     }
 
     public boolean tryEquiper(Personnage perso){
