@@ -286,4 +286,7 @@ Joueur *--> "1\n- m_race" Race: est >
 Personnage *--> "1\n# m_armure:" Armure: est équipé >
 Personnage *--> "1\n# m_arme:" Arme: est équipé >
 Personnage *--> "1\n# m_pion:" Pion: est associé >
+
+Main ..> Jeu : <<uses>>
+
 @enduml
