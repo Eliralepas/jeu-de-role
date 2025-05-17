@@ -263,10 +263,24 @@ package personnages{
     }
 }
 
+package utils{
+    abstract class Demande <<abstract>> {
+        + demandeEntier(min: Integer, max: Integer, msgDemande: String): Integer
+        + demandeString(msgDemande: String, tailleMax: Integer): String
+    }
+
+    abstract class De <<abstract>> {
+        + lance(nbFaces: Integer): Integer
+    }
+}
+
 class Main {
   + Main():
   + main(String[]): void
 }
+
+Main ..> Jeu : <<call>>
+Main ..> Joueur : <<instantiate>>
 
 Donjon o--> "*\n- m_personnages" Personnage : possède >
 Donjon *--> "*\n- m_equipements" Equipement : possède >
@@ -286,7 +300,5 @@ Joueur *--> "1\n- m_race" Race: est >
 Personnage *--> "1\n# m_armure:" Armure: est équipé >
 Personnage *--> "1\n# m_arme:" Arme: est équipé >
 Personnage *--> "1\n# m_pion:" Pion: est associé >
-
-Main ..> Jeu : <<uses>>
 
 @enduml
