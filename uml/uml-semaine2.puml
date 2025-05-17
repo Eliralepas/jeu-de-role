@@ -1,0 +1,370 @@
+@startuml
+
+
+
+package donjon{
+    package casePlateau{
+        class CasePlateau {
+          + CasePlateau(String):
+          - m_case: String
+          - m_colonne: int
+          - m_ligne: int
+          + getLigne(): int
+          + convertirString(): void
+          + estNombre(String): boolean
+          + estValide(): boolean
+          + getColonne(): int
+          + estChiffre(char): boolean
+          + estLettre(char): boolean
+        }
+    }
+    package pion{
+        class Pion {
+          + Pion(int, int, String):
+          - m_symbol: String
+          - m_x: int
+          - m_y: int
+          + toString(): String
+          + setPosition(int, int): void
+          + getX(): int
+          + getDistance(int, int): int
+          + getY(): int
+          + equals(Pion): boolean
+        }
+    }
+    enum Etat << enumeration >> {
+      + Etat():
+      + GAGNE:
+      + PERDU:
+      + ENCOURS:
+      + values(): Etat[]
+      + valueOf(String): Etat
+    }
+    class Donjon {
+      + Donjon(int, ArrayList<Joueur>):
+      + Donjon(int, int, int, ArrayList<Joueur>):
+      - m_termine: Etat
+      - m_lignes: int
+      - m_plateau: String[][]
+      - m_personnages: ArrayList<Personnage>
+      - m_colonnes: int
+      - m_numero: int
+      - m_equipements: ArrayList<Equipement>
+      - m_tour: int
+      - m_pionsObstacle: ArrayList<Pion>
+      + getJoueurs(): ArrayList<Joueur>
+      + jouerDonjon(): boolean
+      - choisirCase(String, int): CasePlateau
+      - getEquipement(Pion): Equipement
+      - demanderNombreCreation(int, String): int
+      - genererDefaut(): void
+      - triParInitiative(): void
+      - tryEquiper(Joueur): boolean
+      - remplirPlateau(): void
+      - tryAttaque(Personnage): boolean
+      - ajouterEquipement(Equipement, CasePlateau): void
+      - creerEquipements(): void
+      - creerObstacles(): void
+      - estCaseValide(CasePlateau, int): boolean
+      - ajouterObstacle(CasePlateau): void
+      - terminerDonjon(Etat): void
+      - testFinDonjon(): String
+      - tryDeplacement(Personnage): boolean
+      - affichageTour(Personnage): String
+      - afficheMsgFin(String): void
+      - positionnerJoueurs(): void
+      - remplirEtJouer(): void
+      - ajouterPersonnage(Personnage, CasePlateau): void
+      - deplacerPerso(Personnage, CasePlateau): void
+      - creerMonstres(): void
+      - lancerInitiative(): void
+      - demanderEquiper(Joueur): void
+      - afficherPlateau(): String
+    }
+}
+
+package jeu{
+    class Jeu {
+      + Jeu():
+      - m_joueurs: ArrayList<Joueur>
+      - m_donjons: ArrayList<Donjon>
+      + jouer(): void
+      + creerJoueur(): void
+      + creerDonjon(): void
+    }
+}
+
+package personnages{
+    package classes{
+        class Classe {
+          + Classe(String, int, ArrayList<Equipement>):
+          - m_pv: int
+          - m_nom: String
+          - m_equipements: ArrayList<Equipement>
+          + toString(): String
+          + getPv(): int
+          + getEquipements(): ArrayList<Equipement>
+        }
+        class Clerc {
+          + Clerc():
+          - m_equipements: ArrayList<Equipement>
+        }
+        class Guerrier {
+          + Guerrier():
+          - m_equipements: ArrayList<Equipement>
+        }
+        class Magicien {
+          + Magicien():
+          - m_equipements: ArrayList<Equipement>
+        }
+        class Roublard {
+          + Roublard():
+          - m_equipements: ArrayList<Equipement>
+        }
+    }
+    package equipements{
+        package armes{
+            class Arbalete {
+              + Arbalete():
+            }
+            class Arc {
+              + Arc():
+            }
+            class Arme {
+              + Arme(String, int, int, boolean):
+              - m_portee: int
+              - m_amplitudeDegats: int
+              + attaque(): int
+              + estArmeDistance(): boolean
+              + estArmure(): boolean
+              + getPortee(): int
+              + getAmplitudeDegats(): int
+              + toString(): String
+            }
+            class Baton {
+              + Baton():
+            }
+            class EpeeLongue {
+              + EpeeLongue():
+            }
+            class Fronde {
+              + Fronde():
+            }
+            class Masse {
+              + Masse():
+            }
+            class Rapiere {
+              + Rapiere():
+            }
+        }
+        package armures{
+            class Armure {
+              + Armure(String, int, boolean):
+              - m_classeArmure: int
+              + getClasseArmure(): int
+              + toString(): String
+            }
+            class ArmureEcailles {
+              + ArmureEcailles():
+            }
+            class CotteDeMailles {
+              + CotteDeMailles():
+            }
+            class DemiPlate {
+              + DemiPlate():
+            }
+            class Harnois {
+              + Harnois():
+            }
+        }
+        class Equipement {
+          + Equipement(String, boolean):
+          # m_estLourd: boolean
+          - m_nom: String
+          - m_pion: Pion
+          + getPion(): Pion
+          + estArmure(): boolean
+          + pasDefinie(): boolean
+          + setPion(int, int): void
+          + estLourd(): boolean
+          + toString(): String
+        }
+    }
+    package races{
+        class Elf {
+          + Elf():
+        }
+        class Halfelin {
+          + Halfelin():
+        }
+        class Humain {
+          + Humain():
+        }
+        class Nain {
+          + Nain():
+        }
+        class Race {
+          + Race(String, int, int, int, int, int):
+          - m_nom: String
+          - m_dexterite: int
+          - m_vitesse: int
+          - m_initiative: int
+          - m_force: int
+          - m_pv: int
+          + toString(): String
+          + setAttributs(int, int, int, int, int): void
+        }
+    }
+    class Joueur {
+      + Joueur(String, Race, Classe):
+      - m_inventaire: ArrayList<Equipement>
+      - m_classe: Classe
+      - m_race: Race
+      + recuperer(Equipement): void
+      + getInfos(): String
+      + estJoueur(): boolean
+      + getAction(): int
+      + equiper(): void
+      + sePresenter(): String
+      + getTailleInventaire(): int
+      + regagnePv(): void
+      + getClasse(): String
+      + contenuInventaire(): String
+      + toString(): String
+      - choisirEquipement(): Equipement
+    }
+    class Monstre {
+      + Monstre(String, String, int, int, int, int, int, int, int, int):
+      - m_numero: int
+      + toString(): String
+    }
+    class Personnage {
+      + Personnage(String, String, int, int, int, int, int, Arme, Armure):
+      # m_armure: Armure
+      # m_vitesse: int
+      # m_force: int
+      # m_dexterite: int
+      # m_arme: Arme
+      # m_pv: int
+      # m_nom: String
+      # m_pvMax: int
+      # m_symbol: String
+      # m_pion: Pion
+      # m_initiative: int
+      + getInfos(): String
+      + seDeplacer(int, int): void
+      + getPion(): Pion
+      + getSymbol(): String
+      + getInitiative(): int
+      + getClasseArmure(): int
+      + estJoueur(): boolean
+      + peutAttaquer(): boolean
+      + sePresenter(): String
+      + getAmplitudeDegatsArme(): int
+      + subirAttaque(int): void
+      + getPv(): int
+      + getAttribut(): int
+      + getVitesse(): int
+      + estMort(): boolean
+      + attaquer(Personnage): void
+      + setInitiative(int): void
+      + getPortee(): int
+      + getAction(): int
+      + getNomAttribut(): String
+      + toString(): String
+      - getDegats(): int
+      - infligerDegats(Personnage, int): void
+    }
+}
+
+class Main {
+  + Main():
+  + main(String[]): void
+}
+
+
+
+Arbalete        -[#000082,plain]-^  Arme
+Arc             -[#000082,plain]-^  Arme
+Arme            -[#000082,plain]-^  Equipement
+Armure          -[#000082,plain]-^  Equipement
+ArmureEcailles  -[#000082,plain]-^  Armure
+Baton           -[#000082,plain]-^  Arme
+Classe         "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
+Clerc           -[#595959,dashed]->  Arbalete       : "«create»"
+Clerc           -[#595959,dashed]->  ArmureEcailles : "«create»"
+Clerc           -[#000082,plain]-^  Classe
+Clerc          "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
+Clerc           -[#595959,dashed]->  Masse          : "«create»"
+CotteDeMailles  -[#000082,plain]-^  Armure
+DemiPlate       -[#000082,plain]-^  Armure
+Donjon          -[#595959,dashed]->  Arbalete       : "«create»"
+Donjon          -[#595959,dashed]->  Arc            : "«create»"
+Donjon          -[#595959,dashed]->  ArmureEcailles : "«create»"
+Donjon          -[#595959,dashed]->  Baton          : "«create»"
+Donjon          -[#595959,dashed]->  CasePlateau    : "«create»"
+Donjon          -[#595959,dashed]->  CotteDeMailles : "«create»"
+Donjon          -[#595959,dashed]->  DemiPlate      : "«create»"
+Donjon          -[#595959,dashed]->  EpeeLongue     : "«create»"
+Donjon         "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
+Donjon         "1" *-[#595959,plain]-> "m_termine\n1" Etat
+Donjon          -[#595959,dashed]->  Fronde         : "«create»"
+Donjon          -[#595959,dashed]->  Harnois        : "«create»"
+Donjon          -[#595959,dashed]->  Masse          : "«create»"
+Donjon          -[#595959,dashed]->  Monstre        : "«create»"
+Donjon         "1" *-[#595959,plain]-> "m_personnages\n*" Personnage
+Donjon          -[#595959,dashed]->  Pion           : "«create»"
+Donjon         "1" *-[#595959,plain]-> "m_pionsObstacle\n*" Pion
+Donjon          -[#595959,dashed]->  Rapiere        : "«create»"
+Elf             -[#000082,plain]-^  Race
+EpeeLongue      -[#000082,plain]-^  Arme
+Equipement     "1" *-[#595959,plain]-> "m_pion\n1" Pion
+Equipement      -[#595959,dashed]->  Pion           : "«create»"
+Etat            +-[#820000,plain]-  Donjon
+Fronde          -[#000082,plain]-^  Arme
+Guerrier        -[#595959,dashed]->  Arbalete       : "«create»"
+Guerrier        -[#000082,plain]-^  Classe
+Guerrier        -[#595959,dashed]->  CotteDeMailles : "«create»"
+Guerrier        -[#595959,dashed]->  EpeeLongue     : "«create»"
+Guerrier       "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
+Halfelin        -[#000082,plain]-^  Race
+Harnois         -[#000082,plain]-^  Armure
+Humain          -[#000082,plain]-^  Race
+Jeu             -[#595959,dashed]->  Clerc          : "«create»"
+Jeu             -[#595959,dashed]->  Donjon         : "«create»"
+Jeu            "1" *-[#595959,plain]-> "m_donjons\n*" Donjon
+Jeu             -[#595959,dashed]->  Elf            : "«create»"
+Jeu             -[#595959,dashed]->  Guerrier       : "«create»"
+Jeu             -[#595959,dashed]->  Halfelin       : "«create»"
+Jeu             -[#595959,dashed]->  Humain         : "«create»"
+Jeu             -[#595959,dashed]->  Joueur         : "«create»"
+Jeu            "1" *-[#595959,plain]-> "m_joueurs\n*" Joueur
+Jeu             -[#595959,dashed]->  Magicien       : "«create»"
+Jeu             -[#595959,dashed]->  Nain           : "«create»"
+Jeu             -[#595959,dashed]->  Roublard       : "«create»"
+Joueur          -[#595959,dashed]->  Arme           : "«create»"
+Joueur          -[#595959,dashed]->  Armure         : "«create»"
+Joueur         "1" *-[#595959,plain]-> "m_classe\n1" Classe
+Joueur         "1" *-[#595959,plain]-> "m_inventaire\n*" Equipement
+Joueur          -[#000082,plain]-^  Personnage
+Joueur         "1" *-[#595959,plain]-> "m_race\n1" Race
+Magicien        -[#595959,dashed]->  Baton          : "«create»"
+Magicien        -[#000082,plain]-^  Classe
+Magicien       "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
+Magicien        -[#595959,dashed]->  Fronde         : "«create»"
+Main            -[#595959,dashed]->  Jeu            : "«create»"
+Masse           -[#000082,plain]-^  Arme
+Monstre         -[#595959,dashed]->  Arme           : "«create»"
+Monstre         -[#595959,dashed]->  Armure         : "«create»"
+Monstre         -[#000082,plain]-^  Personnage
+Nain            -[#000082,plain]-^  Race
+Personnage     "1" *-[#595959,plain]-> "m_arme\n1" Arme
+Personnage     "1" *-[#595959,plain]-> "m_armure\n1" Armure
+Personnage     "1" *-[#595959,plain]-> "m_pion\n1" Pion
+Personnage      -[#595959,dashed]->  Pion           : "«create»"
+Rapiere         -[#000082,plain]-^  Arme
+Roublard        -[#595959,dashed]->  Arc            : "«create»"
+Roublard        -[#000082,plain]-^  Classe
+Roublard       "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
+Roublard        -[#595959,dashed]->  Rapiere        : "«create»"
+@enduml
