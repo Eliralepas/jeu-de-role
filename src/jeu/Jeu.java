@@ -7,20 +7,33 @@ import personnages.races.*;
 
 import java.util.ArrayList;
 
-import static affichage.Demande.demandeEntier;
-import static affichage.Demande.demandeString;
+import static utils.Demande.demandeEntier;
+import static utils.Demande.demandeString;
 
 public class Jeu {
     private final ArrayList<Joueur> m_joueurs;
     private final ArrayList<Donjon> m_donjons;
-    private final int m_donjonActuel;
 
     public Jeu(){
         m_joueurs = new ArrayList<Joueur>();
         m_donjons = new ArrayList<Donjon>();
-        m_donjonActuel = 0;
         creerJoueur();
         creerDonjon();
+        jouer();
+    }
+
+    public void jouer(){
+        int i=0;
+        int n = m_donjons.size();
+        boolean finJeu = false;
+        while(i<n && !finJeu){
+            Donjon d = m_donjons.get(i);
+            finJeu = d.jouerDonjon();
+            if(!finJeu){ //Récupérer tous les joueurs
+                m_joueurs.clear();
+                m_joueurs.addAll(d.getJoueurs());
+            }
+        }
     }
 
     public void creerJoueur(){
@@ -66,12 +79,25 @@ public class Jeu {
 
     public void creerDonjon(){
         System.out.println("▬▬▬▬▬▬▬▬ Création du donjon ▬▬▬▬▬▬▬▬");
-        int colonnes = demandeEntier(15, 25, "Entrez le nombre de colonnes du donjon: ");
-        int lignes = demandeEntier(15, 25, "Entrez le nombre de lignes du donjon: ");
-        m_donjons.add(new Donjon(m_donjons.size(), colonnes, lignes, m_joueurs));
-    }
-
-    public ArrayList<Joueur> getJoueurs(){
-        return m_joueurs;
+        int nbDonjons = demandeEntier(1, 5, "Combien de donjons souhaitez-vous créer ?"); //Max 5 donjons par défaut
+        for (int i=1; i<nbDonjons+1; i++) {
+            System.out.println("\nDonjon n°" + i);
+            String msgDonjon = """
+                    Souhaitez-vous générer le donjon par défaut ?
+                    0 --> Non
+                    1 --> Oui
+                    """;
+            int defaut = demandeEntier(0, 1, msgDonjon);
+            Donjon d = null;
+            if (defaut == 0) {
+                int colonnes = demandeEntier(15, 25, "Entrez le nombre de colonnes du donjon: ");
+                int lignes = demandeEntier(15, 25, "Entrez le nombre de lignes du donjon: ");
+                d = new Donjon(i, colonnes, lignes, m_joueurs);
+            } else {
+                //Donjon par défaut
+                d = new Donjon(i, m_joueurs);
+            }
+            m_donjons.add(d);
+        }
     }
 }

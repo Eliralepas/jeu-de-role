@@ -1,24 +1,21 @@
 package personnages.equipements.armes;
 
 import personnages.equipements.Equipement;
-
-import java.util.Random;
+import utils.De;
 
 public class Arme extends Equipement {
     private final int m_amplitudeDegats;
     private final int m_portee;
-    private final boolean m_estLourde;
 
     public Arme(String nom, int amplitudeDegats, int portee, boolean estLourde){
-        super(nom);
+        super(nom, estLourde);
         m_amplitudeDegats = amplitudeDegats;
         m_portee = portee;
-        m_estLourde = estLourde;
     }
 
     public int attaque() {
         //Renvoyer les dégâts de l'arme
-        return new Random().nextInt(m_amplitudeDegats) + 1;
+        return De.lance(m_amplitudeDegats);
     }
 
     public int getPortee(){
@@ -36,13 +33,17 @@ public class Arme extends Equipement {
         return m_portee > 1;
     }
 
-    public boolean estLourde(){
-        //Renvoie vrai si l'arme est lourde, faux sinon.
-        return m_estLourde;
+    @Override
+    public boolean estArmure() {
+        return false;
     }
 
     @Override
     public String toString() {
-        return super.toString() + " (dégâts: 1d" + m_amplitudeDegats + ", portee: " + m_portee + ")";
+        String etat = "non";
+        if (m_estLourd){
+            etat = "oui";
+        }
+        return super.toString() + " (dégâts: 1d" + m_amplitudeDegats + ", portee: " + m_portee + ", lourde: " + etat + ")";
     }
 }
