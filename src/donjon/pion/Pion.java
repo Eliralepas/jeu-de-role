@@ -28,6 +28,10 @@ public class Pion {
         return Math.max(Math.abs(m_x - x),Math.abs(m_y - y));
     }
 
+    public boolean equals(Pion p) {
+        return (m_x == p.m_x && m_y == p.m_y);
+    }
+
     @Override
     public String toString() {
         return m_symbol;

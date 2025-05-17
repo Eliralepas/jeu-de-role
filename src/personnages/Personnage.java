@@ -3,10 +3,9 @@ package personnages;
 import donjon.pion.Pion;
 import personnages.equipements.armes.Arme;
 import personnages.equipements.armures.Armure;
+import utils.De;
 
-import java.util.Random;
-
-import static affichage.Demande.demandeEntier;
+import static utils.Demande.demandeEntier;
 
 public abstract class Personnage {
     protected final String m_nom;
@@ -44,7 +43,7 @@ public abstract class Personnage {
         //Attaquer un personnage.
         System.out.println("Lancez un dé de 20 (appuyez sur 'ENTREE')\n");
         System.console().readLine();
-        int resultatLance = new Random().nextInt(20) + 1;
+        int resultatLance = De.lance(20);
         System.out.println("Vous avez fait " + resultatLance);
         int degats = getAttribut();
         int total = resultatLance + degats;
@@ -52,17 +51,12 @@ public abstract class Personnage {
         infligerDegats(perso, total);
     }
 
-    public int getDegats(){
+    private int getDegats(){
         //Renvoyer les dégâts de l'arme.
         return m_arme.attaque();
     }
 
-    public int getVitesse(){
-        //Renvoyer la vitesse du personnage
-        return m_vitesse;
-    }
-
-    public void infligerDegats(Personnage perso, int degats){
+    private void infligerDegats(Personnage perso, int degats){
         //Infliger les dégats à la cible si les dégâts sont supérieurs à la classe d'armure de la cible
         int classeArmureCible = perso.getClasseArmure();
         if (degats > classeArmureCible){
@@ -70,8 +64,9 @@ public abstract class Personnage {
             System.out.println("Lancez un dé de " + getAmplitudeDegatsArme() + " pour infliger des dégâts (appuyez sur 'ENTREE')");
             System.console().readLine();
             int resultatLance = getDegats();
-            System.out.println(perso.m_nom + " subit " + resultatLance + "dégâts !");
             perso.subirAttaque(resultatLance);
+            System.out.println(perso.m_nom + " subit " + resultatLance + " dégâts !");
+            System.out.println(perso.m_nom + " n'a plus que " + perso.getPv() + " points de vie restants !");
         }
         else {
             System.out.println("Votre attaque ne parvient pas à percer l'armure de " + perso.m_nom + "(" + classeArmureCible + ").");
@@ -113,9 +108,23 @@ public abstract class Personnage {
         return m_initiative;
     }
 
-    public  int getPortee(){
-        //Renvoyer la portee
+    public void setInitiative(int initiative){
+        m_initiative = initiative;
+    }
+
+    public int getPortee(){
+        //Renvoyer la portee.
         return m_arme.getPortee();
+    }
+
+    public int getVitesse(){
+        //Renvoyer la vitesse.
+        return m_vitesse;
+    }
+
+    public int getPv(){
+        //Renvoyer les points de vie.
+        return m_pv;
     }
 
     public boolean estJoueur(){
@@ -124,6 +133,10 @@ public abstract class Personnage {
 
     public boolean estMort(){
         return m_pv <= 0;
+    }
+
+    public boolean peutAttaquer(){
+        return !m_arme.pasDefinie();
     }
 
     public String getSymbol(){

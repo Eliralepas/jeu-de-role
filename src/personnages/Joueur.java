@@ -5,11 +5,11 @@ import personnages.equipements.armes.Arme;
 import personnages.equipements.Equipement;
 import personnages.equipements.armures.Armure;
 import personnages.races.Race;
+import utils.De;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-import static affichage.Demande.demandeEntier;
+import static utils.Demande.demandeEntier;
 
 public class Joueur extends Personnage{
     private final Race m_race;
@@ -27,11 +27,10 @@ public class Joueur extends Personnage{
         int initiative = 0;
         race.setAttributs(pv, force, dexterite, vitesse, initiative);
         for(int i=0; i<4; i++){
-            Random rnd = new Random();
-            force += rnd.nextInt(4) + 1;
-            dexterite += rnd.nextInt(4) + 1;
-            vitesse += rnd.nextInt(4) + 1;
-            initiative += rnd.nextInt(4) + 1;
+            force += De.lance(4);
+            dexterite += De.lance(4);
+            vitesse += De.lance(4);
+            initiative += De.lance(4);
         }
         force += 3;
         dexterite += 3;
@@ -44,9 +43,60 @@ public class Joueur extends Personnage{
         super(nom, symbol, pv, force, dexterite, vitesse, initiative, new Arme("", 0, 0, false), new Armure("", 0, false));
     }
 
-    public String getRace(){
-        //Renvoyer le nom de la race.
-        return m_race.toString();
+    public void recuperer(Equipement equip){
+        m_inventaire.add(equip);
+    }
+
+    public void equiper(){
+        Equipement equip = choisirEquipement(); //Choisir l'équipement à équiper
+        m_inventaire.remove(equip); //Supprimer l'équipement choisi de l'inventaire
+        //Si l'équipement choisi est une armure
+        if(equip.estArmure()){
+            //Stocker l'armure actuellement équipée dans l'inventaire
+            if (!m_armure.pasDefinie()){
+                m_inventaire.add(m_armure);
+                if (m_armure.estLourd()){
+                    m_vitesse += 4;
+                }
+            }
+            //Equiper l'armure
+            m_armure = (Armure) equip;
+            if (equip.estLourd()){
+                m_vitesse -= 4;
+            }
+        }
+        else {
+            //Stocker l'arme actuellement équipée dans l'inventaire
+            if (!m_arme.pasDefinie()){
+                m_inventaire.add(m_arme);
+                if (m_arme.estLourd()){
+                    m_vitesse += 2;
+                    m_force -= 4;
+                }
+            }
+            //Equiper l'arme
+            m_arme = (Arme) equip;
+            if (equip.estLourd()){
+                m_vitesse -= 2;
+                m_force += 4;
+            }
+        }
+    }
+
+    private Equipement choisirEquipement(){
+        StringBuilder msgEquipement = new StringBuilder("Entrez le numéro correspondant à l'equipement à equiper:\n");
+        int compteur = 1;
+        int n = m_inventaire.size();
+        for(Equipement equip : m_inventaire){
+            msgEquipement.append(compteur).repeat(" ", n/10).append("\t --> \t").append(equip).append("\n");
+            compteur++;
+        }
+        int index = demandeEntier(1, m_inventaire.size(), msgEquipement.toString());
+        return m_inventaire.get(index-1);
+    }
+
+    public void regagnePv(){
+        m_pv = m_pvMax;
     }
 
     public String getClasse(){
@@ -62,6 +112,10 @@ public class Joueur extends Personnage{
         return chaine;
     }
 
+    public int getTailleInventaire(){
+        return m_inventaire.size();
+    }
+
     @Override
     public String sePresenter() {
         return m_nom + " (" + m_race + " " + m_classe.toString().toLowerCase() + ")";
@@ -69,7 +123,7 @@ public class Joueur extends Personnage{
 
     @Override
     public String getInfos() {
-        return  m_nom + " (" + m_race + m_classe + ", " + m_pv + "/" + m_pvMax + ")";
+        return  m_nom + " (" + m_race + " " + m_classe + ", " + m_pv + "/" + m_pvMax + ")";
     }
 
     @Override
@@ -90,18 +144,18 @@ public class Joueur extends Personnage{
         String chaine = m_nom + " (" + m_race.toString() + ", " + m_classe.toString() + ")\n"
                 + "\tVie: " + m_pv + "/" + m_pvMax + "\n"
                 + "\tArmure: ";
-        if (m_armure != null){
+        if (m_armure.pasDefinie()){
+            chaine += "aucune\n";
+        }
+        else {
             chaine += m_armure + "\n";
         }
-        else {
-            chaine += "aucune\n";
-        }
         chaine += "\tArme: ";
-        if (m_arme != null){
-            chaine += m_arme + "\n";
+        if (m_arme.pasDefinie()){
+            chaine += "aucune\n";
         }
         else {
-            chaine += "aucune\n";
+            chaine += m_arme + "\n";
         }
         chaine += "\tInventaire: [" + m_inventaire.size() + "]\n" + contenuInventaire();
         chaine += "\tForce: " + m_force + "\n";

@@ -4,12 +4,10 @@ import personnages.equipements.Equipement;
 
 public class Armure extends Equipement {
     private final int m_classeArmure;
-    private final boolean m_estLourde;
 
     public Armure(String nom, int classeArmure, boolean estLourde){
-        super(nom);
+        super(nom, estLourde);
         m_classeArmure = classeArmure;
-        m_estLourde = estLourde;
     }
 
     public int getClasseArmure(){
@@ -17,15 +15,10 @@ public class Armure extends Equipement {
         return m_classeArmure;
     }
 
-    public boolean estLourde(){
-        //Renvoie vrai si l'armure est une armure lourde, faux sinon.
-        return m_estLourde;
-    }
-
     @Override
     public String toString() {
         String etat = "non";
-        if (m_estLourde){
+        if (m_estLourd){
             etat = "oui";
         }
         return super.toString() + " (classe d'armure: " + m_classeArmure + ", lourde: " + etat + ")";
