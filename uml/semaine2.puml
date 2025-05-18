@@ -255,6 +255,8 @@ package personnages{
       + attaquer(perso: Personnage)
       + setInitiative(initiative: Integer)
       + getPortee(): Integer
+      + getDexterite(): Integer
+      + getForce(): Integer
       + getAction(): Integer
       + getNomAttribut(): String
       + toString(): String
@@ -279,8 +281,6 @@ class Main {
   + main(String[]): void
 }
 
-Main ..> Jeu : <<call>>
-Main ..> Joueur : <<instantiate>>
 
 Donjon o--> "*\n- m_personnages" Personnage : possède >
 Donjon *--> "*\n- m_equipements" Equipement : possède >
@@ -300,5 +300,57 @@ Joueur *--> "1\n- m_race" Race: est >
 Personnage *--> "1\n# m_armure:" Armure: est équipé >
 Personnage *--> "1\n# m_arme:" Arme: est équipé >
 Personnage *--> "1\n# m_pion:" Pion: est associé >
+
+' Relations d'utilisation
+Donjon ..> CasePlateau : <<uses>>
+Donjon ..> De : <<uses>>
+
+Jeu ..> Demande : <<uses>>
+
+Joueur ..> De : <<uses>>
+Joueur ..> Demande : <<uses>>
+
+Personnage ..> De : <<uses>>
+Personnage ..> Demande : <<uses>>
+
+' Relations d'instanciation
+' Donjon par défault
+Donjon ..> Monstre : <<instantiate>>
+Donjon ..> Arbalete : <<instantiate>>
+Donjon ..> EpeeLongue : <<instantiate>>
+Donjon ..> Masse : <<instantiate>>
+Donjon ..> DemiPlate : <<instantiate>>
+Donjon ..> CotteDeMailles : <<instantiate>>
+
+Main ..> Joueur : <<instantiate>>
+
+Jeu ..> Donjon : <<instantiate>>
+Jeu ..> Joueur : <<instantiate>>
+
+Joueur ..> Arme : <<instantiate>>
+Joueur ..> Armure : <<instantiate>>
+
+Monstre ..> Arme : <<instantiate>>
+Monstre ..> Armure : <<instantiate>>
+
+' Relations d'appel
+Donjon ..> Joueur : <<call>>
+Donjon ..> Personnage : <<call>>
+Donjon ..> Pion : <<call>>
+
+Main ..> Jeu : <<call>>
+
+Jeu ..> Donjon : <<call>>
+
+Joueur ..> Classe : <<call>>
+Joueur ..> Race : <<call>>
+Joueur ..> Equipement : <<call>>
+Joueur ..> Arme : <<call>>
+Joueur ..> Armure : <<call>>
+Joueur ..> Personnage : <<call>>
+
+Personnage --> Arme : <<call>>
+Personnage --> Armure : <<call>>
+Personnage --> Pion : <<call>>
 
 @enduml
