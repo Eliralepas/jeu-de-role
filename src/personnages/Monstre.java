@@ -3,7 +3,6 @@ package personnages;
 import personnages.equipements.armes.Arme;
 import personnages.equipements.armures.Armure;
 
-
 public class Monstre extends Personnage{
     private final int m_numero;
 

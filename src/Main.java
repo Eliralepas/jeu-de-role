@@ -1,10 +1,8 @@
-import personnages.Joueur;
-import personnages.classes.Guerrier;
-import personnages.races.Humain;
+import jeu.Jeu;
 
 public class Main {
     public static void main(String[] args)
     {
-
+        new Jeu();
     }
 }

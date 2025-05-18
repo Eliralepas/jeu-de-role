@@ -1,0 +1,356 @@
+@startuml
+skinparam AttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml
+hide empty members
+
+package donjon{
+    package casePlateau{
+        class CasePlateau {
+          - m_case: String
+          - m_colonne: Integer
+          - m_ligne: Integer
+          + <<create>> CasePlateau(c: String)
+          + getLigne(): Integer
+          + convertirString()
+          + estNombre(s: String): Boolean
+          + estValide(): Boolean
+          + getColonne(): Integer
+          + estChiffre(c: String): Boolean
+          + estLettre(c: String): Boolean
+        }
+    }
+    package pion{
+        class Pion {
+          - m_symbol: String
+          - m_x: Integer
+          - m_y: Integer
+          + <<create >> Pion(x: Integer, y: Integer, symbol: String)
+          + toString(): String
+          + setPosition(x: Integer, y: Integer)
+          + getX(): Integer
+          + getDistance(x: Integer, y: Integer): Integer
+          + getY(): Integer
+          + equals(p: Pion): Boolean
+        }
+    }
+    enum Etat << enumeration >> {
+      GAGNE
+      PERDU
+      ENCOURS
+    }
+    class Donjon {
+      - m_termine: Etat
+      - m_lignes: Integer
+      - m_plateau: String[][]
+      - m_colonnes: Integer
+      - m_numero: Integer
+      - m_tour: Integer
+      + <<create>> Donjon(numero: Integer, listeJoueurs: ArrayList<Joueur>)
+      + <<create>> Donjon(numero: Integer, colonnes: Integer, lignes: Integer, listeJoueurs: ArrayList<Joueur>)
+      + getJoueurs(): ArrayList<Joueur>
+      + jouerDonjon(): Boolean
+      - choisirCase(element: String, mode: Integer): CasePlateau
+      - getEquipement(pionRecherche: Pion): Equipement
+      - demanderNombreCreation(min: Integer, objectACreer: String): Integer
+      - genererDefaut()
+      - triParInitiative()
+      - tryEquiper(joueur: Joueur): Boolean
+      - remplirPlateau()
+      - tryAttaque(perso: Personnage): Boolean
+      - ajouterEquipement(equip: Equipement, caseChoisie: CasePlateau): void
+      - creerEquipements()
+      - creerObstacles()
+      - estCaseValide(caseChoisie: CasePlateau, mode: Integer): Boolean
+      - ajouterObstacle(caseChoisie: CasePlateau)
+      - terminerDonjon(e: Etat)
+      - testFinDonjon(): String
+      - tryDeplacement(perso: Personnage): Boolean
+      - affichageTour(perso: Personnage): String
+      - afficheMsgFin(resultat: String)
+      - positionnerJoueurs()
+      - remplirEtJouer()
+      - ajouterPersonnage(perso: Personnage, caseChoisie: CasePlateau)
+      - deplacerPerso(perso: Personnage, caseChoisie: CasePlateau)
+      - creerMonstres()
+      - lancerInitiative()
+      - demanderEquiper(joueur: Joueur)
+      - afficherPlateau(): String
+    }
+}
+
+package jeu{
+    class Jeu {
+      + <<create>> Jeu()
+      + jouer()
+      + creerJoueur()
+      + creerDonjon()
+    }
+}
+
+package personnages{
+    package classes{
+       abstract class Classe <<abstract>> {
+          - m_pv: Integer
+          - m_nom: String
+	      + <<create>> Classe(nom: String, pv: Integer, equipements: ArrayList<Equipement>)
+          + toString(): String
+          + getPv(): Integer
+          + getEquipements(): ArrayList<Equipement>
+       }
+        class Clerc extends Classe {
+          - m_equipements: ArrayList<Equipement>
+	      + <<create>> Clerc()
+        }
+        class Guerrier extends Classe {
+          - m_equipements: ArrayList<Equipement>
+	      + <<create>> Guerrier()
+        }
+        class Magicien extends Classe {
+          - m_equipements: ArrayList<Equipement>
+	      + <<create>> Magicien()
+        }
+        class Roublard extends Classe {
+          - m_equipements: ArrayList<Equipement>
+	      + <<create>> Roublard()
+        }
+    }
+    package equipements{
+        package armes{
+	    class Arme extends Equipement {
+              - m_portee: Integer
+              - m_amplitudeDegats: Integer
+	          + <<create>> Arme(nom: String, amplitudeDegats: Integer, portee: Integer, estLourde: Boolean)
+              + attaque(): Integer
+              + estArmeDistance(): Boolean
+              + estArmure(): Boolean
+              + getPortee(): Integer
+              + getAmplitudeDegats(): Integer
+              + toString(): String
+            }
+            class Arbalete extends Arme {
+              + <<create>> Arbalete()
+            }
+            class Arc extends Arme {
+              + <<create>> Arc()
+            }
+            class Baton extends Arme {
+              + <<create>> Baton()
+            }
+            class EpeeLongue extends Arme {
+              + <<create>> EpeeLongue()
+            }
+            class Fronde extends Arme {
+              + <<create>> Fronde()
+            }
+            class Masse extends Arme {
+              + <<create>> Masse()
+            }
+            class Rapiere extends Arme {
+              + <<create>> Rapiere()
+            }
+        }
+        package armures{
+            class Armure extends Equipement {
+              - m_classeArmure: Integer
+	          + <<create>> Armure(nom: String, classeArmure: Integer, estLourde: Boolean)
+              + getClasseArmure(): Integer
+              + toString(): String
+            }
+            class ArmureEcailles extends Armure {
+              + <<create>> ArmureEcailles()
+            }
+            class CotteDeMailles extends Armure {
+              + <<create>> CotteDeMailles()
+            }
+            class DemiPlate extends Armure {
+              + <<create>> DemiPlate()
+            }
+            class Harnois extends Armure {
+              + <<create>> Harnois()
+            }
+        }
+        abstract class Equipement <<abstract>> {
+          # m_estLourd: Boolean
+          - m_nom: String
+	      + Equipement(nom: String, estLourd: Boolean)
+          + getPion(): Pion
+          + estArmure(): Boolean
+          + pasDefinie(): Boolean
+          + setPion(x: Integer, y: Integer)
+          + estLourd(): Boolean
+          + toString(): String
+        }
+    }
+    package races{
+        class Elf extends Race {
+          + <<create>> Elf()
+        }
+        class Halfelin extends Race {
+          + <<create>> Halfelin()
+        }
+        class Humain extends Race {
+          + <<create>> Humain()
+        }
+        class Nain extends Race {
+          + <<create>> Nain()
+        }
+        abstract class Race <<abstract>> {
+          - m_nom: String
+          - m_dexterite: Integer
+          - m_vitesse: Integer
+          - m_initiative: Integer
+          - m_force: Integer
+          - m_pv: Integer
+	      + <<create>> Race(nom: String, pv: Integer, force: Integer, dexterite: Integer, vitesse: Integer, initiative: Integer):
+          + toString(): String
+          + setAttributs(pv: Integer, force: Integer, dexterite: Integer, vitesse:  Integer, initiative: Integer)
+        }
+    }
+    class Joueur extends Personnage {
+      + <<create>> Joueur(nom: String, race: Race, classe: Classe)
+      + recuperer(Equipement)
+      + getInfos(): String
+      + estJoueur(): Boolean
+      + getAction(): Integer
+      + equiper()
+      + sePresenter(): String
+      + getTailleInventaire(): Integer
+      + regagnePv()
+      + getClasse(): String
+      + contenuInventaire(): String
+      + toString(): String
+      - choisirEquipement(): Equipement
+    }
+    class Monstre extends Personnage {
+      - m_numero: Integer
+      + <<create>> Monstre(espece: String, symbol: String, numero: Integer, pv: Integer, force: Integer, dexterite: Integer, vitesse: Integer, amplitudeDegats: Integer, portee: Integer, classeArmure: Integer):
+      + toString(): String
+    }
+    abstract class Personnage <<abstract>> {
+      # m_vitesse: Integer
+      # m_force: Integer
+      # m_dexterite: Integer
+      # m_pv: Integer
+      # m_nom: String
+      # m_pvMax: Integer
+      # m_symbol: String
+      # m_initiative: Integer
+      + <<create>> Personnage(nom: String, symbol: String, pv: Integer, force: Integer, dexterite: Integer, vitesse: Integer, initiative: Integer, arme: Arme, armure: Armure):
+      + getInfos(): String
+      + seDeplacer(x: Integer, t: Integer)
+      + getPion(): Pion
+      + getSymbol(): String
+      + getInitiative(): Integer
+      + getClasseArmure(): Integer
+      + estJoueur(): Boolean
+      + peutAttaquer(): Boolean
+      + sePresenter(): String
+      + getAmplitudeDegatsArme(): Integer
+      + subirAttaque(degats: Integer)
+      + getPv(): Integer
+      + getAttribut(): Integer
+      + getVitesse(): Integer
+      + estMort(): Boolean
+      + attaquer(perso: Personnage)
+      + setInitiative(initiative: Integer)
+      + getPortee(): Integer
+      + getDexterite(): Integer
+      + getForce(): Integer
+      + getAction(): Integer
+      + getNomAttribut(): String
+      + toString(): String
+      - getDegats(): Integer
+      - infligerDegats(perso: Personnage, degats: Integer)
+    }
+}
+
+package utils{
+    abstract class Demande <<abstract>> {
+        + demandeEntier(min: Integer, max: Integer, msgDemande: String): Integer
+        + demandeString(msgDemande: String, tailleMax: Integer): String
+    }
+
+    abstract class De <<abstract>> {
+        + lance(nbFaces: Integer): Integer
+    }
+}
+
+class Main {
+  + Main():
+  + main(String[]): void
+}
+
+
+Donjon o--> "*\n- m_personnages" Personnage : possède >
+Donjon *--> "*\n- m_equipements" Equipement : possède >
+Donjon *--> "*\n-m_pionsObstacle" Pion : possède >
+
+Jeu *---> "*\n- m_joueurs" Joueur: participe à <
+Jeu *---> "*\n- m_donjons" Donjon: possède >
+
+Classe *---> "*\n- m_equipements " Equipement
+
+Equipement *--> "1\n- m_pion" Pion: est associé à >
+
+Joueur *--> "*\n- m_inventaire" Equipement: possède >
+Joueur *--> "1\n- m_classe" Classe: est >
+Joueur *--> "1\n- m_race" Race: est >
+
+Personnage *--> "1\n# m_armure:" Armure: est équipé >
+Personnage *--> "1\n# m_arme:" Arme: est équipé >
+Personnage *--> "1\n# m_pion:" Pion: est associé >
+
+' Relations d'utilisation
+Donjon ..> CasePlateau : <<uses>>
+Donjon ..> De : <<uses>>
+
+Jeu ..> Demande : <<uses>>
+
+Joueur ..> De : <<uses>>
+Joueur ..> Demande : <<uses>>
+
+Personnage ..> De : <<uses>>
+Personnage ..> Demande : <<uses>>
+
+' Relations d'instanciation
+' Donjon par défault
+Donjon ..> Monstre : <<instantiate>>
+Donjon ..> Arbalete : <<instantiate>>
+Donjon ..> EpeeLongue : <<instantiate>>
+Donjon ..> Masse : <<instantiate>>
+Donjon ..> DemiPlate : <<instantiate>>
+Donjon ..> CotteDeMailles : <<instantiate>>
+
+Main ..> Joueur : <<instantiate>>
+
+Jeu ..> Donjon : <<instantiate>>
+Jeu ..> Joueur : <<instantiate>>
+
+Joueur ..> Arme : <<instantiate>>
+Joueur ..> Armure : <<instantiate>>
+
+Monstre ..> Arme : <<instantiate>>
+Monstre ..> Armure : <<instantiate>>
+
+' Relations d'appel
+Donjon ..> Joueur : <<call>>
+Donjon ..> Personnage : <<call>>
+Donjon ..> Pion : <<call>>
+
+Main ..> Jeu : <<call>>
+
+Jeu ..> Donjon : <<call>>
+
+Joueur ..> Classe : <<call>>
+Joueur ..> Race : <<call>>
+Joueur ..> Equipement : <<call>>
+Joueur ..> Arme : <<call>>
+Joueur ..> Armure : <<call>>
+Joueur ..> Personnage : <<call>>
+
+Personnage --> Arme : <<call>>
+Personnage --> Armure : <<call>>
+Personnage --> Pion : <<call>>
+
+@enduml

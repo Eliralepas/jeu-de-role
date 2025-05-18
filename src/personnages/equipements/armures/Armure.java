@@ -14,4 +14,13 @@ public class Armure extends Equipement {
         //Renvoie la classe d'armure.
         return m_classeArmure;
     }
+
+    @Override
+    public String toString() {
+        String etat = "non";
+        if (m_estLourd){
+            etat = "oui";
+        }
+        return super.toString() + " (classe d'armure: " + m_classeArmure + ", lourde: " + etat + ")";
+    }
 }
