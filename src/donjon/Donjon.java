@@ -28,6 +28,15 @@ public class Donjon {
     private final ArrayList<Personnage> m_personnages;
     private int m_tour;
     private Etat m_termine;
+
+    public int getColonnes() {
+        return m_colonnes;
+    }
+
+    public int getLignes(){
+        return m_lignes;
+    }
+
     enum Etat {
         ENCOURS, PERDU, GAGNE
     }

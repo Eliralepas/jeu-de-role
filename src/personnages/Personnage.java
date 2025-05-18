@@ -175,4 +175,20 @@ public abstract class Personnage {
     public String toString() {
         return m_nom;
     }
+
+    public int getPvMax() {
+        return m_pvMax;
+    }
+
+    public Boolean armureEstLourde(){
+        return m_armure.estLourd();
+    }
+
+    public int getForce() {
+        return m_force;
+    }
+
+    public int getDexterite(){
+        return m_dexterite;
+    }
 }
