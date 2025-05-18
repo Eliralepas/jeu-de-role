@@ -37,9 +37,9 @@ public class Donjon {
         m_colonnes = colonnes;
         m_lignes = lignes;
         m_plateau = new String[lignes][colonnes];
-        m_pionsObstacle = new ArrayList<Pion>();
-        m_equipements = new ArrayList<Equipement>();
-        m_personnages = new ArrayList<Personnage>();
+        m_pionsObstacle = new ArrayList<>();
+        m_equipements = new ArrayList<>();
+        m_personnages = new ArrayList<>();
         m_personnages.addAll(listeJoueurs);
         m_tour = 0;
         m_termine = Etat.ENCOURS;
@@ -51,9 +51,9 @@ public class Donjon {
         m_colonnes = 23;
         m_lignes = 18;
         m_plateau = new String[m_lignes][m_colonnes];
-        m_pionsObstacle = new ArrayList<Pion>();
-        m_equipements = new ArrayList<Equipement>();
-        m_personnages = new ArrayList<Personnage>();
+        m_pionsObstacle = new ArrayList<>();
+        m_equipements = new ArrayList<>();
+        m_personnages = new ArrayList<>();
         m_personnages.addAll(listeJoueurs);
         m_tour = 0;
         m_termine = Etat.ENCOURS;
@@ -179,7 +179,9 @@ public class Donjon {
             while (caseChoisie == null){
                 caseChoisie = choisirCase("sur laquelle ajouter l'équipement", 0);
             }
-            ajouterEquipement(equipementChoisi, caseChoisie);
+            if (equipementChoisi != null){
+                ajouterEquipement(equipementChoisi, caseChoisie);
+            }
         }
     }
 
@@ -469,7 +471,7 @@ public class Donjon {
     }
 
     private void triParInitiative(){
-        ArrayList<Personnage> listeTriee = new ArrayList<Personnage>();
+        ArrayList<Personnage> listeTriee = new ArrayList<>();
         listeTriee.add(m_personnages.getFirst());
         int n = m_personnages.size();
         for(int i=1; i<n; i++){
