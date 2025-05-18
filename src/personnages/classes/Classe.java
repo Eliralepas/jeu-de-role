@@ -12,7 +12,7 @@ public abstract class Classe {
     public Classe(String nom, int pv, ArrayList<Equipement> equipements){
         m_nom = nom;
         m_pv = pv;
-        m_equipements = new ArrayList<Equipement>();
+        m_equipements = new ArrayList<>();
         m_equipements.addAll(equipements);
     }
 

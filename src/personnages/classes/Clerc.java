@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Clerc extends Classe{
     private static final ArrayList<Equipement> m_equipements;
     static {
-        m_equipements = new ArrayList<Equipement>();
+        m_equipements = new ArrayList<>();
         m_equipements.add(new Masse());
         m_equipements.add(new ArmureEcailles());
         m_equipements.add(new Arbalete());
