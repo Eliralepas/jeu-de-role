@@ -66,7 +66,12 @@ public abstract class Personnage {
             int resultatLance = getDegats();
             perso.subirAttaque(resultatLance);
             System.out.println(perso.m_nom + " subit " + resultatLance + " dégâts !");
-            System.out.println(perso.m_nom + " n'a plus que " + perso.getPv() + " points de vie restants !");
+            if (perso.getPv() > 0){
+                System.out.println(perso.m_nom + " n'a plus que " + perso.getPv() + " points de vie restants !");
+            }
+            else {
+                System.out.println(perso.m_nom + " a été tué par " + m_nom + " !");
+            }
         }
         else {
             System.out.println("Votre attaque ne parvient pas à percer l'armure de " + perso.m_nom + "(" + classeArmureCible + ").");

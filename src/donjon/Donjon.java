@@ -236,7 +236,7 @@ public class Donjon {
             default -> false;
         };
         if(!estValide){
-            System.out.println("La case n'est pas vide");
+            System.out.println("La case n'est pas valide");
             return false;
         }
         return true;
@@ -325,7 +325,6 @@ public class Donjon {
                     }
                     System.out.println(afficherPlateau());
                 }
-                triParInitiative();
             }
         }
         return true;
@@ -350,7 +349,7 @@ public class Donjon {
             return false;
         }
         Personnage persoCible = null;
-        int i = 1;
+        int i = 0;
         int n = m_personnages.size();
         while(i<n && persoCible == null) {
             Personnage p2 = m_personnages.get(i);
@@ -362,6 +361,10 @@ public class Donjon {
         }
         if (persoCible == null){
             System.out.println("Vous ne pouvez pas lancer d'attaques sur cette case.");
+            return false;
+        }
+        if (perso.estJoueur() == persoCible.estJoueur()){ //Si un monstre attaque un monstre ou un joueur attaque un joueur
+            System.out.println("Vous ne pouvez pas attaquer votre allié.");
             return false;
         }
         perso.attaquer(persoCible);
@@ -480,9 +483,11 @@ public class Donjon {
                 if(p.getInitiative() < initiativePerso){
                     indexTrouve = true;
                 }
-                j++;
+                else{
+                    j++;
+                }
             }
-            listeTriee.add(j-1, perso);
+            listeTriee.add(j, perso);
         }
         m_personnages.clear();
         m_personnages.addAll(listeTriee);
