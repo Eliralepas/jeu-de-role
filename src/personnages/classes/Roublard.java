@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Roublard extends Classe{
     private static final ArrayList<Equipement> m_equipements;
     static {
-        m_equipements = new ArrayList<Equipement>();
+        m_equipements = new ArrayList<>();
         m_equipements.add(new Rapiere());
         m_equipements.add(new Arc());
     }

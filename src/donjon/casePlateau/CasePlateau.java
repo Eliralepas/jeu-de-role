@@ -25,10 +25,7 @@ public class CasePlateau {
     public boolean estValide(){
         //Renvoyer true si la case est au bon format.
         int n = m_case.length();
-        if (!(2 <= n && n <= 3) || !(estLettre(m_case.charAt(0)) && estNombre(m_case.substring(1, n)))){
-            return false;
-        }
-        return true;
+        return (2 <= n && n <= 3) && (estLettre(m_case.charAt(0)) && estNombre(m_case.substring(1, n)));
     }
 
     public boolean estLettre(char c){
