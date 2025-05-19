@@ -11,6 +11,7 @@ import personnages.equipements.armures.ArmureEcailles;
 import personnages.equipements.armures.CotteDeMailles;
 import personnages.equipements.armures.DemiPlate;
 import personnages.equipements.armures.Harnois;
+import personnages.equipements.sorts.Sort;
 import utils.De;
 
 import java.util.ArrayList;
@@ -322,6 +323,7 @@ public class Donjon {
                         case 1 -> tryAttaque(persoActuel);
                         case 2 -> tryDeplacement(persoActuel);
                         case 3 -> tryEquiper((Joueur)persoActuel);
+                        case 4 -> tryLancerSort((Joueur)persoActuel);
                         default -> false;
                     };
                     if (resultat){
@@ -471,6 +473,13 @@ public class Donjon {
             }
             i++;
         }
+    }
+
+    public boolean tryLancerSort(Joueur joueur){
+        if (!joueur.peutLancerSorts()){
+            return false;
+        }
+        return joueur.lancerSort();
     }
 
     private void lancerInitiative(){

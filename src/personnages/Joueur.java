@@ -4,6 +4,7 @@ import personnages.classes.Classe;
 import personnages.equipements.armes.Arme;
 import personnages.equipements.Equipement;
 import personnages.equipements.armures.Armure;
+import personnages.equipements.sorts.Sort;
 import personnages.races.Race;
 import utils.De;
 
@@ -15,11 +16,13 @@ public class Joueur extends Personnage{
     private final Race m_race;
     private final Classe m_classe;
     private final ArrayList<Equipement> m_inventaire;
+    private final ArrayList<Sort> m_sorts;
 
     public Joueur(String nom, Race race, Classe classe){
         m_race = race;
         m_classe = classe;
         m_inventaire = classe.getEquipements();
+        m_sorts = classe.getSorts();
         int pv = classe.getPv();
         int force = 0;
         int dexterite = 0;
@@ -95,6 +98,23 @@ public class Joueur extends Personnage{
         return m_inventaire.get(index-1);
     }
 
+    public boolean lancerSort(){
+        Sort s = choisirSort();
+        return s.lancer();
+    }
+
+    private Sort choisirSort(){
+        StringBuilder msgSort = new StringBuilder("Entrez le numéro correspondant au sort à lancer:\n");
+        int compteur = 1;
+        int n = m_inventaire.size();
+        for(Sort s: m_sorts){
+            msgSort.append(compteur).repeat(" ", n/10).append("\t --> \t").append(s).append("\n");
+            compteur++;
+        }
+        int index = demandeEntier(1, m_sorts.size(), msgSort.toString());
+        return m_sorts.get(index-1);
+    }
+
     public void regagnePv(){
         m_pv = m_pvMax;
     }
@@ -134,9 +154,15 @@ public class Joueur extends Personnage{
                 Attaquer:    1
                 Se déplacer: 2
                 S'équiper:   3
+                Lancer sort: 4
                 
                 """;
-        return demandeEntier(1, 3, msgAction);
+        return demandeEntier(1, 4, msgAction);
+    }
+
+    @Override
+    public boolean peutLancerSorts() {
+        return !m_sorts.isEmpty();
     }
 
     @Override

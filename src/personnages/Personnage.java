@@ -144,6 +144,11 @@ public abstract class Personnage {
         return !m_arme.pasDefinie();
     }
 
+    public boolean peutLancerSorts(){
+        //A pour but d'être surchargé par la classe fille Joueur.
+        return false;
+    }
+
     public String getSymbol(){
         //Renvoyer le symbol.
         return m_symbol;
