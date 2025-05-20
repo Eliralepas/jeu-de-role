@@ -70,14 +70,7 @@ public abstract class Personnage {
             System.out.println("Lancez un dé de " + getAmplitudeDegatsArme() + " pour infliger des dégâts (appuyez sur 'ENTREE')");
             System.console().readLine();
             int resultatLance = getDegats();
-            perso.subirAttaque(resultatLance);
-            System.out.println(perso.m_nom + " subit " + resultatLance + " dégâts !");
-            if (perso.getPv() > 0){
-                System.out.println(perso.m_nom + " n'a plus que " + perso.getPv() + " points de vie restants !");
-            }
-            else {
-                System.out.println(perso.m_nom + " a été tué par " + m_nom + " !");
-            }
+            perso.subirAttaque(resultatLance, m_nom);
         }
         else {
             System.out.println("Votre attaque ne parvient pas à percer l'armure de " + perso.m_nom + "(" + classeArmureCible + ").");
@@ -103,9 +96,16 @@ public abstract class Personnage {
         return m_arme.estArmeDistance()? "Dextérité": "Force";
     }
 
-    public void subirAttaque(int degats){
+    public void subirAttaque(int degats, String attaquant){
         //Déduire les dégâts reçus de la vie.
         m_pv -= degats;
+        System.out.println(m_nom + " subit " + degats + " dégâts !");
+        if (m_pv > 0){
+            System.out.println(m_nom + " n'a plus que " + m_pv + " points de vie restants !");
+        }
+        else {
+            System.out.println(m_nom + " a été tué par " + attaquant + " !");
+        }
     }
 
     public int getClasseArmure(){

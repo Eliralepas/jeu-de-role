@@ -337,10 +337,56 @@ public class Donjon {
                         persoActuel.setInitiative(initiative);
                     }
                     System.out.println(afficherPlateau());
+                    //le maître du jeu peut intervenir à la fin d'une action d'un joueur ou d'un monstre
+                    switch (getActionMaitreJeu()){
+                        case 2 -> deplacerPerso(demanderPerso(),choisirCase("de déplacement", 2));
+                        case 3 -> infligerDegats();
+                        case 4 -> creerObstacles();
+                        case 5 -> skipTour();
+                        default -> System.out.println("Le maître du jeu n'intervient pas.");
+                    };
                 }
+
             }
         }
         return true;
+    }
+
+    private void infligerDegats(){
+        Personnage perso = demanderPerso();
+        int degats = demandeEntier(1, 100, "Entrez le nombre de dégâts à infliger: \n");
+        perso.subirAttaque(degats, "le maître du jeu");
+    }
+
+    private void skipTour(){
+
+    }
+
+    private Personnage demanderPerso()
+    {
+        StringBuilder msg = new StringBuilder("Entrez le numéro correspondant au personnage à choisir:\n");
+        int compteur = 1;
+        int nb = m_personnages.size();
+        for(Personnage perso : m_personnages){
+            msg.append(compteur).repeat(" ", nb).append("\t --> \t").append(perso.sePresenter()).append("\n");
+            compteur++;
+        }
+        int index = demandeEntier(1, nb, msg.toString());
+        return m_personnages.get(index-1);
+    }
+
+    private int getActionMaitreJeu(){
+        String msgAction =
+                "Maître du jeu, que souhaitez-vous faire ?\n" +
+                        """
+                        Rien faire:             1
+                        Déplacer un jour:       2
+                        Infliger dégât:         3
+                        Ajouter des obstacles:  4
+                        Sauter le tour:         5
+                        
+                        """;
+        return demandeEntier(1, 5, msgAction);
     }
 
     private boolean tryAttaque(Personnage perso){
