@@ -39,11 +39,17 @@ public abstract class Personnage {
         m_pion.setPosition(x, y);
     }
 
+    public void seDeplacer(Pion p){
+        //Se déplacer sur le pion p
+        m_pion.setPosition(p);
+    }
+
     public void attaquer(Personnage perso){
         //Attaquer un personnage.
-        System.out.println("Lancez un dé de 20 (appuyez sur 'ENTREE')\n");
+        int attaque = 20 + m_arme.getBonus();
+        System.out.println("Lancez un dé de " + attaque + " (appuyez sur 'ENTREE')\n");
         System.console().readLine();
-        int resultatLance = De.lance(20);
+        int resultatLance = De.lance(attaque);
         System.out.println("Vous avez fait " + resultatLance);
         int degats = getAttribut();
         int total = resultatLance + degats;
@@ -76,6 +82,15 @@ public abstract class Personnage {
         else {
             System.out.println("Votre attaque ne parvient pas à percer l'armure de " + perso.m_nom + "(" + classeArmureCible + ").");
         }
+    }
+
+    public void guerir(int pv){
+        System.out.println(m_nom + " regagne " + pv + " points de vie.");
+        m_pv += pv;
+        if (m_pv > m_pvMax){
+            m_pv = m_pvMax;
+        }
+        System.out.println(m_nom + " a maintenant " + m_pv + "/" + m_pvMax + " points de vie.");
     }
 
     public int getAttribut(){
@@ -164,6 +179,14 @@ public abstract class Personnage {
         return m_nom + " (" + m_pv + "/" + m_pvMax + ")";
     }
 
+    public int getPvMax() {
+        return m_pvMax;
+    }
+
+    public boolean equals(Personnage perso) {
+        return m_nom.equals(perso.m_nom);
+    }
+
     public int getAction(){
         //Renvoyer l'entier correspondant à l'action choisie, a pour but d'être surchargé par la classe fille Joueur.
         String msgAction =
@@ -179,21 +202,5 @@ public abstract class Personnage {
     @Override
     public String toString() {
         return m_nom;
-    }
-
-    public int getPvMax() {
-        return m_pvMax;
-    }
-
-    public Boolean armureEstLourde(){
-        return m_armure.estLourd();
-    }
-
-    public int getForce() {
-        return m_force;
-    }
-
-    public int getDexterite(){
-        return m_dexterite;
     }
 }

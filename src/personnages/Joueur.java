@@ -94,13 +94,26 @@ public class Joueur extends Personnage{
             msgEquipement.append(compteur).repeat(" ", n/10).append("\t --> \t").append(equip).append("\n");
             compteur++;
         }
-        int index = demandeEntier(1, m_inventaire.size(), msgEquipement.toString());
+        int index = demandeEntier(1, n, msgEquipement.toString());
         return m_inventaire.get(index-1);
     }
 
-    public boolean lancerSort(){
+    public Arme choisirArme(){
+        StringBuilder msgArme = new StringBuilder("Entrez le numéro correspondant à l'arme à choisir:\n");
+        ArrayList<Arme> armes = getArmes();
+        int compteur = 1;
+        int n = armes.size();
+        for(Arme a: armes){
+            msgArme.append(compteur).repeat(" ", n/10).append("\t --> \t").append(a).append("\n");
+            compteur++;
+        }
+        int index = demandeEntier(1, n, msgArme.toString());
+        return armes.get(index-1);
+    }
+
+    public boolean lancerSort(ArrayList<Personnage> personnages){
         Sort s = choisirSort();
-        return s.lancer();
+        return s.lancer(personnages);
     }
 
     private Sort choisirSort(){
@@ -115,13 +128,20 @@ public class Joueur extends Personnage{
         return m_sorts.get(index-1);
     }
 
-    public void regagnePv(){
-        m_pv = m_pvMax;
-    }
-
     public String getClasse(){
         //Renvoyer le nom de la classe.
         return m_classe.toString();
+    }
+
+    private ArrayList<Arme> getArmes(){
+        ArrayList<Arme> armes = new ArrayList<>();
+        armes.add(m_arme);
+        for(Equipement equip : m_inventaire){
+            if(!equip.estArmure()){
+                armes.add((Arme)equip);
+            }
+        }
+        return armes;
     }
 
     public String contenuInventaire(){

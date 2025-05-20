@@ -11,6 +11,12 @@ public class Pion {
         m_symbol = symbol;
     }
 
+    public Pion(Pion p){
+        m_x = p.m_x;
+        m_y = p.m_y;
+        m_symbol = p.m_symbol;
+    }
+
     public int getX(){
         return m_x;
     }
@@ -22,6 +28,10 @@ public class Pion {
     public void setPosition(int x, int y){
         m_x = x;
         m_y = y;
+    }
+
+    public void setPosition(Pion p){
+        setPosition(p.getX(), p.getY());
     }
 
     public int getDistance(int x, int y){

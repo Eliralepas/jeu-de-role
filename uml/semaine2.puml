@@ -214,8 +214,12 @@ package personnages{
       + estJoueur(): Boolean
       + getAction(): Integer
       + equiper()
+      + choisirArme(): Arme
+      + lancerSort(personnages: Personnage[*]): Boolean
+      - choisirSort(): Sort
       + sePresenter(): String
       + getTailleInventaire(): Integer
+      - getArmes(): Arme[*]
       + regagnePv()
       + getClasse(): String
       + contenuInventaire(): String

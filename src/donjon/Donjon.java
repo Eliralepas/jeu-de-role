@@ -418,7 +418,7 @@ public class Donjon {
         int x = caseChoisie.getColonne();
         int y = caseChoisie.getLigne();
         //Récupérer les coordonnées d'origine
-        Pion pionPerso = perso.getPion();
+        Pion pionPerso = new Pion(perso.getPion());
         int xOrigine = pionPerso.getX();
         int yOrigine = pionPerso.getY();
         //Déplacer le personnage
@@ -435,11 +435,9 @@ public class Donjon {
             }
         }
         //Afficher à nouveau l'équipement si la case d'origine contient un équipement qui était caché par un monstre
+        m_plateau[yOrigine][xOrigine] = " . ";
         if (!perso.estJoueur() && getEquipement(pionPerso) != null){
             m_plateau[yOrigine][xOrigine] = " * ";
-        }
-        else {
-            m_plateau[yOrigine][xOrigine] = " . ";
         }
     }
 
@@ -479,7 +477,18 @@ public class Donjon {
         if (!joueur.peutLancerSorts()){
             return false;
         }
-        return joueur.lancerSort();
+        boolean resultat = joueur.lancerSort(m_personnages);
+        updatePosPersos();
+        return resultat;
+    }
+
+    private void updatePosPersos(){
+        for(Personnage perso : m_personnages){
+            Pion p = perso.getPion();
+            int x = p.getX();
+            int y = p.getY();
+            m_plateau[y][x] = perso.getSymbol();
+        }
     }
 
     private void lancerInitiative(){
@@ -602,7 +611,7 @@ public class Donjon {
         for (Personnage p: m_personnages){
             if(p.estJoueur()){
                 Joueur j = (Joueur) p;
-                j.regagnePv();
+                j.guerir(j.getPvMax());
                 joueurs.add(j);
             }
         }
