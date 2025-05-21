@@ -1,8 +1,11 @@
 package personnages.classes;
 
 import personnages.equipements.Equipement;
+import personnages.equipements.armes.Arbalete;
 import personnages.equipements.armes.Arc;
+import personnages.equipements.armes.Masse;
 import personnages.equipements.armes.Rapiere;
+import personnages.equipements.armures.ArmureEcailles;
 
 import java.util.ArrayList;
 
