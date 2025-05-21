@@ -25,9 +25,11 @@ package donjon{
           - m_symbol: String
           - m_x: Integer
           - m_y: Integer
-          + <<create >> Pion(x: Integer, y: Integer, symbol: String)
+          + <<create>> Pion(x: Integer, y: Integer, symbol: String)
+          + <<create>> Pion(Pion p)
           + toString(): String
           + setPosition(x: Integer, y: Integer)
+          + setPosition(Pion p)
           + getX(): Integer
           + getDistance(x: Integer, y: Integer): Integer
           + getY(): Integer
@@ -76,6 +78,11 @@ package donjon{
       - lancerInitiative()
       - demanderEquiper(joueur: Joueur)
       - afficherPlateau(): String
+      - infligerDegats()
+      - demanderPerso(): Personnage
+      - getActionJeu(): Integer
+      + tryLancerSort(joueur: Joueur): Boolean
+      - updatePosPersos()
     }
 }
 
@@ -93,25 +100,23 @@ package personnages{
        abstract class Classe <<abstract>> {
           - m_pv: Integer
           - m_nom: String
-	      + <<create>> Classe(nom: String, pv: Integer, equipements: ArrayList<Equipement>)
+	      + <<create>> Classe(nom: String, pv: Integer, equipements: Equipement[*])
+	      + <<create>> Classe(nom: String, pv: Integer, equipements: Equipement[*], sorts: Sort[*])
           + toString(): String
           + getPv(): Integer
-          + getEquipements(): ArrayList<Equipement>
+          + getEquipements(): Equipement[*]
+          + getSorts(): Sort[*]
        }
         class Clerc extends Classe {
-          - m_equipements: ArrayList<Equipement>
 	      + <<create>> Clerc()
         }
         class Guerrier extends Classe {
-          - m_equipements: ArrayList<Equipement>
 	      + <<create>> Guerrier()
         }
         class Magicien extends Classe {
-          - m_equipements: ArrayList<Equipement>
 	      + <<create>> Magicien()
         }
         class Roublard extends Classe {
-          - m_equipements: ArrayList<Equipement>
 	      + <<create>> Roublard()
         }
     }
@@ -120,13 +125,17 @@ package personnages{
 	    class Arme extends Equipement {
               - m_portee: Integer
               - m_amplitudeDegats: Integer
-	          + <<create>> Arme(nom: String, amplitudeDegats: Integer, portee: Integer, estLourde: Boolean)
+              - m_nbLance : Integer
+              - m_bonus : Integer
+              + <<create>> Arme(nom: String, amplitudeDegats: Integer, portee: Integer, estLourde: Boolean)
+	          + <<create>> Arme(nom: String, amplitudeDegats: Integer, portee: Integer, estLourde: Boolean, nbLance: Integer)
               + attaque(): Integer
               + estArmeDistance(): Boolean
               + estArmure(): Boolean
               + getPortee(): Integer
               + getAmplitudeDegats(): Integer
               + toString(): String
+
             }
             class Arbalete extends Arme {
               + <<create>> Arbalete()
@@ -149,6 +158,9 @@ package personnages{
             class Rapiere extends Arme {
               + <<create>> Rapiere()
             }
+            class Epee2Mains extends Arme{
+              + <<create>> Epee2Mains()
+            }
         }
         package armures{
             class Armure extends Equipement {
@@ -170,6 +182,34 @@ package personnages{
               + <<create>> Harnois()
             }
         }
+        package sorts{
+            abstract class Sort <<abstract>>{
+                # m_nom : String
+                + <<create>> Sort(nom: String)
+                + {abstract} lancer(personnages: Personnage[*]): Boolean
+                + {static} choisirPersonnages(personnages: Personnage[*], nbPerso: Integer): Personnage[*]
+                + {static} choisirJoueurs(joueurs: Joueur[*], nbPerso: Integer): Joueur[*]
+                + {static} getJoueurs(personnages: Personnage[*]): Joueur[*]
+                + toString(): String
+            }
+
+            class Guerison extends Sort{
+                + <<create>> Guerison()
+                + lancer(personnages: Personnage[*]): Boolean
+            }
+
+            class BoogieWoogie extends Sort{
+                + <<create>> BoogieWoogie()
+                + lancer(personnages: Personnage[*]): Boolean
+            }
+
+            class ArmeMagique extends Sort{
+                + <<create>> ArmeMagique()
+                + lancer(personnages: Personnage[*]): Boolean
+            }
+
+        }
+
         abstract class Equipement <<abstract>> {
           # m_estLourd: Boolean
           - m_nom: String
@@ -243,6 +283,7 @@ package personnages{
       + <<create>> Personnage(nom: String, symbol: String, pv: Integer, force: Integer, dexterite: Integer, vitesse: Integer, initiative: Integer, arme: Arme, armure: Armure):
       + getInfos(): String
       + seDeplacer(x: Integer, t: Integer)
+      + seDeplacer(Pion p)
       + getPion(): Pion
       + getSymbol(): String
       + getInitiative(): Integer
@@ -253,6 +294,8 @@ package personnages{
       + getAmplitudeDegatsArme(): Integer
       + subirAttaque(degats: Integer)
       + getPv(): Integer
+      + getPvMax(): Integer
+      + equals(perso: Personnage): Boolean
       + getAttribut(): Integer
       + getVitesse(): Integer
       + estMort(): Boolean
@@ -265,6 +308,7 @@ package personnages{
       + getNomAttribut(): String
       + toString(): String
       - getDegats(): Integer
+      + guerir(pv: Integer)
       - infligerDegats(perso: Personnage, degats: Integer)
     }
 }
@@ -295,11 +339,21 @@ Jeu *---> "*\n- m_donjons" Donjon: possède >
 
 Classe *---> "*\n- m_equipements " Equipement
 
+Clerc *---> "*\n- m_equipements" Equipement: possède >
+Clerc *---> "*\n- m_sorts " Sort: peut lancer >
+Guerrier *---> "*\n- m_equipements " Equipement: possède >
+Magicien *---> "*\n- m_equipements " Equipement: possède >
+Magicien *---> "*\n- m_sorts " Sort: peut lancer >
+Roublard *---> "*\n- m_equipements " Equipement: possède >
+
 Equipement *--> "1\n- m_pion" Pion: est associé à >
+
+Sort o--> "*\n# m_personnages" Personnage : peut lancer <
 
 Joueur *--> "*\n- m_inventaire" Equipement: possède >
 Joueur *--> "1\n- m_classe" Classe: est >
 Joueur *--> "1\n- m_race" Race: est >
+Joueur *--> "*\n-m_sorts" Sort: peut lancer >
 
 Personnage *--> "1\n# m_armure:" Armure: est équipé >
 Personnage *--> "1\n# m_arme:" Arme: est équipé >
