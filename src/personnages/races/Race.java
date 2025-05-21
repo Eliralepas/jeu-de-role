@@ -6,24 +6,29 @@ public abstract class Race {
     private final int m_force;
     private final int m_dexterite;
     private final int m_vitesse;
-    private final int m_initiative;
 
-    public Race(String nom, int pv, int force, int dexterite, int vitesse, int initiative){
+    public Race(String nom, int pv, int force, int dexterite, int vitesse){
         m_nom = nom;
         m_pv = pv;
         m_force = force;
         m_dexterite = dexterite;
         m_vitesse = vitesse;
-        m_initiative = initiative;
     }
 
-    public void setAttributs(int pv, int force, int dexterite, int vitesse, int initiative){
-        //Met à jour les attributs du personnage qui est de cette race.
-        pv = m_pv;
-        force = m_force;
-        dexterite = m_dexterite;
-        vitesse = m_vitesse;
-        initiative = m_initiative;
+    public int getPv(){
+        return m_pv;
+    }
+
+    public int getForce(){
+        return m_force;
+    }
+
+    public int getDexterite(){
+        return m_dexterite;
+    }
+
+    public int getVitesse(){
+        return m_vitesse;
     }
 
     @Override

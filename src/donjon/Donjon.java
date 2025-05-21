@@ -16,8 +16,7 @@ import utils.De;
 
 import java.util.ArrayList;
 
-import static utils.Demande.demandeEntier;
-import static utils.Demande.demandeString;
+import static utils.Demande.*;
 
 public class Donjon {
     private final int m_numero;
@@ -318,7 +317,7 @@ public class Donjon {
                 System.out.println(affichageTour(persoActuel));
                 //Faire l'action choisie par l'utilisateur tant qu'il reste des actions à faire.
                 int initiative = persoActuel.getInitiative();
-                while(initiative > 0 && m_termine == Etat.ENCOURS){
+                while(persoActuel.getInitiative() > 0 && m_termine == Etat.ENCOURS){
                     boolean resultat = switch (persoActuel.getAction()){
                         case 1 -> tryAttaque(persoActuel);
                         case 2 -> tryDeplacement(persoActuel);
@@ -333,57 +332,50 @@ public class Donjon {
                         else if (m_termine == Etat.GAGNE) {
                             return true;
                         }
-                        initiative--;
-                        persoActuel.setInitiative(initiative);
+                        persoActuel.diminuerInitiative();
+                        //Le maître du jeu peut intervenir à la fin de l'action d'un joueur ou d'un monstre.
+                        interventionMaitrejeu(persoActuel);
                     }
                     System.out.println(afficherPlateau());
-                    //le maître du jeu peut intervenir à la fin d'une action d'un joueur ou d'un monstre
-                    switch (getActionMaitreJeu()){
-                        case 2 -> deplacerPerso(demanderPerso(),choisirCase("de déplacement", 2));
-                        case 3 -> infligerDegats();
-                        case 4 -> creerObstacles();
-                        case 5 -> skipTour();
-                        default -> System.out.println("Le maître du jeu n'intervient pas.");
-                    };
                 }
-
             }
         }
         return true;
     }
 
     private void infligerDegats(){
-        Personnage perso = demanderPerso();
+        Personnage perso = demanderPersonnages(m_personnages, 1).getFirst();
         int degats = demandeEntier(1, 100, "Entrez le nombre de dégâts à infliger: \n");
         perso.subirAttaque(degats, "le maître du jeu");
+        testMortPerso(perso);
     }
 
-    private void skipTour(){
-
-    }
-
-    private Personnage demanderPerso()
-    {
-        StringBuilder msg = new StringBuilder("Entrez le numéro correspondant au personnage à choisir:\n");
-        int compteur = 1;
-        int nb = m_personnages.size();
-        for(Personnage perso : m_personnages){
-            msg.append(compteur).repeat(" ", nb).append("\t --> \t").append(perso.sePresenter()).append("\n");
-            compteur++;
+    private void interventionMaitrejeu(Personnage persoActuel){
+        System.out.println(afficherPlateau());
+        switch (getActionMaitreJeu()){
+            case 2 -> {
+                Personnage perso = demanderPersonnages(m_personnages, 1).getFirst();
+                deplacerPerso(perso, choisirCase("de déplacement", 2));
+            }
+            case 3 -> infligerDegats();
+            case 4 -> creerObstacles();
+            case 5 -> {
+                persoActuel.setInitiative(0);
+                System.out.println("Le maître du jeu termine le tour de " + persoActuel.sePresenter() + ".");
+            }
+            default -> System.out.println("Le maître du jeu n'intervient pas.");
         }
-        int index = demandeEntier(1, nb, msg.toString());
-        return m_personnages.get(index-1);
     }
 
     private int getActionMaitreJeu(){
         String msgAction =
-                "Maître du jeu, que souhaitez-vous faire ?\n" +
+                "\nMaître du jeu, que souhaitez-vous faire ?\n" +
                         """
-                        Rien faire:             1
-                        Déplacer un jour:       2
-                        Infliger dégât:         3
-                        Ajouter des obstacles:  4
-                        Sauter le tour:         5
+                        Ne rien faire:              1
+                        Déplacer un personnage:     2
+                        Infliger des dégâts:        3
+                        Ajouter des obstacles:      4
+                        Sauter le tour:             5
                         
                         """;
         return demandeEntier(1, 5, msgAction);
@@ -396,45 +388,19 @@ public class Donjon {
         }
         System.out.println(afficherPlateau());
         System.out.println("Votre portée d'attaque est de " + perso.getPortee() + " cases.");
-        CasePlateau caseChoisie = null;
-        while (caseChoisie == null){
-            caseChoisie = choisirCase("à attaquer", 1);
-        }
-        int x = caseChoisie.getColonne();
-        int y = caseChoisie.getLigne();
-        Pion p = perso.getPion();
-        if (perso.getPortee() < p.getDistance(x, y)){
-            System.out.println("La case est hors de portée.");
-            return false;
-        }
-        Personnage persoCible = null;
-        int i = 0;
-        int n = m_personnages.size();
-        while(i<n && persoCible == null) {
-            Personnage p2 = m_personnages.get(i);
-            Pion pion2 = p2.getPion();
-            if (x == pion2.getX() && y == pion2.getY()){
-                persoCible = p2;
-            }
-            i++;
-        }
-        if (persoCible == null){
-            System.out.println("Vous ne pouvez pas lancer d'attaques sur cette case.");
-            return false;
-        }
+        Personnage persoCible = demanderPersonnagesWithoutSelf(m_personnages, 1, perso).getFirst();
         if (perso.estJoueur() == persoCible.estJoueur()){ //Si un monstre attaque un monstre ou un joueur attaque un joueur
             System.out.println("Vous ne pouvez pas attaquer votre allié.");
             return false;
         }
-        perso.attaquer(persoCible);
-        if(persoCible.estMort()){
-            m_plateau[y][x] = " . ";
-            m_personnages.remove(persoCible);
-            System.out.println(testFinDonjon());
-            if (persoCible.estJoueur()){
-                terminerDonjon(Etat.PERDU);
-            }
+        Pion pionCible = persoCible.getPion();
+        Pion pionPerso = perso.getPion();
+        if (perso.getPortee() < pionPerso.getDistance(pionCible)){
+            System.out.println(persoCible.sePresenter() + " est hors de portée.");
+            return false;
         }
+        perso.attaquer(persoCible);
+        testMortPerso(persoCible);
         return true;
     }
 
@@ -534,6 +500,18 @@ public class Donjon {
             int x = p.getX();
             int y = p.getY();
             m_plateau[y][x] = perso.getSymbol();
+        }
+    }
+
+    private void testMortPerso(Personnage perso){
+        if(perso.estMort()){
+            Pion p = perso.getPion();
+            m_plateau[p.getY()][p.getX()] = " . ";
+            m_personnages.remove(perso);
+            System.out.println(testFinDonjon());
+            if (perso.estJoueur()){
+                terminerDonjon(Etat.PERDU);
+            }
         }
     }
 

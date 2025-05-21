@@ -1,6 +1,7 @@
 package personnages.classes;
 
 import personnages.equipements.Equipement;
+import personnages.equipements.armes.Arbalete;
 import personnages.equipements.armes.Baton;
 import personnages.equipements.armes.Fronde;
 import personnages.equipements.sorts.ArmeMagique;

@@ -1,5 +1,10 @@
 package utils;
 
+import personnages.Joueur;
+import personnages.Personnage;
+
+import java.util.ArrayList;
+
 public abstract class Demande {
 
     public static int demandeEntier(int min, int max, String msgDemande) throws NumberFormatException{
@@ -30,5 +35,72 @@ public abstract class Demande {
             }
         }
         return chaine;
+    }
+
+    public static ArrayList<Personnage> demanderPersonnages(ArrayList<Personnage> personnages, int nbPerso){
+        ArrayList<Personnage> persoChoisis = new ArrayList<>();
+        int n = personnages.size();
+        StringBuilder msgDemande = new StringBuilder("Entrez le numéro correspondant au personnage à choisir:\n");
+        int compteur = 1;
+        for(Personnage p : personnages){
+            msgDemande.append(compteur).repeat(" ", n/10).append("\t --> \t").append(p.sePresenter()).append("\n");
+            compteur++;
+        }
+        for(int i=0; i<nbPerso; i++){
+            int index = demandeEntier(1, n, msgDemande.toString());
+            persoChoisis.add(personnages.get(index-1));
+        }
+        return persoChoisis;
+    }
+
+    public static ArrayList<Personnage> demanderPersonnagesWithoutSelf(ArrayList<Personnage> personnages, int nbPerso, Personnage perso){
+        ArrayList<Personnage> listePersos = new ArrayList<>(personnages);
+        listePersos.remove(perso);
+        return demanderPersonnages(listePersos, nbPerso);
+    }
+
+    public static ArrayList<Personnage> demanderPersonnagesFilter(ArrayList<Personnage> personnages, int nbPerso){
+        ArrayList<Personnage> listePersos = new ArrayList<>(personnages);
+        ArrayList<Personnage> persoChoisis = new ArrayList<>();
+        int n = personnages.size();
+        for(int i=0; i<nbPerso; i++){
+            StringBuilder msgDemande = new StringBuilder("Entrez le numéro correspondant au personnage n°" + (i+1) + " à choisir:\n");
+            int compteur = 1;
+            for(Personnage p : listePersos){
+                msgDemande.append(compteur).repeat(" ", n/10).append("\t --> \t").append(p.sePresenter()).append("\n");
+                compteur++;
+            }
+            int index = demandeEntier(1, n, msgDemande.toString());
+            Personnage persoChoisi = listePersos.get(index-1);
+            persoChoisis.add(persoChoisi);
+            listePersos.remove(index-1);
+        }
+        return persoChoisis;
+    }
+
+    public static ArrayList<Joueur> demanderJoueurs(ArrayList<Joueur> joueurs, int nbPerso){
+        ArrayList<Joueur> joueursChoisis = new ArrayList<>();
+        int n = joueurs.size();
+        StringBuilder msgDemande = new StringBuilder("Entrez le numéro correspondant au joueur à choisir:\n");
+        int compteur = 1;
+        for(Joueur j : joueurs){
+            msgDemande.append(compteur).repeat(" ", n/10).append("\t --> \t").append(j.sePresenter()).append("\n");
+            compteur++;
+        }
+        for(int i=0; i<nbPerso; i++){
+            int index = demandeEntier(1, n, msgDemande.toString());
+            joueursChoisis.add(joueurs.get(index-1));
+        }
+        return joueursChoisis;
+    }
+
+    public static ArrayList<Joueur> getJoueurs(ArrayList<Personnage> personnages){
+        ArrayList<Joueur> joueurs = new ArrayList<>();
+        for(Personnage p : personnages){
+            if(p.estJoueur()){
+                joueurs.add((Joueur)p);
+            }
+        }
+        return joueurs;
     }
 }

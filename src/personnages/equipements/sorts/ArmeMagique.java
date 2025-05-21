@@ -6,6 +6,9 @@ import personnages.equipements.armes.Arme;
 
 import java.util.ArrayList;
 
+import static utils.Demande.demanderJoueurs;
+import static utils.Demande.getJoueurs;
+
 public class ArmeMagique extends Sort{
 
     public ArmeMagique(){ super("Arme magique"); }
@@ -13,7 +16,7 @@ public class ArmeMagique extends Sort{
     @Override
     public boolean lancer(ArrayList<Personnage> personnages) {
         //Choisir le joueur
-        ArrayList<Joueur> joueurChoisi = choisirJoueurs(getJoueurs(personnages), 1);
+        ArrayList<Joueur> joueurChoisi = demanderJoueurs(getJoueurs(personnages), 1);
         if (joueurChoisi.isEmpty()) {
             System.out.println("Aucun personnage n'a été sélectionné.");
             return false;

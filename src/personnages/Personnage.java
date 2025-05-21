@@ -128,6 +128,11 @@ public abstract class Personnage {
         return m_initiative;
     }
 
+    public void diminuerInitiative(){
+        //Décrémente l'initiative
+        m_initiative--;
+    }
+
     public void setInitiative(int initiative){
         m_initiative = initiative;
     }

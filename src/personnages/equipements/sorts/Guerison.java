@@ -1,7 +1,10 @@
 package personnages.equipements.sorts;
 
+import personnages.Joueur;
 import personnages.Personnage;
 import utils.De;
+import static utils.Demande.demanderJoueurs;
+import static utils.Demande.getJoueurs;
 
 import java.util.ArrayList;
 
@@ -11,14 +14,14 @@ public class Guerison extends Sort{
 
     @Override
     public boolean lancer(ArrayList<Personnage> personnages) {
-        ArrayList<Personnage> persoChoisis = choisirPersonnages(personnages, 1);
-        if (persoChoisis.isEmpty()) {
-            System.out.println("Aucun personnage n'a été sélectionné.");
+        ArrayList<Joueur> joueurChoisi = demanderJoueurs(getJoueurs(personnages), 1);
+        if (joueurChoisi.isEmpty()) {
+            System.out.println("Aucun joueur n'a été sélectionné.");
             return false;
         }
-        Personnage perso = persoChoisis.getFirst();
+        Personnage perso = joueurChoisi.getFirst();
         if (perso == null) {
-            System.out.println("Le personnage n'existe pas.");
+            System.out.println("Le joueur n'existe pas.");
             return false;
         }
         int soin = De.lance(10);
