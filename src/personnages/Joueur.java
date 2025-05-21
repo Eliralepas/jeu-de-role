@@ -23,12 +23,11 @@ public class Joueur extends Personnage{
         m_classe = classe;
         m_inventaire = classe.getEquipements();
         m_sorts = classe.getSorts();
-        int pv = classe.getPv();
-        int force = 0;
-        int dexterite = 0;
-        int vitesse = 0;
+        int pv = classe.getPv() + race.getPv();
+        int force = race.getForce();
+        int dexterite = race.getDexterite();
+        int vitesse = race.getVitesse();
         int initiative = 0;
-        race.setAttributs(pv, force, dexterite, vitesse, initiative);
         for(int i=0; i<4; i++){
             force += De.lance(4);
             dexterite += De.lance(4);

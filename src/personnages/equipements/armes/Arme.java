@@ -4,7 +4,7 @@ import personnages.equipements.Equipement;
 import utils.De;
 
 public class Arme extends Equipement {
-    private final int m_amplitudeDegats;
+    private int m_amplitudeDegats;
     private final int m_portee;
     private final int m_nbLance;
     private int m_bonus;
@@ -29,7 +29,7 @@ public class Arme extends Equipement {
         //Renvoyer les dégâts de l'arme.
         int degats = 0;
         for(int i=0; i<m_nbLance; i++){
-            degats += De.lance(m_amplitudeDegats + m_bonus);
+            degats += De.lance(m_amplitudeDegats);
         }
         return degats;
     }
@@ -52,6 +52,7 @@ public class Arme extends Equipement {
     public void addBonus(int bonus){
         //Incrémente le bonus
         m_bonus += bonus;
+        m_amplitudeDegats += bonus;
     }
 
     public boolean estArmeDistance(){
