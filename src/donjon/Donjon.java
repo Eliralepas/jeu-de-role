@@ -7,11 +7,7 @@ import personnages.Monstre;
 import personnages.Personnage;
 import personnages.equipements.Equipement;
 import personnages.equipements.armes.*;
-import personnages.equipements.armures.ArmureEcailles;
-import personnages.equipements.armures.CotteDeMailles;
-import personnages.equipements.armures.DemiPlate;
-import personnages.equipements.armures.Harnois;
-import personnages.equipements.sorts.Sort;
+import personnages.equipements.armures.*;
 import utils.De;
 
 import java.util.ArrayList;
@@ -28,17 +24,11 @@ public class Donjon {
     private final ArrayList<Personnage> m_personnages;
     private int m_tour;
     private Etat m_termine;
-
-    public int getColonnes() {
-        return m_colonnes;
-    }
-
-    public int getLignes(){
-        return m_lignes;
-    }
-
-    enum Etat {
+    private enum Etat {
         ENCOURS, PERDU, GAGNE
+    }
+    private enum Action {
+        AJOUT, ATTAQUE, DEPLACEMENT
     }
 
     public Donjon(int numero, int colonnes, int lignes, ArrayList<Joueur> listeJoueurs){
@@ -56,6 +46,7 @@ public class Donjon {
     }
 
     public Donjon(int numero, ArrayList<Joueur> listeJoueurs){
+        //Constructeur du donjon par défaut
         m_numero = numero;
         m_colonnes = 23;
         m_lignes = 18;
@@ -70,6 +61,7 @@ public class Donjon {
     }
 
     private void genererDefaut(){
+        //Génère le donjon par défaut
         remplirPlateau();
         //Obstacles
         ajouterObstacle(new CasePlateau("J8"));
@@ -94,6 +86,7 @@ public class Donjon {
     }
 
     private void remplirEtJouer(){
+        //Remplit tout le donjon et lance le tour
         remplirPlateau();
         creerObstacles();
         creerMonstres();
@@ -103,6 +96,7 @@ public class Donjon {
     }
 
     private void remplirPlateau(){
+        //Remplit le plateau de cases vides
         for(int i = 0; i< m_lignes; i++){
             for (int j = 0; j< m_colonnes; j++){
                 m_plateau[i][j] = " . ";
@@ -111,23 +105,26 @@ public class Donjon {
     }
 
     private int demanderNombreCreation(int min, String objectACreer){
+        //Renvoyer un entier correspondant au nombre de création voulu
         int max = (m_lignes * m_colonnes)/4; //Arbitrairement, on définit le nombre max de création au quart des cases du plateau
         return demandeEntier(min, max, "Combien " + objectACreer + " souhaitez-vous créer ?");
     }
 
     private void creerObstacles(){
+        //Crée et ajoute autant d'obstacles que souhaité
         System.out.println(afficherPlateau());
         int nbObstacles = demanderNombreCreation(0, "d'obstacles");
         for (int i=0; i<nbObstacles; i++){
             CasePlateau caseChoisie = null;
             while (caseChoisie == null){
-                caseChoisie = choisirCase("l'obstacle", 0);
+                caseChoisie = choisirCase("l'obstacle", Action.AJOUT);
             }
             ajouterObstacle(caseChoisie);
         }
     }
 
     private void creerMonstres(){
+        //Crée et ajoute autant de monstres que souhaité
         System.out.println(afficherPlateau());
         int nbMonstres = demanderNombreCreation(1, "de monstres");
         for (int i=0; i<nbMonstres; i++){
@@ -143,13 +140,14 @@ public class Donjon {
             Monstre m = new Monstre(espece, symbol, i+1, pv, force, dexterite, vitesse, amplitudeDegats, portee, classeArmure);
             CasePlateau caseChoisie = null;
             while (caseChoisie == null){
-                caseChoisie = choisirCase("sur laquelle ajouter le monstre", 0);
+                caseChoisie = choisirCase("sur laquelle ajouter le monstre", Action.AJOUT);
             }
             ajouterPersonnage(m, caseChoisie);
         }
     }
 
     private void creerEquipements(){
+        //Crée et ajoute autant d'équipements que souhaité
         System.out.println(afficherPlateau());
         int nbEquipements = demanderNombreCreation(0, "d'equipements");
         for (int i=0; i<nbEquipements; i++){
@@ -186,7 +184,7 @@ public class Donjon {
             };
             CasePlateau caseChoisie = null;
             while (caseChoisie == null){
-                caseChoisie = choisirCase("sur laquelle ajouter l'équipement", 0);
+                caseChoisie = choisirCase("sur laquelle ajouter l'équipement", Action.AJOUT);
             }
             if (equipementChoisi != null){
                 ajouterEquipement(equipementChoisi, caseChoisie);
@@ -195,41 +193,34 @@ public class Donjon {
     }
 
     private void positionnerJoueurs(){
+        //Demande une case où placer chaque joueur
         for(Personnage perso: m_personnages){
             if(perso.estJoueur()){
                 CasePlateau caseChoisie = null;
                 while (caseChoisie == null){
-                    caseChoisie = choisirCase("sur laquelle ajouter le joueur: " + perso.sePresenter(), 0);
+                    caseChoisie = choisirCase("sur laquelle ajouter le joueur: " + perso.sePresenter(), Action.AJOUT);
                 }
                 ajouterPersonnage(perso, caseChoisie);
             }
         }
     }
 
-    private CasePlateau choisirCase(String element, int mode){
-        /*mode:
-            0 --> ajout
-            1 --> attaque
-            2 --> déplacement
-        */
+    private CasePlateau choisirCase(String element, Action action){
+        //Demande à l'utilisateur une case pour une action choisie
         boolean caseNonChoisie = true;
         CasePlateau caseChoisie = null;
         while(caseNonChoisie) {
             System.out.println("Entrez la case " + element + ": ");
             caseChoisie = new CasePlateau(System.console().readLine());
-            if (estCaseValide(caseChoisie, mode)){
+            if (estCaseValide(caseChoisie, action)){
                 caseNonChoisie = false;
             }
         }
         return caseChoisie;
     }
 
-    private boolean estCaseValide(CasePlateau caseChoisie, int mode){
-        /*mode:
-            0 --> ajout
-            1 --> attaque
-            2 --> déplacement
-        */
+    private boolean estCaseValide(CasePlateau caseChoisie, Action action){
+        //Vérifie si la case choisie est valide
         if (!caseChoisie.estValide()){
             System.out.println("Mauvais format de case.");
             return false;
@@ -240,11 +231,10 @@ public class Donjon {
             System.out.println("Cette case n'existe pas.");
             return false;
         }
-        boolean estValide = switch (mode) {
-            case 0 -> m_plateau[y][x].equals(" . ");
-            case 1 -> !(m_plateau[y][x].equals(" . ") || m_plateau[y][x].equals(" * "));
-            case 2 -> m_plateau[y][x].equals(" . ") || m_plateau[y][x].equals(" * ");
-            default -> false;
+        boolean estValide = switch (action) {
+            case AJOUT -> m_plateau[y][x].equals(" . ");
+            case ATTAQUE -> !(m_plateau[y][x].equals(" . ") || m_plateau[y][x].equals(" * "));
+            case DEPLACEMENT -> m_plateau[y][x].equals(" . ") || m_plateau[y][x].equals(" * ");
         };
         if(!estValide){
             System.out.println("La case n'est pas valide");
@@ -254,6 +244,7 @@ public class Donjon {
     }
 
     private void ajouterObstacle(CasePlateau caseChoisie){
+        //Ajouter un obstacle sur la case choisie
         int x = caseChoisie.getColonne();
         int y = caseChoisie.getLigne();
         m_plateau[y][x] = "[ ]";
@@ -262,6 +253,7 @@ public class Donjon {
     }
 
     private void ajouterEquipement(Equipement equip, CasePlateau caseChoisie){
+        //Ajouter un équipement sur la case choisie
         int x = caseChoisie.getColonne();
         int y = caseChoisie.getLigne();
         equip.setPion(x, y);
@@ -271,15 +263,10 @@ public class Donjon {
     }
 
     private void ajouterPersonnage(Personnage perso, CasePlateau caseChoisie){
+        //Ajouter un personnage sur la case choisie
         int x = caseChoisie.getColonne();
         int y = caseChoisie.getLigne();
-        String symbol = perso.getSymbol();
-        if (symbol.length() < 3){ //Ajouter un espace au début si la taille du symbol est < 3
-            symbol = " " + symbol;
-        }
-        if (symbol.length() < 3){ //Ajouter un espace à la fin si la taille du symbol est encore < 3
-            symbol += " ";
-        }
+        String symbol = formatSymbol(perso.getSymbol());
         if(perso.estJoueur()){
             demanderEquiper(((Joueur) perso)); //Le joueur peut équiper l'armure et l'arme de son choix.
         }
@@ -292,13 +279,13 @@ public class Donjon {
     }
 
     private Equipement getEquipement(Pion pionRecherche){
+        //Renvoyer l'équipement à la position du pion de recherche
         Equipement equip = null;
         int i = 0;
         int n = m_equipements.size();
         while (i<n && equip == null){
             Equipement e = m_equipements.get(i);
             Pion p = e.getPion();
-            //System.out.println(e + "(" + p.getX() + "," + p.getY() + ") == (" + pionRecherche.getX() + "," + pionRecherche.getY() + ")");
             if (pionRecherche.equals(p)) {
                 equip = e;
             }
@@ -308,6 +295,7 @@ public class Donjon {
     }
 
     public boolean jouerDonjon(){
+        //Gère chaque tour de chaque personnage tant que le donjon n'est pas terminé
         while(m_termine==Etat.ENCOURS){
             m_tour++;
             lancerInitiative();
@@ -326,6 +314,7 @@ public class Donjon {
                         default -> false;
                     };
                     if (resultat){
+                        //Test si le donjon est terminé
                         if (m_termine == Etat.PERDU){
                             return false;
                         }
@@ -335,6 +324,13 @@ public class Donjon {
                         persoActuel.diminuerInitiative();
                         //Le maître du jeu peut intervenir à la fin de l'action d'un joueur ou d'un monstre.
                         interventionMaitrejeu(persoActuel);
+                        //Test si le donjon est terminé
+                        if (m_termine == Etat.PERDU){
+                            return false;
+                        }
+                        else if (m_termine == Etat.GAGNE) {
+                            return true;
+                        }
                     }
                     System.out.println(afficherPlateau());
                 }
@@ -344,6 +340,7 @@ public class Donjon {
     }
 
     private void infligerDegats(){
+        //Choisir le personnage et les dégâts à lui infliger
         Personnage perso = demanderPersonnages(m_personnages, 1).getFirst();
         int degats = demandeEntier(1, 100, "Entrez le nombre de dégâts à infliger: \n");
         perso.subirAttaque(degats, "le maître du jeu");
@@ -351,11 +348,12 @@ public class Donjon {
     }
 
     private void interventionMaitrejeu(Personnage persoActuel){
+        //Demander au maître du jeu quel action il souhaite effectuer
         System.out.println(afficherPlateau());
         switch (getActionMaitreJeu()){
             case 2 -> {
                 Personnage perso = demanderPersonnages(m_personnages, 1).getFirst();
-                deplacerPerso(perso, choisirCase("de déplacement", 2));
+                deplacerPerso(perso, choisirCase("de déplacement", Action.DEPLACEMENT));
             }
             case 3 -> infligerDegats();
             case 4 -> creerObstacles();
@@ -368,6 +366,7 @@ public class Donjon {
     }
 
     private int getActionMaitreJeu(){
+        //Renvoyer l'entier correspondant à l'action du maître du jeu
         String msgAction =
                 "\nMaître du jeu, que souhaitez-vous faire ?\n" +
                         """
@@ -382,6 +381,7 @@ public class Donjon {
     }
 
     private boolean tryAttaque(Personnage perso){
+        //Vérifie qu'une attaque est possible puis tente l'attaque
         if (!perso.peutAttaquer()){
             System.out.println("Vous n'avez pas d'armes équipées.");
             return false;
@@ -405,13 +405,14 @@ public class Donjon {
     }
 
     private boolean tryDeplacement(Personnage perso){
+        //Vérifie qu'un déplacement est possible puis effectue ce déplacement
         System.out.println(afficherPlateau());
         int distanceMax = perso.getVitesse()/3;
         System.out.println("Vous pouvez vous déplacer de " + distanceMax + " cases.");
         //Choisir une case
         CasePlateau caseChoisie = null;
         while (caseChoisie == null){
-            caseChoisie = choisirCase("de destination", 2);
+            caseChoisie = choisirCase("de destination", Action.DEPLACEMENT);
         }
         int x = caseChoisie.getColonne();
         int y = caseChoisie.getLigne();
@@ -426,6 +427,7 @@ public class Donjon {
     }
 
     private void deplacerPerso(Personnage perso, CasePlateau caseChoisie){
+        //Déplacer le personnage choisi sur la case choisie
         //Récupérer les nouvelles coordonnées
         int x = caseChoisie.getColonne();
         int y = caseChoisie.getLigne();
@@ -454,6 +456,7 @@ public class Donjon {
     }
 
     private boolean tryEquiper(Joueur joueur){
+        //Vérifie que le joueur choisi peut équiper un équipement et lui demande quoi équiper
         System.out.println(joueur);
         if (joueur.getTailleInventaire() < 0){
             System.out.println("Vous n'avez aucun équipement à équiper.");
@@ -464,37 +467,35 @@ public class Donjon {
     }
 
     private void demanderEquiper(Joueur joueur){
+        //Demander au joueur choisi s'il souhaite s'équiper, si oui gère l'action de s'équiper
         System.out.println(joueur);
-        int i = 0;
-        int n = 2;
-        boolean continuer = true;
-        while (i < n && continuer){
+        int i=1;
+        while (i == 1){
             String msgDemande = """
                     Souhaitez-vous vous équiper ?
                     0 --> Non
                     1 --> Oui
                     
                     """;
-            if (demandeEntier(0, 1, msgDemande) == 1){
+            i = demandeEntier(0, 1, msgDemande);
+            if (i == 1){
                 joueur.equiper();
             }
-            else {
-                continuer = false;
-            }
-            i++;
         }
     }
 
     public boolean tryLancerSort(Joueur joueur){
+        //Vérifie que le joueur choisi peut lancer un sort, si oui lance le sort choisi
         if (!joueur.peutLancerSorts()){
             return false;
         }
         boolean resultat = joueur.lancerSort(m_personnages);
-        updatePosPersos();
+        updatePosPersos(); //Mise à jour des positions des personnages sur le plateau
         return resultat;
     }
 
     private void updatePosPersos(){
+        //Mise à jour des positions des personnages sur le plateau
         for(Personnage perso : m_personnages){
             Pion p = perso.getPion();
             int x = p.getX();
@@ -504,6 +505,7 @@ public class Donjon {
     }
 
     private void testMortPerso(Personnage perso){
+        //Vérifie si le personnage choisi est mort, si oui termine le donjon (échec)
         if(perso.estMort()){
             Pion p = perso.getPion();
             m_plateau[p.getY()][p.getX()] = " . ";
@@ -516,12 +518,14 @@ public class Donjon {
     }
 
     private void lancerInitiative(){
+        //Met à jour l'initiative de chaque personnage au début du nouveau tour
         for (Personnage perso: m_personnages){
             perso.setInitiative(De.lance(20));
         }
     }
 
     private void triParInitiative(){
+        //Trie la liste des personnages par initiative
         ArrayList<Personnage> listeTriee = new ArrayList<>();
         listeTriee.add(m_personnages.getFirst());
         int n = m_personnages.size();
@@ -547,6 +551,7 @@ public class Donjon {
     }
 
     private String afficherPlateau(){
+        //Affiche le plateau
         StringBuilder affichage = new StringBuilder("      ");
         //Le haut de l'affichage avec les lettres de l'alphabet
         for (int i = 0; i< m_colonnes; i++) {
@@ -577,6 +582,7 @@ public class Donjon {
     }
 
     private String affichageTour(Personnage perso){
+        //Affiche les infos utiles au début de chaque tour
         //Affichage du numéro du Donjon et le joueur
         StringBuilder affiche = new StringBuilder(
                 """
@@ -603,11 +609,13 @@ public class Donjon {
     }
 
     private void afficheMsgFin(String resultat){
+        //Affiche le message de fin du donjon
         System.out.println("Fin du donjon.");
         System.out.println("Vous avez " + resultat + " !");
     }
 
     private String testFinDonjon(){
+        //Teste si tous les monstres sont morts
         int nbMonstres = 0;
         for (Personnage perso: m_personnages){
             if (!perso.estJoueur()){
@@ -621,6 +629,7 @@ public class Donjon {
     }
 
     private void terminerDonjon(Etat e){
+        //Termine le donjon en affichant le message de fin
         m_termine = e;
         String resultat = "gagné";
         if (m_termine == Etat.PERDU){
@@ -640,5 +649,16 @@ public class Donjon {
             }
         }
         return joueurs;
+    }
+
+    private String formatSymbol(String symbol){
+        //Formate le symbol du joueur à afficher sur le plateau
+        if (symbol.length() < 3){ //Ajouter un espace au début si la taille du symbol est < 3
+            symbol = " " + symbol;
+        }
+        if (symbol.length() < 3){ //Ajouter un espace à la fin si la taille du symbol est encore < 3
+            symbol += " ";
+        }
+        return symbol;
     }
 }

@@ -23,6 +23,7 @@ public class Jeu {
     }
 
     public void jouer(){
+        //Lance le jeu
         int i=0;
         int n = m_donjons.size();
         boolean finJeu = false;
@@ -37,6 +38,7 @@ public class Jeu {
     }
 
     public void creerJoueur(){
+        //Demande à créer des joueurs
         System.out.println("▬▬▬▬▬▬▬▬ Création de joueurs ▬▬▬▬▬▬▬▬");
         int nbJoueurs = demandeEntier(1, 20, "Combien de joueurs souhaitez-vous créer ?"); //Max 20 joueurs par défaut
         for (int i=0; i<nbJoueurs; i++){
@@ -78,6 +80,7 @@ public class Jeu {
     }
 
     public void creerDonjon(){
+        //Demande à créer des donjons
         System.out.println("▬▬▬▬▬▬▬▬ Création du donjon ▬▬▬▬▬▬▬▬");
         int nbDonjons = demandeEntier(1, 5, "Combien de donjons souhaitez-vous créer ?"); //Max 5 donjons par défaut
         for (int i=1; i<nbDonjons+1; i++) {

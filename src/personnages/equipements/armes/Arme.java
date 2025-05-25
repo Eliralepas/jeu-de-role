@@ -62,6 +62,7 @@ public class Arme extends Equipement {
 
     @Override
     public boolean estArmure() {
+        //Méthode surchargée par la classe Armure
         return false;
     }
 

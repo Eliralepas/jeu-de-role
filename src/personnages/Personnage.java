@@ -78,6 +78,7 @@ public abstract class Personnage {
     }
 
     public void guerir(int pv){
+        //Redonner des points de vie au personnage
         System.out.println(m_nom + " regagne " + pv + " points de vie.");
         m_pv += pv;
         if (m_pv > m_pvMax){
@@ -153,6 +154,7 @@ public abstract class Personnage {
     }
 
     public boolean estJoueur(){
+        //Méthode surchargée par la classe Joueur
         return false;
     }
 

@@ -46,11 +46,13 @@ public class Joueur extends Personnage{
     }
 
     public void recuperer(Equipement equip){
+        //Ajouter l'équipement à l'inventaire
         m_inventaire.add(equip);
     }
 
     public void equiper(){
-        Equipement equip = choisirEquipement(); //Choisir l'équipement à équiper
+        //Choisir l'équipement à équiper
+        Equipement equip = choisirEquipement();
         m_inventaire.remove(equip); //Supprimer l'équipement choisi de l'inventaire
         //Si l'équipement choisi est une armure
         if(equip.estArmure()){
@@ -86,6 +88,7 @@ public class Joueur extends Personnage{
     }
 
     private Equipement choisirEquipement(){
+        //Choisir un équipement dans l'inventaire
         StringBuilder msgEquipement = new StringBuilder("Entrez le numéro correspondant à l'equipement à equiper:\n");
         int compteur = 1;
         int n = m_inventaire.size();
@@ -98,6 +101,7 @@ public class Joueur extends Personnage{
     }
 
     public Arme choisirArme(){
+        //Choisir une arme
         StringBuilder msgArme = new StringBuilder("Entrez le numéro correspondant à l'arme à choisir:\n");
         ArrayList<Arme> armes = getArmes();
         int compteur = 1;
@@ -111,11 +115,13 @@ public class Joueur extends Personnage{
     }
 
     public boolean lancerSort(ArrayList<Personnage> personnages){
+        //Chosir le sort puis le lancer
         Sort s = choisirSort();
         return s.lancer(personnages);
     }
 
     private Sort choisirSort(){
+        //Choisir le sort
         StringBuilder msgSort = new StringBuilder("Entrez le numéro correspondant au sort à lancer:\n");
         int compteur = 1;
         int n = m_inventaire.size();
@@ -133,6 +139,7 @@ public class Joueur extends Personnage{
     }
 
     private ArrayList<Arme> getArmes(){
+        //Renvoyer la liste des armes
         ArrayList<Arme> armes = new ArrayList<>();
         armes.add(m_arme);
         for(Equipement equip : m_inventaire){
@@ -144,6 +151,7 @@ public class Joueur extends Personnage{
     }
 
     public String contenuInventaire(){
+        //Afficher le contenu de l'inventaire
         String chaine = "";
         for (Equipement equipement : m_inventaire) {
             chaine += "\t › " + equipement.toString() + "\n";
@@ -152,6 +160,7 @@ public class Joueur extends Personnage{
     }
 
     public int getTailleInventaire(){
+        //Renvoyer la taille de l'inventaire
         return m_inventaire.size();
     }
 
@@ -167,6 +176,7 @@ public class Joueur extends Personnage{
 
     @Override
     public int getAction() {
+        //Renvoyer l'entier correspondant à l'action à effectuer
         String msgAction =
                 m_nom + " il vous reste " + m_initiative + " actions, que souhaitez-vous faire ?\n" +
                 """
@@ -181,6 +191,7 @@ public class Joueur extends Personnage{
 
     @Override
     public boolean peutLancerSorts() {
+        //Renvoie true si le joueur peut lancer un sort, false sinon
         return !m_sorts.isEmpty();
     }
 

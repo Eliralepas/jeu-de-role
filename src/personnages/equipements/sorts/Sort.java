@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public abstract class Sort {
     protected String m_nom;
-    protected ArrayList<Personnage> m_personnages;
 
     public Sort(String nom){
         m_nom = nom;
