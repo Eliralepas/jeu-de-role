@@ -1,8 +1,10 @@
 package personnages.equipements.armes;
 
+import affichage.Affichage;
+
 public class Masse extends Arme{
 
     public Masse() {
-        super("Masse d'armes", 6, 1, false);
+        super(Affichage.nomMasse(), 6, 1, false);
     }
 }

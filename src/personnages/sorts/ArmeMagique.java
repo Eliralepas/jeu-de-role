@@ -1,8 +1,11 @@
-package personnages.equipements.sorts;
+package personnages.sorts;
 
 import personnages.Joueur;
 import personnages.Personnage;
+import personnages.equipements.Equipement;
 import personnages.equipements.armes.Arme;
+import affichage.Affichage;
+import utils.TypeEquipement;
 
 import java.util.ArrayList;
 
@@ -11,27 +14,28 @@ import static utils.Demande.getJoueurs;
 
 public class ArmeMagique extends Sort{
 
-    public ArmeMagique(){ super("Arme magique"); }
+    public ArmeMagique(){ super(Affichage.nomArmeMagique()); }
 
     @Override
     public boolean lancer(ArrayList<Personnage> personnages) {
         //Choisir le joueur
         ArrayList<Joueur> joueurChoisi = demanderJoueurs(getJoueurs(personnages), 1);
         if (joueurChoisi.isEmpty()) {
-            System.out.println("Aucun personnage n'a été sélectionné.");
+            Affichage.aucuneSelection(Affichage.selectionJoueur());
             return false;
         }
         Joueur joueur = joueurChoisi.getFirst();
         if (joueur == null) {
-            System.out.println("Le joueur n'existe pas.");
+            Affichage.joueurInexistant();
             return false;
         }
         //Choisir l'arme
-        Arme arme = joueur.choisirArme();
-        if (arme == null) {
-            System.out.println("L'arme n'existe pas.");
+        Equipement equip = joueur.choisirEquipementType(TypeEquipement.ARME);
+        if (equip == null) {
+            Affichage.armeInexistante();
             return false;
         }
+        Arme arme = (Arme) equip;
         arme.addBonus(1);
         return true;
     }

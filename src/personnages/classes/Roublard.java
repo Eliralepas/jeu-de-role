@@ -1,11 +1,9 @@
 package personnages.classes;
 
 import personnages.equipements.Equipement;
-import personnages.equipements.armes.Arbalete;
 import personnages.equipements.armes.Arc;
-import personnages.equipements.armes.Masse;
 import personnages.equipements.armes.Rapiere;
-import personnages.equipements.armures.ArmureEcailles;
+import affichage.Affichage;
 
 import java.util.ArrayList;
 
@@ -18,6 +16,6 @@ public class Roublard extends Classe{
     }
 
     public Roublard() {
-        super("Roublard", 16, m_equipements);
+        super(Affichage.nomRoublard(), 16, m_equipements);
     }
 }

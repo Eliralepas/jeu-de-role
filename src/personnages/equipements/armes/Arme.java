@@ -1,7 +1,13 @@
 package personnages.equipements.armes;
 
 import personnages.equipements.Equipement;
+import personnages.equipements.effets.Effet;
+import personnages.equipements.effets.EffetsStandards;
+import affichage.Affichage;
 import utils.De;
+import utils.TypeEquipement;
+
+import java.util.ArrayList;
 
 public class Arme extends Equipement {
     private int m_amplitudeDegats;
@@ -9,20 +15,17 @@ public class Arme extends Equipement {
     private final int m_nbLance;
     private int m_bonus;
 
-    public Arme(String nom, int amplitudeDegats, int portee, boolean estLourde){
-        super(nom, estLourde);
-        m_amplitudeDegats = amplitudeDegats;
-        m_portee = portee;
-        m_nbLance = 1;
-        m_bonus = 0;
-    }
-
     public Arme(String nom, int amplitudeDegats, int portee, boolean estLourde, int nbLance){
-        super(nom, estLourde);
+        ArrayList<Effet> effets = estLourde ? EffetsStandards.ARME_LOURDE : EffetsStandards.SANS_EFFET;
+        super(nom, estLourde, TypeEquipement.ARME, effets);
         m_amplitudeDegats = amplitudeDegats;
         m_portee = portee;
         m_nbLance = nbLance;
         m_bonus = 0;
+    }
+
+    public Arme(String nom, int amplitudeDegats, int portee, boolean estLourde){
+        this(nom, amplitudeDegats, portee, estLourde, 1);
     }
 
     public int attaque() {
@@ -61,17 +64,7 @@ public class Arme extends Equipement {
     }
 
     @Override
-    public boolean estArmure() {
-        //Méthode surchargée par la classe Armure
-        return false;
-    }
-
-    @Override
     public String toString() {
-        String etat = "non";
-        if (m_estLourd){
-            etat = "oui";
-        }
-        return super.toString() + " (dégâts: 1d" + m_amplitudeDegats + ", portee: " + m_portee + ", lourde: " + etat + ")";
+        return super.toString() + Affichage.toStringArme(m_nbLance, m_amplitudeDegats, m_portee, m_estLourd);
     }
 }

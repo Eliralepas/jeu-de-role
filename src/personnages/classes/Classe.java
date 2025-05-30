@@ -1,7 +1,7 @@
 package personnages.classes;
 
 import personnages.equipements.Equipement;
-import personnages.equipements.sorts.Sort;
+import personnages.sorts.Sort;
 
 import java.util.ArrayList;
 

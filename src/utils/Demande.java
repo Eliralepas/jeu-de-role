@@ -1,5 +1,6 @@
 package utils;
 
+import affichage.Affichage;
 import personnages.Joueur;
 import personnages.Personnage;
 
@@ -9,7 +10,7 @@ public abstract class Demande {
 
     public static int demandeEntier(int min, int max, String msgDemande) throws NumberFormatException{
         int entier = min - 1;
-        String msgErreur = "/!\\ Vous devez entrer un nombre entier entre " + min + " et " + max + ". /!\\";
+        String msgErreur = Affichage.intervalleEntier(min, max);
         while (!(min <= entier && entier <= max)) {
             System.out.println(msgDemande);
             String reponse = System.console().readLine();
@@ -40,7 +41,7 @@ public abstract class Demande {
     public static ArrayList<Personnage> demanderPersonnages(ArrayList<Personnage> personnages, int nbPerso){
         ArrayList<Personnage> persoChoisis = new ArrayList<>();
         int n = personnages.size();
-        StringBuilder msgDemande = new StringBuilder("Entrez le numéro correspondant au personnage à choisir:\n");
+        StringBuilder msgDemande = new StringBuilder(Affichage.demandeElement(Affichage.selectionPersonnage()));
         int compteur = 1;
         for(Personnage p : personnages){
             msgDemande.append(compteur).repeat(" ", n/10).append("\t --> \t").append(p.sePresenter()).append("\n");
@@ -64,7 +65,7 @@ public abstract class Demande {
         ArrayList<Personnage> persoChoisis = new ArrayList<>();
         int n = personnages.size();
         for(int i=0; i<nbPerso; i++){
-            StringBuilder msgDemande = new StringBuilder("Entrez le numéro correspondant au personnage n°" + (i+1) + " à choisir:\n");
+            StringBuilder msgDemande = new StringBuilder(Affichage.demandePersonnageNumero(i+1));
             int compteur = 1;
             for(Personnage p : listePersos){
                 msgDemande.append(compteur).repeat(" ", n/10).append("\t --> \t").append(p.sePresenter()).append("\n");
@@ -81,7 +82,7 @@ public abstract class Demande {
     public static ArrayList<Joueur> demanderJoueurs(ArrayList<Joueur> joueurs, int nbPerso){
         ArrayList<Joueur> joueursChoisis = new ArrayList<>();
         int n = joueurs.size();
-        StringBuilder msgDemande = new StringBuilder("Entrez le numéro correspondant au joueur à choisir:\n");
+        StringBuilder msgDemande = new StringBuilder(Affichage.demandeElement(Affichage.selectionJoueur()));
         int compteur = 1;
         for(Joueur j : joueurs){
             msgDemande.append(compteur).repeat(" ", n/10).append("\t --> \t").append(j.sePresenter()).append("\n");
@@ -96,9 +97,9 @@ public abstract class Demande {
 
     public static ArrayList<Joueur> getJoueurs(ArrayList<Personnage> personnages){
         ArrayList<Joueur> joueurs = new ArrayList<>();
-        for(Personnage p : personnages){
-            if(p.estJoueur()){
-                joueurs.add((Joueur)p);
+        for(Personnage perso : personnages){
+            if(perso.getType() == TypePersonnage.JOUEUR){
+                joueurs.add((Joueur)perso);
             }
         }
         return joueurs;

@@ -1,11 +1,11 @@
-package personnages.equipements.sorts;
+package personnages.sorts;
 
 import personnages.Personnage;
 import java.util.ArrayList;
 
 
 public abstract class Sort {
-    protected String m_nom;
+    private final String m_nom;
 
     public Sort(String nom){
         m_nom = nom;

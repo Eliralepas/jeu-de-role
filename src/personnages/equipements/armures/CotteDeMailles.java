@@ -1,8 +1,10 @@
 package personnages.equipements.armures;
 
+import affichage.Affichage;
+
 public class CotteDeMailles extends Armure{
 
     public CotteDeMailles() {
-        super("Cotte de mailles", 11, true);
+        super(Affichage.nomCotteDeMailles(), 11, true);
     }
 }
