@@ -1,8 +1,10 @@
 package personnages.equipements.armures;
 
+import affichage.Affichage;
+
 public class Harnois extends Armure{
 
     public Harnois() {
-        super("Harnois", 12, true);
+        super(Affichage.nomHarnois(), 12, true);
     }
 }

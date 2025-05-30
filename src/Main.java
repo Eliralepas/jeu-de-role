@@ -1,8 +1,5 @@
-import jeu.Jeu;
+import jeu.Initialiseur;
 
-public class Main {
-    public static void main(String[] args)
-    {
-        new Jeu();
-    }
+public static void main() {
+    Initialiseur.lancerJeu();
 }

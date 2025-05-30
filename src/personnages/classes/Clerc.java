@@ -4,8 +4,9 @@ import personnages.equipements.Equipement;
 import personnages.equipements.armes.Arbalete;
 import personnages.equipements.armes.Masse;
 import personnages.equipements.armures.ArmureEcailles;
-import personnages.equipements.sorts.Guerison;
-import personnages.equipements.sorts.Sort;
+import personnages.sorts.Guerison;
+import personnages.sorts.Sort;
+import affichage.Affichage;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,6 @@ public class Clerc extends Classe{
     }
 
     public Clerc() {
-        super("Clerc", 16, m_equipements, m_sorts);
+        super(Affichage.nomClerc(), 16, m_equipements, m_sorts);
     }
 }

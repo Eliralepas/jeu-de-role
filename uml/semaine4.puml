@@ -1,0 +1,459 @@
+@startuml
+
+skinparam AttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml
+hide empty members
+
+
+class Arbalete {
+  + Arbalete():
+}
+class Arc {
+  + Arc():
+}
+class Arme {
+  + Arme(String, int, int, boolean, int):
+  + Arme(String, int, int, boolean):
+  + estArmeDistance(): boolean
+  + toString(): String
+  + attaque(): int
+  + addBonus(int): void
+   amplitudeDegats: int
+   portee: int
+   bonus: int
+}
+class ArmeMagique {
+  + ArmeMagique():
+  + lancer(ArrayList<Personnage>): boolean
+}
+class Armure {
+  + Armure(String, int, boolean):
+  + toString(): String
+   classeArmure: int
+}
+class ArmureEcailles {
+  + ArmureEcailles():
+}
+class Baton {
+  + Baton():
+}
+class BoogieWoogie {
+  + BoogieWoogie():
+  + lancer(ArrayList<Personnage>): boolean
+}
+class CasePlateau {
+  + CasePlateau(String):
+  + estValide(String[][], TypeCase): boolean
+  - estNombre(String): boolean
+  - estBonFormat(): boolean
+  - convertirString(): void
+  - estChiffre(char): boolean
+  - estLettre(char): boolean
+   ligne: int
+   colonne: int
+}
+class Classe {
+  + Classe(String, int, ArrayList<Equipement>, ArrayList<Sort>):
+  + Classe(String, int, ArrayList<Equipement>):
+  + toString(): String
+   equipements: ArrayList<Equipement>
+   sorts: ArrayList<Sort>
+   pv: int
+}
+class Clerc {
+  + Clerc():
+}
+class CotteDeMailles {
+  + CotteDeMailles():
+}
+class De {
+  + De():
+  + lance(int): int
+}
+class Demande {
+  + Demande():
+  + getJoueurs(ArrayList<Personnage>): ArrayList<Joueur>
+  + demanderJoueurs(ArrayList<Joueur>, int): ArrayList<Joueur>
+  + demandeEntier(int, int, String): int
+  + demandeString(String, int): String
+  + demanderPersonnagesWithoutSelf(ArrayList<Personnage>, int, Personnage): ArrayList<Personnage>
+  + demanderPersonnages(ArrayList<Personnage>, int): ArrayList<Personnage>
+  + demanderPersonnagesFilter(ArrayList<Personnage>, int): ArrayList<Personnage>
+}
+class DemiPlate {
+  + DemiPlate():
+}
+class Donjon {
+  + Donjon(int, int, int, ArrayList<Joueur>, boolean):
+  + Donjon(int, int, int, ArrayList<Joueur>):
+  + Donjon(int, ArrayList<Joueur>):
+  + recupererJoueurs(): ArrayList<Joueur>
+  + jouerDonjon(): boolean
+  + tryLancerSort(Personnage): boolean
+  + creerDonjon(int, ArrayList<Joueur>): Donjon
+  + getNbPerso(TypePersonnage): int
+  - affichageTour(Personnage): String
+  - tryRamasserEquipement(Personnage): void
+  - getEquipement(Pion): Equipement
+  - tourPerso(Personnage): Etat
+  - tourDonjon(): Etat
+  - deplacerPerso(Personnage, CasePlateau): void
+  - remplirPlateau(): void
+  - ajouterObstacles(ArrayList<CasePlateau>): void
+  - updateCase(Pion): void
+  - infligerDegats(): void
+  - positionnerJoueurs(): void
+  - ajouterPersonnage(Personnage, CasePlateau): void
+  - remplir(): void
+  - triParInitiative(ArrayList<Personnage>): void
+  - afficheMsgFin(Etat): void
+  - creerMonstres(): void
+  - lancerInitiative(ArrayList<Personnage>): void
+  - formatSymbol(String): String
+  - getPersoVivants(ArrayList<Personnage>): ArrayList<Personnage>
+  - tryDeplacement(Personnage): boolean
+  - choisirCase(String, TypeCase): CasePlateau
+  - tryAttaque(Personnage): boolean
+  - updatePosPersos(): void
+  - creerEquipements(): void
+  - creerObstacles(): void
+  - tryEquiper(Personnage): boolean
+  - testFinDonjon(): Etat
+  - ajouterEquipement(Equipement, CasePlateau): void
+  - ajouterObstacle(CasePlateau): void
+  - genererDefaut(): void
+  - ajouterPersonnages(ArrayList<Personnage>): void
+  - testMortPerso(Personnage): void
+  - afficherPlateau(): String
+  - ajouterEquipements(ArrayList<Equipement>): void
+  - interventionMaitrejeu(Personnage): void
+   nbMaxCreation: int
+   actionMaitreJeu: int
+}
+interface Effet << interface >> {
+  + appliquer(Personnage): void
+  + retirer(Personnage): void
+}
+class EffetForce {
+  + EffetForce(int):
+  + retirer(Personnage): void
+  + appliquer(Personnage): void
+}
+class EffetVitesse {
+  + EffetVitesse(int):
+  + appliquer(Personnage): void
+  + retirer(Personnage): void
+}
+class EffetsStandards {
+  + EffetsStandards():
+}
+class Elf {
+  + Elf():
+}
+class Epee2Mains {
+  + Epee2Mains():
+}
+class EpeeLongue {
+  + EpeeLongue():
+}
+class Equipement {
+  + Equipement(String, boolean, TypeEquipement, ArrayList<Effet>):
+  + toString(): String
+  + retirerEffets(Personnage): void
+  + appliquerEffets(Personnage): void
+  + pasDefinie(): boolean
+  + setPion(int, int): void
+   type: TypeEquipement
+   pion: Pion
+}
+enum Etat << enumerate >> {
+  + Etat():
+  + valueOf(String): Etat
+  + values(): Etat[]
+}
+class Fronde {
+  + Fronde():
+}
+class GestionDonjon {
+  + GestionDonjon():
+  + demanderCreationObstacles(String[][], int): ArrayList<CasePlateau>
+  + demanderCreationEquipements(int): ArrayList<Equipement>
+  + demanderCreationMonstres(int): ArrayList<Personnage>
+  + demanderCase(String[][], String, TypeCase): CasePlateau
+  + demanderEquiper(Joueur): void
+  - demanderNombreCreation(int, int, String): int
+}
+class Guerison {
+  + Guerison():
+  + lancer(ArrayList<Personnage>): boolean
+}
+class Guerrier {
+  + Guerrier():
+}
+class Halfelin {
+  + Halfelin():
+}
+class Harnois {
+  + Harnois():
+}
+class Humain {
+  + Humain():
+}
+class Jeu {
+  + Jeu():
+  + jouer(): void
+  + creerJoueur(): void
+}
+class Joueur {
+  + Joueur(String, Race, Classe):
+  + sePresenter(): String
+  + toString(): String
+   action: int
+   infos: String
+   classe: String
+}
+class Magicien {
+  + Magicien():
+}
+class Main {
+  + Main():
+  + main(): void
+}
+class Masse {
+  + Masse():
+}
+class Monstre {
+  + Monstre(String, String, int, int, int, int, int, int, int, int):
+  + toString(): String
+}
+class Nain {
+  + Nain():
+}
+class Personnage {
+  # Personnage(String, String, TypePersonnage, int, int, int, int, int, Arme, Armure, ArrayList<Equipement>, ArrayList<Sort>):
+  + peutAttaquer(): boolean
+  + toString(): String
+  + contenuInventaire(): String
+  + estMort(): boolean
+  + choisirEquipementType(TypeEquipement): Equipement
+  + lancerSort(ArrayList<Personnage>): boolean
+  + attaquer(Personnage): void
+  + guerir(int): void
+  + seDeplacer(int, int): void
+  + recuperer(Equipement): void
+  + subirAttaque(int, String): void
+  + sePresenter(): String
+  + equiper(): void
+  + seDeplacer(Pion): void
+  + equals(Personnage): boolean
+  + peutLancerSorts(): boolean
+  + diminuerInitiative(): void
+  - infligerDegats(Personnage, int): void
+  - getEquipement(TypeEquipement): ArrayList<Equipement>
+  - choisirEquipement(ArrayList<Equipement>, StringBuilder): Equipement
+  - choisirEquipementEquiper(): Equipement
+  - choisirSort(): Sort
+   armure: Armure
+   pion: Pion
+   dexterite: int
+   attribut: int
+   vitesse: int
+   force: int
+   initiative: int
+   amplitudeDegatsArme: int
+   nom: String
+   infos: String
+   arme: Arme
+   nomAttribut: String
+   pv: int
+   tailleInventaire: int
+   portee: int
+   type: TypePersonnage
+   symbol: String
+   classeArmure: int
+   pvMax: int
+   action: int
+   degats: int
+}
+class Pion {
+  + Pion(int, int, String):
+  + Pion(Pion):
+  + toString(): String
+  + getDistance(int, int): int
+  + getDistance(Pion): int
+  + equals(Pion): boolean
+  + setPosition(int, int): void
+   position: Pion
+   y: int
+   x: int
+}
+class Race {
+  + Race(String, int, int, int, int):
+  + toString(): String
+   dexterite: int
+   vitesse: int
+   force: int
+   pv: int
+}
+class Rapiere {
+  + Rapiere():
+}
+class Roublard {
+  + Roublard():
+}
+class SlotArme {
+  + SlotArme(Personnage):
+  + set(Equipement): void
+  + get(): Equipement
+}
+class SlotArmure {
+  - m_perso: Personnage
+  + SlotArmure(Personnage):
+  + get(): Equipement
+  + set(equip: Equipement): void
+}
+interface SlotEquipable << interface >> {
+  set(equip: Equipement): void
+  get(): Equipement
+}
+abstract class Sort <<abstract>>{
+  - m_nom: String
+  + <<create>> Sort(String):
+  + <<abstract>> lancer(personnages: ArrayList<Personnage>): boolean
+  + toString(): String
+}
+abstract class Symbols <<abstract>>{
+  + {static} CASE_VIDE: String
+  + {static} CASE_EQUIPEMENT: String
+  + {static} CASE_OBSTACLE: String
+}
+enum TypeCase << enumerate >> {
+  AJOUT
+  DEPLACEMENT
+}
+enum TypeEquipement << enumerate >> {
+  ARME
+  ARMURE
+}
+enum TypePersonnage << enumerate >> {
+  JOUEUR
+  MONSTRE
+}
+
+Arbalete         -[#000082,plain]-^  Arme
+Arc              -[#000082,plain]-^  Arme
+Arme             -[#000082,plain]-^  Equipement
+ArmeMagique      -[#000082,plain]-^  Sort
+Armure           -[#000082,plain]-^  Equipement
+ArmureEcailles   -[#000082,plain]-^  Armure
+Baton            -[#000082,plain]-^  Arme
+BoogieWoogie     -[#595959,dashed]->  Pion            : "«create»"
+BoogieWoogie     -[#000082,plain]-^  Sort
+Classe          "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
+Classe          "1" *-[#595959,plain]-> "m_sorts\n*" Sort
+Clerc            -[#595959,dashed]->  Arbalete        : "«create»"
+Clerc            -[#595959,dashed]->  ArmureEcailles  : "«create»"
+Clerc            -[#000082,plain]-^  Classe
+Clerc           "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
+Clerc            -[#595959,dashed]->  Guerison        : "«create»"
+Clerc            -[#595959,dashed]->  Masse           : "«create»"
+Clerc           "1" *-[#595959,plain]-> "m_sorts\n*" Sort
+CotteDeMailles   -[#000082,plain]-^  Armure
+DemiPlate        -[#000082,plain]-^  Armure
+Donjon           -[#595959,dashed]->  Arbalete        : "«create»"
+Donjon           -[#595959,dashed]->  CasePlateau     : "«create»"
+Donjon           -[#595959,dashed]->  CotteDeMailles  : "«create»"
+Donjon           -[#595959,dashed]->  DemiPlate       : "«create»"
+Donjon           -[#595959,dashed]->  Donjon          : "«create»"
+Donjon           -[#595959,dashed]->  EpeeLongue      : "«create»"
+Donjon          "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
+Donjon           -[#595959,dashed]->  Masse           : "«create»"
+Donjon           -[#595959,dashed]->  Monstre         : "«create»"
+Donjon          "1" *-[#595959,plain]-> "m_personnages\n*" Personnage
+Donjon           -[#595959,dashed]->  Pion            : "«create»"
+EffetForce       -[#008200,dashed]-^  Effet
+EffetVitesse     -[#008200,dashed]-^  Effet
+EffetsStandards "1" *-[#595959,plain]-> "ARMURE_LOURDE\n*" Effet
+EffetsStandards  -[#595959,dashed]->  EffetForce      : "«create»"
+EffetsStandards  -[#595959,dashed]->  EffetVitesse    : "«create»"
+Elf              -[#000082,plain]-^  Race
+Epee2Mains       -[#000082,plain]-^  Arme
+EpeeLongue       -[#000082,plain]-^  Arme
+Equipement      "1" *-[#595959,plain]-> "m_effets\n*" Effet
+Equipement       -[#595959,dashed]->  Pion            : "«create»"
+Equipement      "1" *-[#595959,plain]-> "m_pion\n1" Pion
+Equipement      "1" *-[#595959,plain]-> "m_type\n1" TypeEquipement
+Etat             +-[#820000,plain]-  Donjon
+Fronde           -[#000082,plain]-^  Arme
+GestionDonjon    -[#595959,dashed]->  Arbalete        : "«create»"
+GestionDonjon    -[#595959,dashed]->  Arc             : "«create»"
+GestionDonjon    -[#595959,dashed]->  ArmureEcailles  : "«create»"
+GestionDonjon    -[#595959,dashed]->  Baton           : "«create»"
+GestionDonjon    -[#595959,dashed]->  CasePlateau     : "«create»"
+GestionDonjon    -[#595959,dashed]->  CotteDeMailles  : "«create»"
+GestionDonjon    -[#595959,dashed]->  DemiPlate       : "«create»"
+GestionDonjon    -[#595959,dashed]->  Epee2Mains      : "«create»"
+GestionDonjon    -[#595959,dashed]->  EpeeLongue      : "«create»"
+GestionDonjon    -[#595959,dashed]->  Fronde          : "«create»"
+GestionDonjon    -[#595959,dashed]->  Harnois         : "«create»"
+GestionDonjon    -[#595959,dashed]->  Masse           : "«create»"
+GestionDonjon    -[#595959,dashed]->  Monstre         : "«create»"
+GestionDonjon    -[#595959,dashed]->  Rapiere         : "«create»"
+Guerison         -[#000082,plain]-^  Sort
+Guerrier         -[#595959,dashed]->  Arbalete        : "«create»"
+Guerrier         -[#000082,plain]-^  Classe
+Guerrier         -[#595959,dashed]->  CotteDeMailles  : "«create»"
+Guerrier         -[#595959,dashed]->  EpeeLongue      : "«create»"
+Guerrier        "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
+Halfelin         -[#000082,plain]-^  Race
+Harnois          -[#000082,plain]-^  Armure
+Humain           -[#000082,plain]-^  Race
+Jeu              -[#595959,dashed]->  Clerc           : "«create»"
+Jeu              -[#595959,dashed]->  Elf             : "«create»"
+Jeu              -[#595959,dashed]->  Guerrier        : "«create»"
+Jeu              -[#595959,dashed]->  Halfelin        : "«create»"
+Jeu              -[#595959,dashed]->  Humain          : "«create»"
+Jeu             "1" *-[#595959,plain]-> "m_joueurs\n*" Joueur
+Jeu              -[#595959,dashed]->  Joueur          : "«create»"
+Jeu              -[#595959,dashed]->  Magicien        : "«create»"
+Jeu              -[#595959,dashed]->  Nain            : "«create»"
+Jeu              -[#595959,dashed]->  Roublard        : "«create»"
+Joueur           -[#595959,dashed]->  Arme            : "«create»"
+Joueur           -[#595959,dashed]->  Armure          : "«create»"
+Joueur          "1" *-[#595959,plain]-> "m_classe\n1" Classe
+Joueur           -[#000082,plain]-^  Personnage
+Joueur          "1" *-[#595959,plain]-> "m_race\n1" Race
+Magicien         -[#595959,dashed]->  ArmeMagique     : "«create»"
+Magicien         -[#595959,dashed]->  Baton           : "«create»"
+Magicien         -[#595959,dashed]->  BoogieWoogie    : "«create»"
+Magicien         -[#000082,plain]-^  Classe
+Magicien        "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
+Magicien         -[#595959,dashed]->  Fronde          : "«create»"
+Magicien         -[#595959,dashed]->  Guerison        : "«create»"
+Magicien        "1" *-[#595959,plain]-> "m_sorts\n*" Sort
+Main             -[#595959,dashed]->  Jeu             : "«create»"
+Masse            -[#000082,plain]-^  Arme
+Monstre          -[#595959,dashed]->  Arme            : "«create»"
+Monstre          -[#595959,dashed]->  Armure          : "«create»"
+Monstre          -[#000082,plain]-^  Personnage
+Nain             -[#000082,plain]-^  Race
+Personnage      "1" *-[#595959,plain]-> "m_arme\n1" Arme
+Personnage      "1" *-[#595959,plain]-> "m_armure\n1" Armure
+Personnage      "1" *-[#595959,plain]-> "m_inventaire\n*" Equipement
+Personnage       -[#595959,dashed]->  Pion            : "«create»"
+Personnage      "1" *-[#595959,plain]-> "m_pion\n1" Pion
+Personnage       -[#595959,dashed]->  SlotArme        : "«create»"
+Personnage       -[#595959,dashed]->  SlotArmure      : "«create»"
+Personnage      "1" *-[#595959,plain]-> "m_sorts\n*" Sort
+Personnage      "1" *-[#595959,plain]-> "m_type\n1" TypePersonnage
+Rapiere          -[#000082,plain]-^  Arme
+Roublard         -[#595959,dashed]->  Arc             : "«create»"
+Roublard         -[#000082,plain]-^  Classe
+Roublard        "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
+Roublard         -[#595959,dashed]->  Rapiere         : "«create»"
+SlotArme        "1" *-[#595959,plain]-> "m_perso\n1" Personnage
+SlotArme         -[#008200,dashed]-^  SlotEquipable
+SlotArmure      "1" *-[#595959,plain]-> "m_perso\n1" Personnage
+SlotArmure       -[#008200,dashed]-^  SlotEquipable
+@enduml
