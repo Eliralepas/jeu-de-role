@@ -5,322 +5,815 @@ skinparam classFontStyle Bold
 skinparam style strictuml
 hide empty members
 
-
-class Arbalete {
-  + Arbalete():
+abstract class Affichage <<abstract>>{
+  - {static} m_langue: Langue
+  + {static} demandeNbCreationJoueur(): String
+  + {static} subirAttaquePerso(String, int, int, String)
+  + {static} demandeMonstreSymbol(): String
+  + {static} demandeMonstreClasseArmure(): String
+  + {static} getActionMaitreJeu(): String
+  + {static} lancerDe(int)
+  + {static} nomRoublard(): String
+  + {static} demandeMonstrePortee(): String
+  + {static} caseDestination(): String
+  + {static} attaqueAllie()
+  + {static} demandeLignesDonjon(): String
+  + {static} caseHorsPortee()
+  + {static} demandeMonstrePv(): String
+  + {static} nomHarnois(): String
+  + {static} joueurInexistant()
+  + {static} aucuneSelection(String)
+  + {static} nomBaton(): String
+  + {static} contenuInventaire(ArrayList<Equipement>): String
+  + {static} nomGuerrier(): String
+  + {static} personnageInexistant()
+  + {static} choisirCaseDonjon(String)
+  + {static} afficherTour(int, int, String[][], int, ArrayList<Personnage>, int, Personnage): String
+  + {static} caseJoueurAjout(String): String
+  + {static} nomNain(): String
+  + {static} demandeNbCreationObjet(String): String
+  + {static} attaquer(Boolean, int, int, int)
+  + {static} demandeNbDegatInfliger(): String
+  + {static} mjIntervientPas()
+  + {static} caseInexistante()
+  + {static} infligerDegatsSuccesPerso(int, String, int)
+  + {static} demandeNbCreationObstacle(): String
+  + {static} nomDemiPlate(): String
+  + {static} selectionPersonnage(): String
+  + {static} armeInexistante()
+  + {static} nomArbalete(): String
+  + {static} nomArmeMagique(): String
+  + {static} choisirEquipement(ArrayList<Equipement>): String
+  + {static} nomFronde(): String
+  + {static} demandeMonstreDexterite(): String
+  + {static} nomHumain(): String
+  + {static} demandeMonstreForce(): String
+  + {static} demandeMonstreDeFace(): String
+  + {static} nomArc(): String
+  + {static} getInfosJoueur(String, String, String, int, int): String
+  + {static} sePresenterJoueur(String, String, String): String
+  + {static} choisirLangue()
+  + {static} toStringArmure(int, boolean): String
+  + {static} nomElf(): String
+  + {static} maitreDuJeu(): String
+  + {static} nomMasse(): String
+  + {static} selectionJoueur(): String
+  + {static} demandeDonjonDefaut(): String
+  + {static} demandeNomJoueur(): String
+  + {static} getActionPerso(String, int): String
+  + {static} demanderEquiperDonjon(): String
+  + {static} afficheCreationJoueur()
+  + {static} toStringArme(int, int, int, boolean): String
+  + {static} porteeAttaque(int)
+  + {static} nomEpeeLongue(): String
+  + {static} creerEquipementDonjon(): String
+  + {static} demandeMonstreVitesse(): String
+  + {static} nomBoogieWoogie(): String
+  + {static} demandeNbCreationDonjon(): String
+  + {static} demandeRace(): String
+  + {static} demandeColonnesDonjon(): String
+  + {static} aucunEquipement()
+  + {static} nomMagicien(): String
+  + {static} afficheCreationDonjon(int)
+  + {static} nomHalfelin(): String
+  + {static} memePersonnage()
+  + {static} toStringJoueur(String, String, String, int, int, int, int, int, ArrayList<Equipement>, Armure, Arme): String
+  + {static} mjFinTour(String)
+  + {static} nomEpee2Mains(): String
+  + {static} intervalleEntier(int, int): String
+  + {static} confimationCreationJoueur(int, String)
+  + {static} demandeNbCreationMonstre(): String
+  + {static} cibleHorsPortee(String)
+  + {static} nomArmureEcailles(): String
+  + {static} demandeNbCreationEquipement(): String
+  + {static} demandeLangue(): String
+  + {static} getActionJoueur(String, int): String
+  + {static} nomRapiere(): String
+  + {static} nomClerc(): String
+  + {static} caseInvalide()
+  + {static} demandeClasse(): String
+  + {static} nbCasesDeplacement(int)
+  + {static} choisirSort(ArrayList<Sort>): String
+  + {static} demandeMonstreEspece(): String
+  + {static} recupEquipement(String)
+  + {static} mauvaisFormatCase()
+  + {static} demandeElement(String): String
+  + {static} afficherPlateauDonjon(int, int, String[][]): String
+  + {static} guerirPerso(String, int, int, int)
+  + {static} caseObstacleAjout(): String
+  + {static} nomGuerison(): String
+  + {static} nomCotteDeMailles(): String
+  + {static} demandePersonnageNumero(int): String
+  + {static} infligerDegatsEchecPerso(int, String)
+  + {static} caseDeplacement(): String
+  + {static} afficherLangueChoisie()
+  + {static} afficheMsgFinDonjon(EtatDonjon)
+  + {static} getInfosPerso(String, int, int): String
+  + {static} aucuneArmeEquipee()
 }
-class Arc {
-  + Arc():
+class Anglais implements Langue{
+  + <<create>> Anglais()
+  + guerirPerso(String, int, int, int)
+  + donjon(): String
+  + selectionJoueur(): String
+  + demandeMonstreClasseArmure(): String
+  + subirAttaquePerso(String, int, int, String)
+  + demandeNbCreationEquipement(): String
+  + demandeNbCreationMonstre(): String
+  + demandeMonstreDeFace(): String
+  + demandePersonnageNumero(int): String
+  + sePresenterJoueur(String, String, String): String
+  + nomCotteDeMailles(): String
+  + demandeDonjonDefaut(): String
+  + intervalleEntier(int, int): String
+  + demandeMonstreSymbol(): String
+  + toStringJoueur(String, String, String, int, int, int, int, int, ArrayList<Equipement>, Armure, Arme): String
+  + nomDemiPlate(): String
+  + porteeAttaque(int)
+  + nomEpeeLongue(): String
+  + demandeColonnesDonjon(): String
+  + getInfosPerso(String, int, int): String
+  + personnageInexistant()
+  + maitreDuJeu(): String
+  + nomNain(): String
+  + caseObstacleAjout(): String
+  + demandeNbCreationObjet(String): String
+  + caseInexistante()
+  + toStringArme(int, int, int, boolean): String
+  + demandeMonstrePv(): String
+  + creerEquipementDonjon(): String
+  + getInfosJoueur(String, String, String, int, int): String
+  + nbCasesDeplacement(int)
+  + aucuneArmeEquipee()
+  + confimationCreationJoueur(int, String)
+  + nomArmeMagique(): String
+  + recupEquipement(String)
+  + nomHalfelin(): String
+  + attaqueAllie()
+  + mjFinTour(String)
+  + infligerDegatsSuccesPerso(int, String, int)
+  + choisirCaseDonjon(String)
+  + afficheMsgFinDonjon(EtatDonjon)
+  + ouiOuNon(boolean): String
+  + aucuneSelection(String)
+  + infligerDegatsEchecPerso(int, String)
+  + caseJoueurAjout(String): String
+  + demandeRace(): String
+  + caseDestination(): String
+  + nomGuerrier(): String
+  + nomArc(): String
+  + afficheCreationJoueur()
+  + demandeMonstreDexterite(): String
+  + nomClerc(): String
+  + caseDeplacement(): String
+  + nomHumain(): String
+  + demandeNbCreationObstacle(): String
+  + demandeNbCreationJoueur(): String
+  + toStringArmure(int, boolean): String
+  + nomRapiere(): String
+  + joueurInexistant()
+  + afficheCreationDonjon(int)
+  + nomGuerison(): String
+  + mjIntervientPas()
+  + demandeNbDegatInfliger(): String
+  + cibleHorsPortee(String)
+  + contenuInventaire(ArrayList<Equipement>): String
+  + demandeMonstreForce(): String
+  + attaquer(Boolean, int, int, int)
+  + nomArbalete(): String
+  + caseInvalide()
+  + demandeMonstreVitesse(): String
+  + caseHorsPortee()
+  + nomMagicien(): String
+  + demandeClasse(): String
+  + getActionMaitreJeu(): String
+  + armeInexistante()
+  + nomFronde(): String
+  + demandeMonstreEspece(): String
+  + demandeMonstrePortee(): String
+  + lancerDe(int)
+  + demandeElement(String): String
+  + getActionPerso(String, int): String
+  + demanderEquiperDonjon(): String
+  + nomArmureEcailles(): String
+  + selectionPersonnage(): String
+  + aucunEquipement()
+  + nomHarnois(): String
+  + nomBaton(): String
+  + demandeNomJoueur(): String
+  + demandeLangue(): String
+  + nomBoogieWoogie(): String
+  + afficherLangueChoisie()
+  + nomEpee2Mains(): String
+  + nomMasse(): String
+  + getActionJoueur(String, int): String
+  + getNomAttribut(Boolean): String
+  + memePersonnage()
+  + toString(): String
+  + demandeLignesDonjon(): String
+  + nomElf(): String
+  + choisirEquipement(): String
+  + afficherLegendePlateau(): String
+  + demandeNbCreationDonjon(): String
+  + choisirSort(): String
+  + mauvaisFormatCase()
+  + nomRoublard(): String
 }
-class Arme {
-  + Arme(String, int, int, boolean, int):
-  + Arme(String, int, int, boolean):
+class Arbalete extends Arme{
+  + <<create>> Arbalete()
+}
+class Arc extends Arme{
+  + <<create>> Arc()
+}
+class Arme extends Equipement{
+  - m_portee: int
+  - m_bonus: int
+  - m_amplitudeDegats: int
+  - m_nbLance: int
+  + <<create>> Arme(String, int, int, boolean, int)
+  + <<create>> Arme(String, int, int, boolean)
+  + getBonus(): int
   + estArmeDistance(): boolean
   + toString(): String
   + attaque(): int
-  + addBonus(int): void
-   amplitudeDegats: int
-   portee: int
-   bonus: int
+  + getPortee(): int
+  + getAmplitudeDegats(): int
+  + addBonus(int)
 }
-class ArmeMagique {
-  + ArmeMagique():
+class ArmeMagique extends Sort{
+  + <<create>> ArmeMagique()
   + lancer(ArrayList<Personnage>): boolean
 }
-class Armure {
-  + Armure(String, int, boolean):
+class Armure extends Equipement{
+  - m_classeArmure: int
+  + <<create>> Armure(String, int, boolean)
   + toString(): String
-   classeArmure: int
+  + getClasseArmure(): int
 }
-class ArmureEcailles {
-  + ArmureEcailles():
+class ArmureEcailles extends Armure{
+  + <<create>> ArmureEcailles()
 }
-class Baton {
-  + Baton():
+class Baton extends Arme{
+  + <<create>> Baton()
 }
-class BoogieWoogie {
-  + BoogieWoogie():
+class BoogieWoogie extends Sort{
+  + <<create>> BoogieWoogie()
   + lancer(ArrayList<Personnage>): boolean
 }
 class CasePlateau {
-  + CasePlateau(String):
+  - m_case: String
+  - m_colonne: int
+  - m_ligne: int
+  + <<create>> CasePlateau(String)
+  + getColonne(): int
   + estValide(String[][], TypeCase): boolean
-  - estNombre(String): boolean
+  + getLigne(): int
   - estBonFormat(): boolean
-  - convertirString(): void
+  - convertirString()
   - estChiffre(char): boolean
   - estLettre(char): boolean
-   ligne: int
-   colonne: int
+  - estNombre(String): boolean
 }
-class Classe {
-  + Classe(String, int, ArrayList<Equipement>, ArrayList<Sort>):
-  + Classe(String, int, ArrayList<Equipement>):
+abstract class Classe <<abstract>>{
+  - m_nom: String
+  - m_equipements: ArrayList<Equipement>
+  - m_pv: int
+  - m_sorts: ArrayList<Sort>
+  + <<create>> Classe(String, int, ArrayList<Equipement>, ArrayList<Sort>)
+  + <<create>> Classe(String, int, ArrayList<Equipement>)
+  + getSorts(): ArrayList<Sort>
+  + getEquipements(): ArrayList<Equipement>
   + toString(): String
-   equipements: ArrayList<Equipement>
-   sorts: ArrayList<Sort>
-   pv: int
+  + getPv(): int
 }
-class Clerc {
-  + Clerc():
+class Clerc extends Classe{
+  - m_sorts: ArrayList<Sort>
+  - m_equipements: ArrayList<Equipement>
+  + <<create>> Clerc()
 }
-class CotteDeMailles {
-  + CotteDeMailles():
+class CotteDeMailles extends Armure{
+  + <<create>> CotteDeMailles()
 }
-class De {
-  + De():
-  + lance(int): int
+abstract class De <<abstract>>{
+  + {static} lance(int): int
 }
-class Demande {
-  + Demande():
-  + getJoueurs(ArrayList<Personnage>): ArrayList<Joueur>
-  + demanderJoueurs(ArrayList<Joueur>, int): ArrayList<Joueur>
-  + demandeEntier(int, int, String): int
-  + demandeString(String, int): String
-  + demanderPersonnagesWithoutSelf(ArrayList<Personnage>, int, Personnage): ArrayList<Personnage>
-  + demanderPersonnages(ArrayList<Personnage>, int): ArrayList<Personnage>
-  + demanderPersonnagesFilter(ArrayList<Personnage>, int): ArrayList<Personnage>
+abstract class Demande <<abstract>>{
+  + {static} getJoueurs(ArrayList<Personnage>): ArrayList<Joueur>
+  + {static} demanderJoueurs(ArrayList<Joueur>, int): ArrayList<Joueur>
+  + {static} demandeEntier(int, int, String): int
+  + {static} demandeString(String, int): String
+  + {static} demanderPersonnagesWithoutSelf(ArrayList<Personnage>, int, Personnage): ArrayList<Personnage>
+  + {static} demanderPersonnages(ArrayList<Personnage>, int): ArrayList<Personnage>
+  + {static} demanderPersonnagesFilter(ArrayList<Personnage>, int): ArrayList<Personnage>
 }
-class DemiPlate {
-  + DemiPlate():
+class DemiPlate extends Armure{
+  + <<create>> DemiPlate()
 }
 class Donjon {
-  + Donjon(int, int, int, ArrayList<Joueur>, boolean):
-  + Donjon(int, int, int, ArrayList<Joueur>):
-  + Donjon(int, ArrayList<Joueur>):
-  + recupererJoueurs(): ArrayList<Joueur>
+  - m_casesLibres: int
+  - m_numero: int
+  - m_lignes: int
+  - m_tour: int
+  - m_plateau: String[][]
+  - m_equipements: ArrayList<Equipement>
+  - m_personnages: ArrayList<Personnage>
+  - m_nbJoueurs: int
+  - m_colonnes: int
+  + <<create>> Donjon(int, ArrayList<Joueur>)
+  + <<create>> Donjon(int, int, int, ArrayList<Joueur>)
+  + <<create>> Donjon(int, int, int, ArrayList<Joueur>, boolean)
+  + toString(): String
   + jouerDonjon(): boolean
   + tryLancerSort(Personnage): boolean
   + creerDonjon(int, ArrayList<Joueur>): Donjon
   + getNbPerso(TypePersonnage): int
+  + recupererJoueurs(): ArrayList<Joueur>
+  - tryRamasserEquipement(Personnage)
+  - ajouterPersonnages(ArrayList<Personnage>)
+  - updatePosPersos()
+  - ajouterEquipements(ArrayList<Equipement>)
   - affichageTour(Personnage): String
-  - tryRamasserEquipement(Personnage): void
   - getEquipement(Pion): Equipement
-  - tourPerso(Personnage): Etat
-  - tourDonjon(): Etat
-  - deplacerPerso(Personnage, CasePlateau): void
-  - remplirPlateau(): void
-  - ajouterObstacles(ArrayList<CasePlateau>): void
-  - updateCase(Pion): void
-  - infligerDegats(): void
-  - positionnerJoueurs(): void
-  - ajouterPersonnage(Personnage, CasePlateau): void
-  - remplir(): void
-  - triParInitiative(ArrayList<Personnage>): void
-  - afficheMsgFin(Etat): void
-  - creerMonstres(): void
-  - lancerInitiative(ArrayList<Personnage>): void
-  - formatSymbol(String): String
-  - getPersoVivants(ArrayList<Personnage>): ArrayList<Personnage>
-  - tryDeplacement(Personnage): boolean
+  - ajouterObstacles(ArrayList<CasePlateau>)
+  - infligerDegats()
   - choisirCase(String, TypeCase): CasePlateau
+  - creerObstacles()
   - tryAttaque(Personnage): boolean
-  - updatePosPersos(): void
-  - creerEquipements(): void
-  - creerObstacles(): void
+  - testFinDonjon(): EtatDonjon
+  - genererDefaut()
+  - remplirPlateau()
+  - remplir()
+  - tryDeplacement(Personnage): boolean
+  - interventionMaitrejeu(Personnage)
+  - testMortPerso(Personnage)
+  - lancerInitiative(ArrayList<Personnage>)
+  - ajouterObstacle(CasePlateau)
+  - deplacerPerso(Personnage, CasePlateau)
+  - tourDonjon(): EtatDonjon
+  - creerEquipements()
+  - ajouterPersonnage(Personnage, CasePlateau)
+  - updateCase(Pion)
+  - tourPerso(Personnage): EtatDonjon
+  - formatSymbol(String): String
+  - ajouterEquipement(Equipement, CasePlateau)
+  - getNbMaxCreation(): int
+  - positionnerJoueurs()
+  - getActionMaitreJeu(): int
+  - triParInitiative(ArrayList<Personnage>)
+  - creerMonstres()
   - tryEquiper(Personnage): boolean
-  - testFinDonjon(): Etat
-  - ajouterEquipement(Equipement, CasePlateau): void
-  - ajouterObstacle(CasePlateau): void
-  - genererDefaut(): void
-  - ajouterPersonnages(ArrayList<Personnage>): void
-  - testMortPerso(Personnage): void
-  - afficherPlateau(): String
-  - ajouterEquipements(ArrayList<Equipement>): void
-  - interventionMaitrejeu(Personnage): void
-   nbMaxCreation: int
-   actionMaitreJeu: int
+  - getPersoVivants(ArrayList<Personnage>): ArrayList<Personnage>
 }
 interface Effet << interface >> {
-  + appliquer(Personnage): void
-  + retirer(Personnage): void
+  + appliquer(Personnage)
+  + retirer(Personnage)
 }
-class EffetForce {
-  + EffetForce(int):
-  + retirer(Personnage): void
-  + appliquer(Personnage): void
+class EffetForce implements Effet{
+  - m_valeur: int
+  + <<create>> EffetForce(int)
+  + retirer(Personnage)
+  + appliquer(Personnage)
 }
-class EffetVitesse {
-  + EffetVitesse(int):
-  + appliquer(Personnage): void
-  + retirer(Personnage): void
+class EffetVitesse implements Effet{
+  - m_valeur: int
+  + <<create>> EffetVitesse(int)
+  + appliquer(Personnage)
+  + retirer(Personnage)
 }
-class EffetsStandards {
-  + EffetsStandards():
+abstract class EffetsStandards <<abstract>>{
+  + {static} ARMURE_LOURDE: ArrayList<Effet>
+  + {static} ARME_LOURDE: ArrayList<Effet>
+  + {static} SANS_EFFET: ArrayList<Effet>
 }
-class Elf {
-  + Elf():
+class Elf extends Race{
+  + <<create>> Elf()
 }
-class Epee2Mains {
-  + Epee2Mains():
+class Epee2Mains extends Arme{
+  + <<create>> Epee2Mains()
 }
-class EpeeLongue {
-  + EpeeLongue():
+class EpeeLongue extends Arme{
+  + <<create>> EpeeLongue()
 }
-class Equipement {
-  + Equipement(String, boolean, TypeEquipement, ArrayList<Effet>):
+abstract class Equipement <<abstract>>{
+  # m_estLourd: boolean
+  - m_type: TypeEquipement
+  - m_effets: ArrayList<Effet>
+  - m_nom: String
+  - m_pion: Pion
+  + <<create>> Equipement(String, boolean, TypeEquipement, ArrayList<Effet>)
+  + getPion(): Pion
   + toString(): String
-  + retirerEffets(Personnage): void
-  + appliquerEffets(Personnage): void
+  + retirerEffets(Personnage)
+  + getType(): TypeEquipement
+  + appliquerEffets(Personnage)
   + pasDefinie(): boolean
-  + setPion(int, int): void
-   type: TypeEquipement
-   pion: Pion
+  + setPion(int, int)
 }
-enum Etat << enumerate >> {
-  + Etat():
-  + valueOf(String): Etat
-  + values(): Etat[]
+enum EtatDonjon << enumerate >> {
+  EN_COURS
+  DEFAITE
+  VICTOIRE
 }
-class Fronde {
-  + Fronde():
+class Francais implements Langue{
+  + <<create>> Francais()
+  + nomBaton(): String
+  + confimationCreationJoueur(int, String)
+  + nomArc(): String
+  + nbCasesDeplacement(int)
+  + contenuInventaire(ArrayList<Equipement>): String
+  + caseDestination(): String
+  + afficheCreationJoueur()
+  + nomHumain(): String
+  + caseDeplacement(): String
+  + personnageInexistant()
+  + attaqueAllie()
+  + afficherLegendePlateau(): String
+  + demandeDonjonDefaut(): String
+  + getActionMaitreJeu(): String
+  + ouiOuNon(boolean): String
+  + nomGuerison(): String
+  + demandeNbCreationJoueur(): String
+  + demandeLignesDonjon(): String
+  + demandeRace(): String
+  + demandeClasse(): String
+  + demandeNbDegatInfliger(): String
+  + guerirPerso(String, int, int, int)
+  + nomBoogieWoogie(): String
+  + nomGuerrier(): String
+  + maitreDuJeu(): String
+  + intervalleEntier(int, int): String
+  + demandeMonstreSymbol(): String
+  + infligerDegatsEchecPerso(int, String)
+  + subirAttaquePerso(String, int, int, String)
+  + getNomAttribut(Boolean): String
+  + demandeNbCreationEquipement(): String
+  + recupEquipement(String)
+  + aucunEquipement()
+  + demandeMonstrePv(): String
+  + sePresenterJoueur(String, String, String): String
+  + armeInexistante()
+  + demandeMonstreClasseArmure(): String
+  + selectionJoueur(): String
+  + aucuneArmeEquipee()
+  + demandeMonstreForce(): String
+  + getInfosJoueur(String, String, String, int, int): String
+  + mjFinTour(String)
+  + demandeNomJoueur(): String
+  + mauvaisFormatCase()
+  + nomClerc(): String
+  + demandePersonnageNumero(int): String
+  + demandeNbCreationObjet(String): String
+  + creerEquipementDonjon(): String
+  + caseInvalide()
+  + nomCotteDeMailles(): String
+  + nomMasse(): String
+  + nomRapiere(): String
+  + demandeLangue(): String
+  + getActionJoueur(String, int): String
+  + lancerDe(int)
+  + demandeElement(String): String
+  + demanderEquiperDonjon(): String
+  + nomArmureEcailles(): String
+  + infligerDegatsSuccesPerso(int, String, int)
+  + nomFronde(): String
+  + demandeMonstreVitesse(): String
+  + cibleHorsPortee(String)
+  + demandeMonstrePortee(): String
+  + caseHorsPortee()
+  + nomEpeeLongue(): String
+  + toString(): String
+  + getActionPerso(String, int): String
+  + choisirCaseDonjon(String)
+  + toStringJoueur(String, String, String, int, int, int, int, int, ArrayList<Equipement>, Armure, Arme): String
+  + afficheCreationDonjon(int)
+  + afficheMsgFinDonjon(EtatDonjon)
+  + attaquer(Boolean, int, int, int)
+  + caseObstacleAjout(): String
+  + nomArbalete(): String
+  + nomHarnois(): String
+  + nomMagicien(): String
+  + demandeColonnesDonjon(): String
+  + nomDemiPlate(): String
+  + demandeMonstreDexterite(): String
+  + joueurInexistant()
+  + demandeMonstreDeFace(): String
+  + choisirEquipement(): String
+  + toStringArme(int, int, int, boolean): String
+  + porteeAttaque(int)
+  + nomEpee2Mains(): String
+  + nomElf(): String
+  + nomNain(): String
+  + afficherLangueChoisie()
+  + demandeNbCreationObstacle(): String
+  + donjon(): String
+  + caseInexistante()
+  + getInfosPerso(String, int, int): String
+  + demandeNbCreationDonjon(): String
+  + memePersonnage()
+  + selectionPersonnage(): String
+  + nomHalfelin(): String
+  + mjIntervientPas()
+  + nomArmeMagique(): String
+  + choisirSort(): String
+  + toStringArmure(int, boolean): String
+  + nomRoublard(): String
+  + caseJoueurAjout(String): String
+  + aucuneSelection(String)
+  + demandeNbCreationMonstre(): String
+  + demandeMonstreEspece(): String
 }
-class GestionDonjon {
-  + GestionDonjon():
-  + demanderCreationObstacles(String[][], int): ArrayList<CasePlateau>
-  + demanderCreationEquipements(int): ArrayList<Equipement>
-  + demanderCreationMonstres(int): ArrayList<Personnage>
-  + demanderCase(String[][], String, TypeCase): CasePlateau
-  + demanderEquiper(Joueur): void
-  - demanderNombreCreation(int, int, String): int
+class Fronde extends Arme{
+  + <<create>> Fronde()
 }
-class Guerison {
-  + Guerison():
+abstract class GestionDonjon <<abstract>>{
+  + {static} demanderCreationObstacles(String[][], int): ArrayList<CasePlateau>
+  + {static} demanderCreationEquipements(int): ArrayList<Equipement>
+  + {static} demanderCreationMonstres(int): ArrayList<Personnage>
+  + {static} demanderCase(String[][], String, TypeCase): CasePlateau
+  + {static} demanderEquiper(Joueur)
+  - {static} demanderNombreCreation(int, int, String): int
+}
+class Guerison extends Sort{
+  + <<create>> Guerison()
   + lancer(ArrayList<Personnage>): boolean
 }
-class Guerrier {
-  + Guerrier():
+class Guerrier extends Classe{
+  - m_equipements: ArrayList<Equipement>
+  + <<create>> Guerrier()
 }
-class Halfelin {
-  + Halfelin():
+class Halfelin extends Race{
+  + <<create>> Halfelin()
 }
-class Harnois {
-  + Harnois():
+class Harnois extends Armure{
+  + <<create>> Harnois()
 }
-class Humain {
-  + Humain():
+class Humain extends Race{
+  + <<create>> Humain()
+}
+abstract class Initialiseur <<abstract>>{
+  + lancerJeu()
 }
 class Jeu {
-  + Jeu():
-  + jouer(): void
-  + creerJoueur(): void
+  - m_joueurs: ArrayList<Joueur>
+  - m_nbDonjons: int
+  + <<create>> Jeu()
+  + jouer()
+  + creerJoueur()
 }
-class Joueur {
-  + Joueur(String, Race, Classe):
+class Joueur extends Personnage{
+  - m_race: Race
+  - m_classe: Classe
+  + <<create>> Joueur(String, Race, Classe)
+  + getAction(): int
+  + getClasse(): String
   + sePresenter(): String
+  + getInfos(): String
   + toString(): String
-   action: int
-   infos: String
-   classe: String
 }
-class Magicien {
-  + Magicien():
+interface Langue << interface >> {
+  + demandeMonstreVitesse(): String
+  + nomClerc(): String
+  + getInfosJoueur(String, String, String, int, int): String
+  + creerEquipementDonjon(): String
+  + nomNain(): String
+  + caseDeplacement(): String
+  + recupEquipement(String)
+  + armeInexistante()
+  + demandeDonjonDefaut(): String
+  + nomGuerison(): String
+  + caseInexistante()
+  + choisirSort(): String
+  + nomElf(): String
+  + selectionPersonnage(): String
+  + attaqueAllie()
+  + nomGuerrier(): String
+  + afficheMsgFinDonjon(EtatDonjon)
+  + afficheCreationDonjon(int)
+  + getActionJoueur(String, int): String
+  + aucuneArmeEquipee()
+  + getActionMaitreJeu(): String
+  + nbCasesDeplacement(int)
+  + toStringJoueur(String, String, String, int, int, int, int, int, ArrayList<Equipement>, Armure, Arme): String
+  + contenuInventaire(ArrayList<Equipement>): String
+  + nomCotteDeMailles(): String
+  + demandePersonnageNumero(int): String
+  + demandeNbCreationObstacle(): String
+  + demandeNomJoueur(): String
+  + nomHalfelin(): String
+  + nomMagicien(): String
+  + infligerDegatsEchecPerso(int, String)
+  + getNomAttribut(Boolean): String
+  + nomDemiPlate(): String
+  + toStringArmure(int, boolean): String
+  + nomArbalete(): String
+  + donjon(): String
+  + demandeElement(String): String
+  + joueurInexistant()
+  + mjFinTour(String)
+  + nomEpeeLongue(): String
+  + demandeMonstreDeFace(): String
+  + demanderEquiperDonjon(): String
+  + mjIntervientPas()
+  + personnageInexistant()
+  + maitreDuJeu(): String
+  + demandeMonstrePv(): String
+  + nomEpee2Mains(): String
+  + nomRoublard(): String
+  + choisirCaseDonjon(String)
+  + confimationCreationJoueur(int, String)
+  + nomBaton(): String
+  + nomHarnois(): String
+  + nomHumain(): String
+  + attaquer(Boolean, int, int, int)
+  + cibleHorsPortee(String)
+  + aucuneSelection(String)
+  + infligerDegatsSuccesPerso(int, String, int)
+  + mauvaisFormatCase()
+  + nomMasse(): String
+  + demandeNbCreationEquipement(): String
+  + demandeMonstreClasseArmure(): String
+  + afficherLangueChoisie()
+  + ouiOuNon(boolean): String
+  + nomBoogieWoogie(): String
+  + choisirEquipement(): String
+  + demandeNbCreationObjet(String): String
+  + demandeMonstreDexterite(): String
+  + demandeClasse(): String
+  + nomArmeMagique(): String
+  + demandeMonstrePortee(): String
+  + intervalleEntier(int, int): String
+  + demandeNbDegatInfliger(): String
+  + getActionPerso(String, int): String
+  + caseInvalide()
+  + sePresenterJoueur(String, String, String): String
+  + nomFronde(): String
+  + aucunEquipement()
+  + demandeLangue(): String
+  + afficherLegendePlateau(): String
+  + nomArc(): String
+  + memePersonnage()
+  + lancerDe(int)
+  + toString(): String
+  + toStringArme(int, int, int, boolean): String
+  + demandeColonnesDonjon(): String
+  + caseJoueurAjout(String): String
+  + demandeNbCreationJoueur(): String
+  + demandeRace(): String
+  + caseDestination(): String
+  + subirAttaquePerso(String, int, int, String)
+  + demandeMonstreForce(): String
+  + caseHorsPortee()
+  + nomRapiere(): String
+  + demandeNbCreationDonjon(): String
+  + nomArmureEcailles(): String
+  + demandeLignesDonjon(): String
+  + guerirPerso(String, int, int, int)
+  + demandeMonstreEspece(): String
+  + demandeMonstreSymbol(): String
+  + selectionJoueur(): String
+  + caseObstacleAjout(): String
+  + demandeNbCreationMonstre(): String
+  + afficheCreationJoueur()
+  + porteeAttaque(int)
+  + getInfosPerso(String, int, int): String
+}
+class Magicien extends Classe{
+  - m_equipements: ArrayList<Equipement>
+  - m_sorts: ArrayList<Sort>
+  + <<create>> Magicien()
 }
 class Main {
-  + Main():
-  + main(): void
+  + main()
 }
-class Masse {
-  + Masse():
+class Masse extends Arme{
+  + <<create>> Masse()
 }
-class Monstre {
-  + Monstre(String, String, int, int, int, int, int, int, int, int):
+class Monstre extends Personnage{
+  - m_numero: int
+  + <<create>> Monstre(String, String, int, int, int, int, int, int, int, int)
   + toString(): String
 }
-class Nain {
-  + Nain():
+class Nain extends Race{
+  + <<create>> Nain()
 }
-class Personnage {
-  # Personnage(String, String, TypePersonnage, int, int, int, int, int, Arme, Armure, ArrayList<Equipement>, ArrayList<Sort>):
+abstract class Personnage <<abstract>>{
+  - m_pv: int
+  - m_inventaire: ArrayList<Equipement>
+  - m_initiative: int
+  - m_arme: Arme
+  - m_type: TypePersonnage
+  - m_armure: Armure
+  - m_pion: Pion
+  - m_nom: String
+  - m_symbol: String
+  - m_pvMax: int
+  - m_dexterite: int
+  - m_vitesse: int
+  - m_force: int
+  - m_sorts: ArrayList<Sort>
+  # <<create>> Personnage(String, String, TypePersonnage, int, int, int, int, int, Arme, Armure, ArrayList<Equipement>, ArrayList<Sort>)
   + peutAttaquer(): boolean
-  + toString(): String
-  + contenuInventaire(): String
-  + estMort(): boolean
-  + choisirEquipementType(TypeEquipement): Equipement
-  + lancerSort(ArrayList<Personnage>): boolean
-  + attaquer(Personnage): void
-  + guerir(int): void
-  + seDeplacer(int, int): void
-  + recuperer(Equipement): void
-  + subirAttaque(int, String): void
   + sePresenter(): String
-  + equiper(): void
-  + seDeplacer(Pion): void
+  + getPortee(): int
+  + toString(): String
+  + getAction(): int
+  + getInitiative(): int
+  + estMort(): boolean
+  + equiper()
+  + seDeplacer(Pion)
+  + choisirEquipementType(TypeEquipement): Equipement
+  + getVitesse(): int
   + equals(Personnage): boolean
+  + getArmure(): Armure
   + peutLancerSorts(): boolean
-  + diminuerInitiative(): void
-  - infligerDegats(Personnage, int): void
-  - getEquipement(TypeEquipement): ArrayList<Equipement>
-  - choisirEquipement(ArrayList<Equipement>, StringBuilder): Equipement
+  + getInventaire(): ArrayList<Equipement>
+  + getPion(): Pion
+  + getType(): TypePersonnage
+  + lancerSort(ArrayList<Personnage>): boolean
+  + attaquer(Personnage)
+  + guerir(int)
+  + setVitesse(int)
+  + setArme(Arme)
+  + getTailleInventaire(): int
+  + getPv(): int
+  + getInfos(): String
+  + getArme(): Arme
+  + setInitiative(int)
+  + getDexterite(): int
+  + getForce(): int
+  + setForce(int)
+  + getAttribut(): int
+  + diminuerInitiative()
+  + getSymbol(): String
+  + seDeplacer(int, int)
+  + getClasseArmure(): int
+  + recuperer(Equipement)
+  + getPvMax(): int
+  + getNom(): String
+  + setArmure(Armure)
+  + subirAttaque(int, String)
+  - infligerDegats(Personnage, int)
+  - getDegats(): int
+  - choisirEquipement(ArrayList<Equipement>): Equipement
   - choisirEquipementEquiper(): Equipement
+  - getEquipement(TypeEquipement): ArrayList<Equipement>
   - choisirSort(): Sort
-   armure: Armure
-   pion: Pion
-   dexterite: int
-   attribut: int
-   vitesse: int
-   force: int
-   initiative: int
-   amplitudeDegatsArme: int
-   nom: String
-   infos: String
-   arme: Arme
-   nomAttribut: String
-   pv: int
-   tailleInventaire: int
-   portee: int
-   type: TypePersonnage
-   symbol: String
-   classeArmure: int
-   pvMax: int
-   action: int
-   degats: int
 }
 class Pion {
-  + Pion(int, int, String):
-  + Pion(Pion):
+  - m_symbol: String
+  - m_y: int
+  - m_x: int
+  + <<create>> Pion(int, int, String)
+  + <<create>> Pion(Pion)
+  + getY(): int
+  + getX(): int
   + toString(): String
   + getDistance(int, int): int
+  + setPosition(Pion)
   + getDistance(Pion): int
   + equals(Pion): boolean
-  + setPosition(int, int): void
-   position: Pion
-   y: int
-   x: int
+  + setPosition(int, int)
 }
-class Race {
-  + Race(String, int, int, int, int):
+abstract class Race <<abstract>>{
+  - m_nom: String
+  - m_pv: int
+  - m_force: int
+  - m_dexterite: int
+  - m_vitesse: int
+  + <<create>> Race(String, int, int, int, int)
+  + getVitesse(): int
+  + getDexterite(): int
+  + getForce(): int
   + toString(): String
-   dexterite: int
-   vitesse: int
-   force: int
-   pv: int
+  + getPv(): int
 }
-class Rapiere {
-  + Rapiere():
+class Rapiere extends Arme{
+  + <<create>> Rapiere()
 }
-class Roublard {
-  + Roublard():
+class Roublard extends Classe{
+  - m_equipements: ArrayList<Equipement>
+  + <<create>> Roublard()
 }
-class SlotArme {
-  + SlotArme(Personnage):
-  + set(Equipement): void
-  + get(): Equipement
-}
-class SlotArmure {
+class SlotArme implements SlotEquipable{
   - m_perso: Personnage
-  + SlotArmure(Personnage):
+  + <<create>> SlotArme(Personnage)
+  + set(Equipement)
   + get(): Equipement
-  + set(equip: Equipement): void
+}
+class SlotArmure implements SlotEquipable{
+  - m_perso: Personnage
+  + <<create>> SlotArmure(Personnage)
+  + get(): Equipement
+  + set(Equipement)
 }
 interface SlotEquipable << interface >> {
-  set(equip: Equipement): void
-  get(): Equipement
+  + set(Equipement)
+  + get(): Equipement
 }
 abstract class Sort <<abstract>>{
   - m_nom: String
-  + <<create>> Sort(String):
-  + <<abstract>> lancer(personnages: ArrayList<Personnage>): boolean
+  + <<create>> Sort(String)
+  + <<abstract>> lancer(ArrayList<Personnage>): boolean
   + toString(): String
 }
 abstract class Symbols <<abstract>>{
@@ -329,131 +822,102 @@ abstract class Symbols <<abstract>>{
   + {static} CASE_OBSTACLE: String
 }
 enum TypeCase << enumerate >> {
-  AJOUT
   DEPLACEMENT
+  AJOUT
 }
 enum TypeEquipement << enumerate >> {
-  ARME
   ARMURE
+  ARME
 }
 enum TypePersonnage << enumerate >> {
-  JOUEUR
   MONSTRE
+  JOUEUR
 }
 
-Arbalete         -[#000082,plain]-^  Arme
-Arc              -[#000082,plain]-^  Arme
-Arme             -[#000082,plain]-^  Equipement
-ArmeMagique      -[#000082,plain]-^  Sort
-Armure           -[#000082,plain]-^  Equipement
-ArmureEcailles   -[#000082,plain]-^  Armure
-Baton            -[#000082,plain]-^  Arme
-BoogieWoogie     -[#595959,dashed]->  Pion            : "«create»"
-BoogieWoogie     -[#000082,plain]-^  Sort
-Classe          "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
-Classe          "1" *-[#595959,plain]-> "m_sorts\n*" Sort
-Clerc            -[#595959,dashed]->  Arbalete        : "«create»"
-Clerc            -[#595959,dashed]->  ArmureEcailles  : "«create»"
-Clerc            -[#000082,plain]-^  Classe
-Clerc           "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
-Clerc            -[#595959,dashed]->  Guerison        : "«create»"
-Clerc            -[#595959,dashed]->  Masse           : "«create»"
-Clerc           "1" *-[#595959,plain]-> "m_sorts\n*" Sort
-CotteDeMailles   -[#000082,plain]-^  Armure
-DemiPlate        -[#000082,plain]-^  Armure
-Donjon           -[#595959,dashed]->  Arbalete        : "«create»"
-Donjon           -[#595959,dashed]->  CasePlateau     : "«create»"
-Donjon           -[#595959,dashed]->  CotteDeMailles  : "«create»"
-Donjon           -[#595959,dashed]->  DemiPlate       : "«create»"
-Donjon           -[#595959,dashed]->  Donjon          : "«create»"
-Donjon           -[#595959,dashed]->  EpeeLongue      : "«create»"
-Donjon          "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
-Donjon           -[#595959,dashed]->  Masse           : "«create»"
-Donjon           -[#595959,dashed]->  Monstre         : "«create»"
-Donjon          "1" *-[#595959,plain]-> "m_personnages\n*" Personnage
-Donjon           -[#595959,dashed]->  Pion            : "«create»"
-EffetForce       -[#008200,dashed]-^  Effet
-EffetVitesse     -[#008200,dashed]-^  Effet
-EffetsStandards "1" *-[#595959,plain]-> "ARMURE_LOURDE\n*" Effet
-EffetsStandards  -[#595959,dashed]->  EffetForce      : "«create»"
-EffetsStandards  -[#595959,dashed]->  EffetVitesse    : "«create»"
-Elf              -[#000082,plain]-^  Race
-Epee2Mains       -[#000082,plain]-^  Arme
-EpeeLongue       -[#000082,plain]-^  Arme
-Equipement      "1" *-[#595959,plain]-> "m_effets\n*" Effet
-Equipement       -[#595959,dashed]->  Pion            : "«create»"
-Equipement      "1" *-[#595959,plain]-> "m_pion\n1" Pion
-Equipement      "1" *-[#595959,plain]-> "m_type\n1" TypeEquipement
-Etat             +-[#820000,plain]-  Donjon
-Fronde           -[#000082,plain]-^  Arme
-GestionDonjon    -[#595959,dashed]->  Arbalete        : "«create»"
-GestionDonjon    -[#595959,dashed]->  Arc             : "«create»"
-GestionDonjon    -[#595959,dashed]->  ArmureEcailles  : "«create»"
-GestionDonjon    -[#595959,dashed]->  Baton           : "«create»"
-GestionDonjon    -[#595959,dashed]->  CasePlateau     : "«create»"
-GestionDonjon    -[#595959,dashed]->  CotteDeMailles  : "«create»"
-GestionDonjon    -[#595959,dashed]->  DemiPlate       : "«create»"
-GestionDonjon    -[#595959,dashed]->  Epee2Mains      : "«create»"
-GestionDonjon    -[#595959,dashed]->  EpeeLongue      : "«create»"
-GestionDonjon    -[#595959,dashed]->  Fronde          : "«create»"
-GestionDonjon    -[#595959,dashed]->  Harnois         : "«create»"
-GestionDonjon    -[#595959,dashed]->  Masse           : "«create»"
-GestionDonjon    -[#595959,dashed]->  Monstre         : "«create»"
-GestionDonjon    -[#595959,dashed]->  Rapiere         : "«create»"
-Guerison         -[#000082,plain]-^  Sort
-Guerrier         -[#595959,dashed]->  Arbalete        : "«create»"
-Guerrier         -[#000082,plain]-^  Classe
-Guerrier         -[#595959,dashed]->  CotteDeMailles  : "«create»"
-Guerrier         -[#595959,dashed]->  EpeeLongue      : "«create»"
-Guerrier        "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
-Halfelin         -[#000082,plain]-^  Race
-Harnois          -[#000082,plain]-^  Armure
-Humain           -[#000082,plain]-^  Race
-Jeu              -[#595959,dashed]->  Clerc           : "«create»"
-Jeu              -[#595959,dashed]->  Elf             : "«create»"
-Jeu              -[#595959,dashed]->  Guerrier        : "«create»"
-Jeu              -[#595959,dashed]->  Halfelin        : "«create»"
-Jeu              -[#595959,dashed]->  Humain          : "«create»"
-Jeu             "1" *-[#595959,plain]-> "m_joueurs\n*" Joueur
-Jeu              -[#595959,dashed]->  Joueur          : "«create»"
-Jeu              -[#595959,dashed]->  Magicien        : "«create»"
-Jeu              -[#595959,dashed]->  Nain            : "«create»"
-Jeu              -[#595959,dashed]->  Roublard        : "«create»"
-Joueur           -[#595959,dashed]->  Arme            : "«create»"
-Joueur           -[#595959,dashed]->  Armure          : "«create»"
-Joueur          "1" *-[#595959,plain]-> "m_classe\n1" Classe
-Joueur           -[#000082,plain]-^  Personnage
-Joueur          "1" *-[#595959,plain]-> "m_race\n1" Race
-Magicien         -[#595959,dashed]->  ArmeMagique     : "«create»"
-Magicien         -[#595959,dashed]->  Baton           : "«create»"
-Magicien         -[#595959,dashed]->  BoogieWoogie    : "«create»"
-Magicien         -[#000082,plain]-^  Classe
-Magicien        "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
-Magicien         -[#595959,dashed]->  Fronde          : "«create»"
-Magicien         -[#595959,dashed]->  Guerison        : "«create»"
-Magicien        "1" *-[#595959,plain]-> "m_sorts\n*" Sort
-Main             -[#595959,dashed]->  Jeu             : "«create»"
-Masse            -[#000082,plain]-^  Arme
-Monstre          -[#595959,dashed]->  Arme            : "«create»"
-Monstre          -[#595959,dashed]->  Armure          : "«create»"
-Monstre          -[#000082,plain]-^  Personnage
-Nain             -[#000082,plain]-^  Race
-Personnage      "1" *-[#595959,plain]-> "m_arme\n1" Arme
-Personnage      "1" *-[#595959,plain]-> "m_armure\n1" Armure
-Personnage      "1" *-[#595959,plain]-> "m_inventaire\n*" Equipement
-Personnage       -[#595959,dashed]->  Pion            : "«create»"
-Personnage      "1" *-[#595959,plain]-> "m_pion\n1" Pion
-Personnage       -[#595959,dashed]->  SlotArme        : "«create»"
-Personnage       -[#595959,dashed]->  SlotArmure      : "«create»"
-Personnage      "1" *-[#595959,plain]-> "m_sorts\n*" Sort
-Personnage      "1" *-[#595959,plain]-> "m_type\n1" TypePersonnage
-Rapiere          -[#000082,plain]-^  Arme
-Roublard         -[#595959,dashed]->  Arc             : "«create»"
-Roublard         -[#000082,plain]-^  Classe
-Roublard        "1" *-[#595959,plain]-> "m_equipements\n*" Equipement
-Roublard         -[#595959,dashed]->  Rapiere         : "«create»"
-SlotArme        "1" *-[#595959,plain]-> "m_perso\n1" Personnage
-SlotArme         -[#008200,dashed]-^  SlotEquipable
-SlotArmure      "1" *-[#595959,plain]-> "m_perso\n1" Personnage
-SlotArmure       -[#008200,dashed]-^  SlotEquipable
+Affichage        -->  Anglais         : "«create»"
+Affichage        -->  Francais        : "«create»"
+Affichage       "1" *--> "m_langue\n1" Langue
+BoogieWoogie     -->  Pion            : "«create»"
+Classe          "1" *--> "m_equipements\n*" Equipement
+Classe          "1" *--> "m_sorts\n*" Sort
+Clerc            -->  Arbalete        : "«create»"
+Clerc            -->  ArmureEcailles  : "«create»"
+Clerc           "1" *--> "m_equipements\n*" Equipement
+Clerc            -->  Guerison        : "«create»"
+Clerc            -->  Masse           : "«create»"
+Clerc           "1" *--> "m_sorts\n*" Sort
+Donjon           -->  Arbalete        : "«create»"
+Donjon           -->  CasePlateau     : "«create»"
+Donjon           -->  CotteDeMailles  : "«create»"
+Donjon           -->  DemiPlate       : "«create»"
+Donjon           -->  Donjon          : "«create»"
+Donjon           -->  EpeeLongue      : "«create»"
+Donjon          "1" *--> "m_equipements\n*" Equipement
+Donjon           -->  Masse           : "«create»"
+Donjon           -->  Monstre         : "«create»"
+Donjon          "1" *--> "m_personnages\n*" Personnage
+Donjon           -->  Pion            : "«create»"
+EffetsStandards "1" *--> "ARMURE_LOURDE\n*" Effet
+EffetsStandards  -->  EffetForce      : "«create»"
+EffetsStandards  -->  EffetVitesse    : "«create»"
+Equipement      "1" *--> "m_effets\n*" Effet
+Equipement       -->  Pion            : "«create»"
+Equipement      "1" *--> "m_pion\n1" Pion
+Equipement      "1" *--> "m_type\n1" TypeEquipement
+GestionDonjon    -->  Arbalete        : "«create»"
+GestionDonjon    -->  Arc             : "«create»"
+GestionDonjon    -->  ArmureEcailles  : "«create»"
+GestionDonjon    -->  Baton           : "«create»"
+GestionDonjon    -->  CasePlateau     : "«create»"
+GestionDonjon    -->  CotteDeMailles  : "«create»"
+GestionDonjon    -->  DemiPlate       : "«create»"
+GestionDonjon    -->  Epee2Mains      : "«create»"
+GestionDonjon    -->  EpeeLongue      : "«create»"
+GestionDonjon    -->  Fronde          : "«create»"
+GestionDonjon    -->  Harnois         : "«create»"
+GestionDonjon    -->  Masse           : "«create»"
+GestionDonjon    -->  Monstre         : "«create»"
+GestionDonjon    -->  Rapiere         : "«create»"
+Guerrier         -->  Arbalete        : "«create»"
+Guerrier         -->  CotteDeMailles  : "«create»"
+Guerrier         -->  EpeeLongue      : "«create»"
+Guerrier        "1" *--> "m_equipements\n*" Equipement
+Initialiseur     -->  Jeu             : "«create»"
+Jeu              -->  Clerc           : "«create»"
+Jeu              -->  Elf             : "«create»"
+Jeu              -->  Guerrier        : "«create»"
+Jeu              -->  Halfelin        : "«create»"
+Jeu              -->  Humain          : "«create»"
+Jeu             "1" *--> "m_joueurs\n*" Joueur
+Jeu              -->  Joueur          : "«create»"
+Jeu              -->  Magicien        : "«create»"
+Jeu              -->  Nain            : "«create»"
+Jeu              -->  Roublard        : "«create»"
+Joueur           -->  Arme            : "«create»"
+Joueur           -->  Armure          : "«create»"
+Joueur          "1" *--> "m_classe\n1" Classe
+Joueur          "1" *--> "m_race\n1" Race
+Magicien         -->  ArmeMagique     : "«create»"
+Magicien         -->  Baton           : "«create»"
+Magicien         -->  BoogieWoogie    : "«create»"
+Magicien        "1" *--> "m_equipements\n*" Equipement
+Magicien         -->  Fronde          : "«create»"
+Magicien         -->  Guerison        : "«create»"
+Magicien        "1" *--> "m_sorts\n*" Sort
+Monstre          -->  Arme            : "«create»"
+Monstre          -->  Armure          : "«create»"
+Personnage      "1" *--> "m_arme\n1" Arme
+Personnage      "1" *--> "m_armure\n1" Armure
+Personnage      "1" *--> "m_inventaire\n*" Equipement
+Personnage       -->  Pion            : "«create»"
+Personnage      "1" *--> "m_pion\n1" Pion
+Personnage       -->  SlotArme        : "«create»"
+Personnage       -->  SlotArmure      : "«create»"
+Personnage      "1" *--> "m_sorts\n*" Sort
+Personnage      "1" *--> "m_type\n1" TypePersonnage
+Roublard         -->  Arc             : "«create»"
+Roublard        "1" *--> "m_equipements\n*" Equipement
+Roublard         -->  Rapiere         : "«create»"
+SlotArme        "1" *--> "m_perso\n1" Personnage
+SlotArmure      "1" *--> "m_perso\n1" Personnage
 @enduml

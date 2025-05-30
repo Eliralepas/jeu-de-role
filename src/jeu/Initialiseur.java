@@ -2,7 +2,7 @@ package jeu;
 
 import affichage.Affichage;
 
-public class Initialiseur {
+public abstract class Initialiseur {
 
     public static void lancerJeu() {
         Affichage.choisirLangue();
