@@ -119,7 +119,12 @@ public class Donjon {
     private void creerObstacles(){
         //Crée et ajoute autant d'obstacles que souhaité
         System.out.println(this);
-        ajouterObstacles(demanderCreationObstacles(m_plateau, getNbMaxCreation()));
+        int nbObstacles = demanderNombreCreation(0, getNbMaxCreation(), Affichage.demandeNbCreationObstacle());
+        for(int i = 0; i<nbObstacles; i++){
+            CasePlateau caseChoisie = demanderCase(m_plateau, Affichage.caseObstacleAjout(), TypeCase.AJOUT);
+            ajouterObstacle(caseChoisie);
+            System.out.println(this);
+        }
     }
 
     private void creerMonstres(){
@@ -151,12 +156,6 @@ public class Donjon {
         m_plateau[y][x] = CASE_OBSTACLE;
         m_casesLibres--;
         System.out.println(this);
-    }
-
-    private void ajouterObstacles(ArrayList<CasePlateau> cases){
-        for (CasePlateau caseChoisie: cases){
-            ajouterObstacle(caseChoisie);
-        }
     }
 
     private void ajouterEquipement(Equipement equip, CasePlateau caseChoisie){
@@ -219,12 +218,14 @@ public class Donjon {
         //Gère chaque tour de chaque personnage tant que le donjon n'est pas terminé
         EtatDonjon etat = EtatDonjon.EN_COURS;
         while(etat == EtatDonjon.EN_COURS){
+            Affichage.appuyerSurEntree();
+            System.console().readLine();
             m_tour++;
             lancerInitiative(m_personnages); //Attribuer l'initiative à chaque personnage
             triParInitiative(m_personnages); //Trier les personnage par initiative décroissante
             etat = tourDonjon();
         }
-        return true;
+        return etat == EtatDonjon.VICTOIRE;
     }
 
     private EtatDonjon tourDonjon(){
@@ -268,8 +269,10 @@ public class Donjon {
                 if (perso.estMort()){
                     return etat;
                 }
+                System.out.println(this);
+                Affichage.appuyerSurEntree();
+                System.console().readLine();
             }
-            System.out.println(this);
         }
         return etat;
     }
@@ -391,6 +394,7 @@ public class Donjon {
     public boolean tryLancerSort(Personnage perso){
         //Vérifie que le joueur choisi peut lancer un sort, si oui lance le sort choisi
         if (!perso.peutLancerSorts()){
+            Affichage.peutPasLancerSort(perso);
             return false;
         }
         boolean resultat = perso.lancerSort(getPersoVivants(m_personnages));

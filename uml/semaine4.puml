@@ -110,6 +110,8 @@ abstract class Affichage <<abstract>>{
   + {static} afficheMsgFinDonjon(EtatDonjon)
   + {static} getInfosPerso(String, int, int): String
   + {static} aucuneArmeEquipee()
+  + {static} peutPasLancerSort(Personnage personnage)
+  + {static} appuyerSurEntree()
 }
 class Anglais implements Langue{
   + <<create>> Anglais()
@@ -218,6 +220,8 @@ class Anglais implements Langue{
   + choisirSort(): String
   + mauvaisFormatCase()
   + nomRoublard(): String
+  + peutPasLancerSort(Personnage personnage)
+  + appuyerSurEntree()
 }
 class Arbalete extends Arme{
   + <<create>> Arbalete()
@@ -334,7 +338,6 @@ class Donjon {
   - ajouterEquipements(ArrayList<Equipement>)
   - affichageTour(Personnage): String
   - getEquipement(Pion): Equipement
-  - ajouterObstacles(ArrayList<CasePlateau>)
   - infligerDegats()
   - choisirCase(String, TypeCase): CasePlateau
   - creerObstacles()
@@ -521,17 +524,18 @@ class Francais implements Langue{
   + aucuneSelection(String)
   + demandeNbCreationMonstre(): String
   + demandeMonstreEspece(): String
+  + peutPasLancerSort(Personnage personnage)
+  + appuyerSurEntree()
 }
 class Fronde extends Arme{
   + <<create>> Fronde()
 }
 abstract class GestionDonjon <<abstract>>{
-  + {static} demanderCreationObstacles(String[][], int): ArrayList<CasePlateau>
+  + {static} demanderNombreCreation(int, int, String): int
   + {static} demanderCreationEquipements(int): ArrayList<Equipement>
   + {static} demanderCreationMonstres(int): ArrayList<Personnage>
   + {static} demanderCase(String[][], String, TypeCase): CasePlateau
   + {static} demanderEquiper(Joueur)
-  - {static} demanderNombreCreation(int, int, String): int
 }
 class Guerison extends Sort{
   + <<create>> Guerison()
@@ -676,6 +680,8 @@ interface Langue << interface >> {
   + afficheCreationJoueur()
   + porteeAttaque(int)
   + getInfosPerso(String, int, int): String
+  + peutPasLancerSort(Personnage personnage)
+  + appuyerSurEntree()
 }
 class Magicien extends Classe{
   - m_equipements: ArrayList<Equipement>

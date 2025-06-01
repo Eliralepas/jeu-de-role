@@ -20,7 +20,7 @@ import static utils.Demande.demandeString;
 
 public abstract class GestionDonjon {
 
-    private static int demanderNombreCreation(int min, int max, String objectACreer){
+    public static int demanderNombreCreation(int min, int max, String objectACreer){
         //Renvoyer un entier correspondant au nombre de création voulu
         return demandeEntier(min, max, Affichage.demandeNbCreationObjet(objectACreer));
     }
@@ -35,15 +35,6 @@ public abstract class GestionDonjon {
             }
         }
         return caseChoisie;
-    }
-
-    public static ArrayList<CasePlateau> demanderCreationObstacles(String[][] plateau, int max){
-        ArrayList<CasePlateau> casesChoisies = new ArrayList<>();
-        int nbObstacles = demanderNombreCreation(0, max, Affichage.demandeNbCreationObstacle());
-        for (int i=0; i<nbObstacles; i++){
-            casesChoisies.add(demanderCase(plateau, Affichage.caseObstacleAjout(), TypeCase.AJOUT));
-        }
-        return casesChoisies;
     }
 
     public static ArrayList<Personnage> demanderCreationMonstres(int max){

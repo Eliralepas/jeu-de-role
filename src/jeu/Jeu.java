@@ -25,14 +25,15 @@ public class Jeu {
     public void jouer(){
         //Lance le jeu
         int i=0;
-        boolean finJeu = false;
-        while(i<m_nbDonjons && !finJeu){
+        boolean pasDefaite = true;
+        while(i<m_nbDonjons && pasDefaite){
             Donjon d = Donjon.creerDonjon(i+1, m_joueurs);
-            finJeu = d.jouerDonjon();
-            if(!finJeu){ //Récupérer tous les joueurs
+            pasDefaite = d.jouerDonjon();
+            if(pasDefaite){ //Récupérer tous les joueurs
                 m_joueurs.clear();
                 m_joueurs.addAll(d.recupererJoueurs());
             }
+            i++;
         }
     }
 

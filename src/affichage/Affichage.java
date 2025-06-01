@@ -212,6 +212,10 @@ public abstract class Affichage {
         return m_langue.demandeLignesDonjon();
     }
 
+    public static void appuyerSurEntree(){
+        m_langue.appuyerSurEntree();
+    }
+
     public static String afficherPlateauDonjon(int colonnes, int lignes, String[][] plateau){
         StringBuilder affichage = new StringBuilder("      ");
         //Le haut de l'affichage avec les lettres de l'alphabet
@@ -273,6 +277,10 @@ public abstract class Affichage {
 
     public static void aucunEquipement(){
         m_langue.aucunEquipement();
+    }
+
+    public static void peutPasLancerSort(Personnage personnage){
+        m_langue.peutPasLancerSort(personnage);
     }
 
     public static void recupEquipement(String equipement){

@@ -1,5 +1,6 @@
 package affichage.langues;
 
+import personnages.Personnage;
 import personnages.equipements.Equipement;
 import personnages.equipements.armes.Arme;
 import personnages.equipements.armures.Armure;
@@ -109,11 +110,15 @@ public interface Langue {
 
     String afficherLegendePlateau();
 
+    void appuyerSurEntree();
+
     String donjon();
 
     void afficheMsgFinDonjon(EtatDonjon etat);
 
     void aucunEquipement();
+
+    void peutPasLancerSort(Personnage personnage);
 
     void recupEquipement(String equipement);
 

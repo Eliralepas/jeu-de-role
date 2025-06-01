@@ -1,6 +1,7 @@
 package affichage.langues;
 
 import donjon.casePlateau.Symbols;
+import personnages.Personnage;
 import personnages.equipements.Equipement;
 import personnages.equipements.armes.Arme;
 import personnages.equipements.armures.Armure;
@@ -146,7 +147,7 @@ public class Francais implements Langue {
 
     public void guerirPerso(String nom, int pv, int nouveauxPv, int pvMax){
         System.out.println(nom + " regagne " + pv + " points de vie.");
-        System.out.println(nom + " a maintenant " + nouveauxPv + "/" + pvMax + " points de vie.");
+        System.out.println(nom + " a maintenant " + nouveauxPv + "/" + pvMax + " points de vie.\n");
     }
 
 
@@ -264,6 +265,10 @@ public class Francais implements Langue {
         return "Entrez le nombre de lignes du donjon: ";
     }
 
+    public void appuyerSurEntree(){
+        System.out.println("Veuillez appuyer sur 'ENTREE' pour continuer.");
+    }
+
     public String afficherLegendePlateau(){
         //Affichage de la légende
         return "     " + Symbols.CASE_VIDE + "Case vide   │  " + Symbols.CASE_EQUIPEMENT + "Equipement   │   " + Symbols.CASE_OBSTACLE + " Obstacle\n";
@@ -290,6 +295,10 @@ public class Francais implements Langue {
 
     public void aucunEquipement(){
         System.out.println("Vous n'avez aucun équipement à équiper.");
+    }
+
+    public void peutPasLancerSort(Personnage personnage){
+        System.out.println(personnage.getNom() + " ne peut pas lancer de sorts.");
     }
 
     public void recupEquipement(String equipement){
