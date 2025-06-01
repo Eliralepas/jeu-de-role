@@ -1,8 +1,10 @@
 package personnages.equipements.armes;
 
+import affichage.Affichage;
+
 public class Baton extends Arme{
 
     public Baton() {
-        super("Bâton", 6, 1, false);
+        super(Affichage.nomBaton(), 6, 1, false);
     }
 }

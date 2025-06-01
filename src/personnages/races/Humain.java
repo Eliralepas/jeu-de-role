@@ -1,8 +1,10 @@
 package personnages.races;
 
+import affichage.Affichage;
+
 public class Humain extends Race{
 
     public Humain() {
-        super("Humain", 2, 2, 2, 2);
+        super(Affichage.nomHumain(), 2, 2, 2, 2);
     }
 }

@@ -1,8 +1,10 @@
 package personnages.equipements.armures;
 
+import affichage.Affichage;
+
 public class ArmureEcailles extends Armure{
 
     public ArmureEcailles() {
-        super("Armure d'écailles", 9, false);
+        super(Affichage.nomArmureEcailles(), 9, false);
     }
 }

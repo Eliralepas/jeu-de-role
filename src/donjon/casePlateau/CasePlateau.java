@@ -1,5 +1,11 @@
 package donjon.casePlateau;
 
+import affichage.Affichage;
+import utils.TypeCase;
+
+import static donjon.casePlateau.Symbols.CASE_EQUIPEMENT;
+import static donjon.casePlateau.Symbols.CASE_VIDE;
+
 public class CasePlateau {
     private final String m_case;
     private int m_colonne;
@@ -7,12 +13,12 @@ public class CasePlateau {
 
     public CasePlateau(String c){
         m_case = c;
-        if(estValide()){
+        if(estBonFormat()){
             convertirString();
         }
     }
 
-    public void convertirString(){
+    private void convertirString(){
         m_colonne = m_case.charAt(0) - 65; // On veut que la lettre A représente l'index 0 et 'A' = 65 donc index = lettre - 65.
         if (m_case.length() == 2){
             m_ligne = m_case.charAt(1) - 49; // On veut que le chiffre 1 représente l'index 0 et '1' = 49 donc index = lettre - 49.
@@ -22,21 +28,46 @@ public class CasePlateau {
         }
     }
 
-    public boolean estValide(){
+    public boolean estValide(String[][] plateau, TypeCase action){
+        //Vérifie si la case choisie est valide
+        if (!estBonFormat()){
+            Affichage.mauvaisFormatCase();
+            return false;
+        }
+        int x = m_colonne;
+        int y = m_ligne;
+        int nbColonnes = plateau.length;
+        int nbLignes = plateau[0].length;
+        if (0 > x || x > nbColonnes -1 || 0 > y || y > nbLignes -1){
+            Affichage.caseInexistante();
+            return false;
+        }
+        boolean estValide = switch (action) {
+            case AJOUT -> plateau[y][x].equals(CASE_VIDE);
+            case DEPLACEMENT -> plateau[y][x].equals(CASE_VIDE) || plateau[y][x].equals(CASE_EQUIPEMENT);
+        };
+        if(!estValide){
+            Affichage.caseInvalide();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean estBonFormat(){
         //Renvoyer true si la case est au bon format.
         int n = m_case.length();
         return (2 <= n && n <= 3) && (estLettre(m_case.charAt(0)) && estNombre(m_case.substring(1, n)));
     }
 
-    public boolean estLettre(char c){
+    private boolean estLettre(char c){
         return (65 <= c && c <= 90);
     }
 
-    public boolean estChiffre(char c){
+    private boolean estChiffre(char c){
         return (48 <= c && c <= 57);
     }
 
-    public boolean estNombre(String s){
+    private boolean estNombre(String s){
         if (s.length() == 1){
             return estChiffre(s.charAt(0));
         }

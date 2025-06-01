@@ -1,8 +1,10 @@
 package personnages.equipements.armes;
 
+import affichage.Affichage;
+
 public class Epee2Mains extends Arme{
 
     public Epee2Mains() {
-        super("Épée à deux mains", 6, 1, true, 2);
+        super(Affichage.nomEpee2Mains(), 6, 1, true, 2);
     }
 }

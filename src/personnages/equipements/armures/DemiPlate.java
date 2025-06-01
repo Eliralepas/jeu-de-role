@@ -1,8 +1,10 @@
 package personnages.equipements.armures;
 
+import affichage.Affichage;
+
 public class DemiPlate extends Armure{
 
     public DemiPlate() {
-        super("Demi-plate", 10, false);
+        super(Affichage.nomDemiPlate(), 10, false);
     }
 }

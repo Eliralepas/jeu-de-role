@@ -1,13 +1,13 @@
 package personnages.classes;
 
 import personnages.equipements.Equipement;
-import personnages.equipements.armes.Arbalete;
 import personnages.equipements.armes.Baton;
 import personnages.equipements.armes.Fronde;
-import personnages.equipements.sorts.ArmeMagique;
-import personnages.equipements.sorts.BoogieWoogie;
-import personnages.equipements.sorts.Guerison;
-import personnages.equipements.sorts.Sort;
+import personnages.sorts.ArmeMagique;
+import personnages.sorts.BoogieWoogie;
+import personnages.sorts.Guerison;
+import personnages.sorts.Sort;
+import affichage.Affichage;
 
 import java.util.ArrayList;
 
@@ -27,6 +27,6 @@ public class Magicien extends Classe{
     }
 
     public Magicien() {
-        super("Magicien", 16, m_equipements, m_sorts);
+        super(Affichage.nomMagicien(), 16, m_equipements, m_sorts);
     }
 }
