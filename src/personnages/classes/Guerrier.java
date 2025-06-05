@@ -9,15 +9,12 @@ import affichage.Affichage;
 import java.util.ArrayList;
 
 public class Guerrier extends Classe{
-    private static final ArrayList<Equipement> m_equipements;
-    static {
-        m_equipements = new ArrayList<>();
-        m_equipements.add(new CotteDeMailles());
-        m_equipements.add(new EpeeLongue());
-        m_equipements.add(new Arbalete());
-    }
 
     public Guerrier() {
-        super(Affichage.nomGuerrier(), 20, m_equipements);
+        ArrayList<Equipement> equipements = new ArrayList<>();
+        equipements.add(new CotteDeMailles());
+        equipements.add(new EpeeLongue());
+        equipements.add(new Arbalete());
+        super(Affichage.nomGuerrier(), 20, equipements);
     }
 }

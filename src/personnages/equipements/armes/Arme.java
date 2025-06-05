@@ -63,6 +63,19 @@ public class Arme extends Equipement {
         return m_portee > 1;
     }
 
+    public static ArrayList<Arme> getArmes(){
+        ArrayList<Arme> armes = new ArrayList<>();
+        armes.add(new Arbalete());
+        armes.add(new Arc());
+        armes.add(new Baton());
+        armes.add(new Epee2Mains());
+        armes.add(new EpeeLongue());
+        armes.add(new Fronde());
+        armes.add(new Masse());
+        armes.add(new Rapiere());
+        return armes;
+    }
+
     @Override
     public String toString() {
         return super.toString() + Affichage.toStringArme(m_nbLance, m_amplitudeDegats, m_portee, m_estLourd);

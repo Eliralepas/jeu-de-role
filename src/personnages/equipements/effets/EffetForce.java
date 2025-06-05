@@ -18,4 +18,9 @@ public class EffetForce implements Effet {
     public void retirer(Personnage perso) {
         perso.setForce(perso.getForce() - m_valeur);
     }
+
+    @Override
+    public String toString() {
+        return "Effet Force: [valeur = " + m_valeur + "]";
+    }
 }

@@ -10,7 +10,7 @@ public class Monstre extends Personnage{
     private final int m_numero;
 
     public Monstre(String espece, String symbol, int numero, int pv, int force, int dexterite, int vitesse, int amplitudeDegats, int portee, int classeArmure){
-        super(espece, symbol, TypePersonnage.MONSTRE, pv, force, dexterite, vitesse, 0, new Arme("", amplitudeDegats, portee, false), new Armure("", classeArmure, false), new ArrayList<>(), new ArrayList<>());
+        super(espece, symbol, TypePersonnage.MONSTRE, pv, force, dexterite, vitesse, 0, new Arme("attaque monstre", amplitudeDegats, portee, false), new Armure("armure monstre", classeArmure, false), new ArrayList<>(), new ArrayList<>());
         m_numero = numero;
     }
 

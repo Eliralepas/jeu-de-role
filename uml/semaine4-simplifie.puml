@@ -1,0 +1,333 @@
+@startuml
+
+skinparam AttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml
+
+package affichage {
+    abstract class Affichage <<abstract>>{
+
+    }
+
+    package langue
+    {
+        interface Langue << interface >> {
+        }
+
+        class Anglais implements Langue{
+        }
+
+        class Francais implements Langue{
+        }
+    }
+}
+
+package donjon
+{
+    class Donjon {
+
+    }
+
+    abstract class GestionDonjon <<abstract>>{
+    }
+
+    package casePlateau
+    {
+        class CasePlateau {
+        }
+
+        abstract class Symbols <<abstract>>{
+        }
+    }
+
+    package pion
+    {
+        class Pion {
+        }
+    }
+}
+
+package jeu
+{
+    class Jeu {
+    }
+
+    abstract class Initialiseur <<abstract>>{
+    }
+}
+
+package personnages
+{
+    abstract class Personnage <<abstract>>{
+    }
+
+    class Monstre extends Personnage{
+    }
+
+    class Joueur extends Personnage{
+    }
+
+    package classes
+    {
+        abstract class Classe <<abstract>>{
+        }
+
+        class Clerc extends Classe{
+        }
+
+        class Guerrier extends Classe{
+        }
+
+        class Magicien extends Classe{
+        }
+
+        class Roublard extends Classe{
+        }
+    }
+
+    package races
+    {
+        abstract class Race <<abstract>>{
+        }
+
+        class Elf extends Race{
+        }
+
+        class Halfelin extends Race{
+        }
+
+        class Humain extends Race{
+        }
+
+        class Nain extends Race{
+        }
+    }
+
+    package equipements
+    {
+        abstract class Equipement <<abstract>>{
+        }
+
+        package armes
+        {
+            class Arme{
+
+            }
+
+            class Arbalete extends Arme{
+            }
+
+            class Arc extends Arme{
+            }
+
+            class Baton extends Arme{
+            }
+
+            class Epee2Mains extends Arme{
+            }
+
+            class EpeeLongue extends Arme{
+            }
+
+            class Fronde extends Arme{
+            }
+
+            class Masse extends Arme{
+            }
+
+            class Rapiere extends Arme{
+            }
+        }
+
+        package armures
+        {
+            class Armure{
+            }
+
+            class ArmureEcailles extends Armure{
+            }
+
+            class CotteDeMailles extends Armure{
+            }
+
+            class DemiPlate extends Armure{
+            }
+
+            class Harnois extends Armure{
+            }
+        }
+
+        package effets
+        {
+            interface Effet << interface >> {
+            }
+
+            class EffetForce implements Effet{
+            }
+
+            class EffetVitesse implements Effet{
+            }
+
+            abstract class EffetsStandards <<abstract>>{
+            }
+        }
+
+        package slots
+        {
+            interface SlotEquipable << interface >> {
+            }
+
+            class SlotArme implements SlotEquipable{
+            }
+
+            class SlotArmure implements SlotEquipable{
+            }
+        }
+    }
+
+    package sorts
+    {
+        abstract class Sort <<abstract>>{
+        }
+
+        class ArmeMagique extends Sort{
+        }
+
+        class BoogieWoogie extends Sort{
+        }
+
+        class Guerison extends Sort{
+        }
+    }
+}
+
+package utils
+{
+    abstract class De <<abstract>>{
+
+    }
+
+    abstract class Demande <<abstract>>{
+
+    }
+
+    enum EtatDonjon << enumerate >> {
+      EN_COURS
+      DEFAITE
+      VICTOIRE
+    }
+
+    enum TypeCase << enumerate >> {
+      DEPLACEMENT
+      AJOUT
+    }
+
+    enum TypeEquipement << enumerate >> {
+      ARMURE
+      ARME
+    }
+
+    enum TypePersonnage << enumerate >> {
+      MONSTRE
+      JOUEUR
+    }
+}
+
+class Main {
+  + main()
+}
+
+Arme -|> Equipement
+Armure -|> Equipement
+
+@enduml
+Affichage        ->  Anglais         : "«create»"
+Affichage        ->  Francais        : "«create»"
+Affichage       "1" *-> "m_langue\n1" Langue
+BoogieWoogie     ->  Pion            : "«create»"
+Classe          "1" *-> "m_equipements\n*" Equipement
+Classe          "1" *-> "m_sorts\n*" Sort
+Clerc            ->  Arbalete        : "«create»"
+Clerc            ->  ArmureEcailles  : "«create»"
+Clerc           "1" *-> "m_equipements\n*" Equipement
+Clerc            ->  Guerison        : "«create»"
+Clerc            ->  Masse           : "«create»"
+Clerc           "1" *-> "m_sorts\n*" Sort
+Donjon           ->  Arbalete        : "«create»"
+Donjon           ->  CasePlateau     : "«create»"
+Donjon           ->  CotteDeMailles  : "«create»"
+Donjon           ->  DemiPlate       : "«create»"
+Donjon           ->  Donjon          : "«create»"
+Donjon           ->  EpeeLongue      : "«create»"
+Donjon          "1" *-> "m_equipements\n*" Equipement
+Donjon           ->  Masse           : "«create»"
+Donjon           ->  Monstre         : "«create»"
+Donjon          "1" *-> "m_personnages\n*" Personnage
+Donjon           ->  Pion            : "«create»"
+EffetsStandards "1" *-> "ARMURE_LOURDE\n*" Effet
+EffetsStandards  ->  EffetForce      : "«create»"
+EffetsStandards  ->  EffetVitesse    : "«create»"
+Equipement      "1" *-> "m_effets\n*" Effet
+Equipement       ->  Pion            : "«create»"
+Equipement      "1" *-> "m_pion\n1" Pion
+Equipement      "1" *-> "m_type\n1" TypeEquipement
+GestionDonjon    ->  Arbalete        : "«create»"
+GestionDonjon    ->  Arc             : "«create»"
+GestionDonjon    ->  ArmureEcailles  : "«create»"
+GestionDonjon    ->  Baton           : "«create»"
+GestionDonjon    ->  CasePlateau     : "«create»"
+GestionDonjon    ->  CotteDeMailles  : "«create»"
+GestionDonjon    ->  DemiPlate       : "«create»"
+GestionDonjon    ->  Epee2Mains      : "«create»"
+GestionDonjon    ->  EpeeLongue      : "«create»"
+GestionDonjon    ->  Fronde          : "«create»"
+GestionDonjon    ->  Harnois         : "«create»"
+GestionDonjon    ->  Masse           : "«create»"
+GestionDonjon    ->  Monstre         : "«create»"
+GestionDonjon    ->  Rapiere         : "«create»"
+Guerrier         ->  Arbalete        : "«create»"
+Guerrier         ->  CotteDeMailles  : "«create»"
+Guerrier         ->  EpeeLongue      : "«create»"
+Guerrier        "1" *-> "m_equipements\n*" Equipement
+Initialiseur     ->  Jeu             : "«create»"
+Jeu              ->  Clerc           : "«create»"
+Jeu              ->  Elf             : "«create»"
+Jeu              ->  Guerrier        : "«create»"
+Jeu              ->  Halfelin        : "«create»"
+Jeu              ->  Humain          : "«create»"
+Jeu             "1" *-> "m_joueurs\n*" Joueur
+Jeu              ->  Joueur          : "«create»"
+Jeu              ->  Magicien        : "«create»"
+Jeu              ->  Nain            : "«create»"
+Jeu              ->  Roublard        : "«create»"
+Joueur           ->  Arme            : "«create»"
+Joueur           ->  Armure          : "«create»"
+Joueur          "1" *-> "m_classe\n1" Classe
+Joueur          "1" *-> "m_race\n1" Race
+Magicien         ->  ArmeMagique     : "«create»"
+Magicien         ->  Baton           : "«create»"
+Magicien         ->  BoogieWoogie    : "«create»"
+Magicien        "1" *-> "m_equipements\n*" Equipement
+Magicien         ->  Fronde          : "«create»"
+Magicien         ->  Guerison        : "«create»"
+Magicien        "1" *-> "m_sorts\n*" Sort
+Monstre          ->  Arme            : "«create»"
+Monstre          ->  Armure          : "«create»"
+Personnage      "1" *-> "m_arme\n1" Arme
+Personnage      "1" *-> "m_armure\n1" Armure
+Personnage      "1" *-> "m_inventaire\n*" Equipement
+Personnage       ->  Pion            : "«create»"
+Personnage      "1" *-> "m_pion\n1" Pion
+Personnage       ->  SlotArme        : "«create»"
+Personnage       ->  SlotArmure      : "«create»"
+Personnage      "1" *-> "m_sorts\n*" Sort
+Personnage      "1" *-> "m_type\n1" TypePersonnage
+Roublard         ->  Arc             : "«create»"
+Roublard        "1" *-> "m_equipements\n*" Equipement
+Roublard         ->  Rapiere         : "«create»"
+SlotArme        "1" *-> "m_perso\n1" Personnage
+SlotArmure      "1" *-> "m_perso\n1" Personnage
+
+@enduml
+
+@enduml

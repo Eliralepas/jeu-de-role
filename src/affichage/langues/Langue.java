@@ -62,7 +62,11 @@ public interface Langue {
 
     /// Affichage classe GestionDonjon
 
-    String creerEquipementDonjon();
+    String demandeEquipement();
+
+    String demandeArme();
+
+    String demandeArmure();
 
     String demandeNbCreationObjet(String objectACreer);
 

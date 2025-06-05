@@ -104,4 +104,9 @@ public abstract class Demande {
         }
         return joueurs;
     }
+
+    @Override
+    public String toString() {
+        return "Demande";
+    }
 }

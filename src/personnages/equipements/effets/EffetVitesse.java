@@ -18,4 +18,9 @@ public class EffetVitesse implements Effet {
     public void retirer(Personnage perso) {
         perso.setVitesse(perso.getVitesse() - m_valeur);
     }
+
+    @Override
+    public String toString() {
+        return "Effet Vitesse: [valeur = " + m_valeur + "]";
+    }
 }

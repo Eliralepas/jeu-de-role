@@ -83,4 +83,9 @@ public class CasePlateau {
         //Renvoyer la ligne correspondante.
         return  m_ligne;
     }
+
+    @Override
+    public String toString() {
+        return m_case;
+    }
 }
