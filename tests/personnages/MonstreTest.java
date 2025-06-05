@@ -3,8 +3,7 @@ package personnages;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import personnages.equipements.armes.Arme;
-import personnages.equipements.armures.Armure;
+import static utils.TypePersonnage.MONSTRE;
 
 class MonstreTest {
     private Monstre monstre1;
@@ -13,12 +12,13 @@ class MonstreTest {
     @BeforeEach
     void setUp() {
         monstre1 = new Monstre("Dragon", "D", 1, 10, 5, 5, 5, 6, 1, 12);
-        monstre2 = new Monstre("Dragon", "D", 2, 10, 5, 5, 5, 6, 1, 12);
+        monstre2 = new Monstre("Dragon", "X", 2, 10, 5, 5, 5, 6, 1, 12);
     }
 
     @Test
     void testConstructeur() {
         assertEquals("Dragon", monstre1.sePresenter());
+        assertEquals("D", monstre1.getSymbol());
         assertEquals(10, monstre1.getPv());
         assertEquals(5, monstre1.getForce());
         assertEquals(5, monstre1.getDexterite());
@@ -26,12 +26,11 @@ class MonstreTest {
         assertEquals(0, monstre1.getInitiative());
         assertEquals(1, monstre1.getPortee());
         assertEquals(12, monstre1.getClasseArmure());
-        assertEquals(6, monstre1.getAmplitudeDegatsArme());
     }
 
     @Test
-    void testEstJoueur() {
-        assertFalse(monstre1.estJoueur());
+    void testEstMonstre() {
+        assertEquals(MONSTRE, monstre1.getType());
     }
 
     @Test
@@ -47,14 +46,22 @@ class MonstreTest {
     @Test
     void testSubirAttaque() {
         int pvInitiaux = monstre1.getPv();
-        monstre1.subirAttaque(3);
+        monstre1.subirAttaque(3, "MOI");
         assertEquals(pvInitiaux - 3, monstre1.getPv());
+    }
+
+    @Test
+    void testGuerir(){
+        int pvMax = monstre1.getPvMax();
+        monstre1.subirAttaque(3, "MOI");
+        monstre1.guerir(3);
+        assertEquals(pvMax, monstre1.getPv());
     }
 
     @Test
     void testEstMort() {
         assertFalse(monstre1.estMort());
-        monstre1.subirAttaque(monstre1.getPv());
+        monstre1.subirAttaque(100, "MOI");
         assertTrue(monstre1.estMort());
     }
 
