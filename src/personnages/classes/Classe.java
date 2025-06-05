@@ -14,16 +14,14 @@ public abstract class Classe {
     public Classe(String nom, int pv, ArrayList<Equipement> equipements){
         m_nom = nom;
         m_pv = pv;
-        m_equipements = new ArrayList<>();
-        m_equipements.addAll(equipements);
+        m_equipements = new ArrayList<>(equipements);
         m_sorts = new ArrayList<>();
     }
 
     public Classe(String nom, int pv, ArrayList<Equipement> equipements, ArrayList<Sort> sorts){
         m_nom = nom;
         m_pv = pv;
-        m_equipements = new ArrayList<>();
-        m_equipements.addAll(equipements);
+        m_equipements = equipements;
         m_sorts = sorts;
     }
 
@@ -34,11 +32,21 @@ public abstract class Classe {
 
     public ArrayList<Equipement> getEquipements(){
         //Renvoie la liste des équipements.
-        return m_equipements;
+        return new ArrayList<>(m_equipements);
     }
 
     public ArrayList<Sort> getSorts(){
-        return m_sorts;
+        //Renvoie la liste des sorts.
+        return new ArrayList<>(m_sorts);
+    }
+
+    public static ArrayList<Classe> getClasses(){
+        ArrayList<Classe> classes = new ArrayList<>();
+        classes.add(new Clerc());
+        classes.add(new Guerrier());
+        classes.add(new Magicien());
+        classes.add(new Roublard());
+        return classes;
     }
 
     @Override

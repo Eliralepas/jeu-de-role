@@ -8,4 +8,9 @@ public abstract class Initialiseur {
         Affichage.choisirLangue();
         new Jeu();
     }
+
+    @Override
+    public String toString() {
+        return "Initialiseur";
+    }
 }

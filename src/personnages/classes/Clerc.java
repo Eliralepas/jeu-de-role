@@ -11,20 +11,16 @@ import affichage.Affichage;
 import java.util.ArrayList;
 
 public class Clerc extends Classe{
-    private static final ArrayList<Equipement> m_equipements;
-    static {
-        m_equipements = new ArrayList<>();
-        m_equipements.add(new Masse());
-        m_equipements.add(new ArmureEcailles());
-        m_equipements.add(new Arbalete());
-    }
-    private static final ArrayList<Sort> m_sorts;
-    static {
-        m_sorts = new ArrayList<>();
-        m_sorts.add(new Guerison());
-    }
 
     public Clerc() {
-        super(Affichage.nomClerc(), 16, m_equipements, m_sorts);
+        ArrayList<Equipement> equipements = new ArrayList<>();
+        equipements.add(new Masse());
+        equipements.add(new ArmureEcailles());
+        equipements.add(new Arbalete());
+
+        ArrayList<Sort> sorts = new ArrayList<>();
+        sorts.add(new Guerison());
+
+        super(Affichage.nomClerc(), 16, equipements, sorts);
     }
 }

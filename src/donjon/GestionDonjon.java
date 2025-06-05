@@ -5,24 +5,21 @@ import personnages.Joueur;
 import personnages.Monstre;
 import personnages.Personnage;
 import personnages.equipements.Equipement;
-import personnages.equipements.armes.*;
-import personnages.equipements.armures.ArmureEcailles;
-import personnages.equipements.armures.CotteDeMailles;
-import personnages.equipements.armures.DemiPlate;
-import personnages.equipements.armures.Harnois;
 import affichage.Affichage;
 import utils.TypeCase;
 
 import java.util.ArrayList;
 
+import static personnages.equipements.armes.Arme.getArmes;
+import static personnages.equipements.armures.Armure.getArmures;
 import static utils.Demande.demandeEntier;
 import static utils.Demande.demandeString;
 
 public abstract class GestionDonjon {
 
-    public static int demanderNombreCreation(int min, int max, String objectACreer){
+    public static int demanderNombreCreation(int min, int max, String objetACreer){
         //Renvoyer un entier correspondant au nombre de création voulu
-        return demandeEntier(min, max, Affichage.demandeNbCreationObjet(objectACreer));
+        return demandeEntier(min, max, Affichage.demandeNbCreationObjet(objetACreer));
     }
 
     public static CasePlateau demanderCase(String[][] plateau, String element, TypeCase action){
@@ -60,24 +57,11 @@ public abstract class GestionDonjon {
         ArrayList<Equipement> equipements = new ArrayList<>();
         int nbEquipements = demanderNombreCreation(0, max, Affichage.demandeNbCreationEquipement());
         for (int i=0; i<nbEquipements; i++){
-            Equipement equipementChoisi = switch (demandeEntier(1, 12, Affichage.creerEquipementDonjon())) {
-                case 1 -> new Arbalete();
-                case 2 -> new Arc();
-                case 3 -> new Baton();
-                case 4 -> new EpeeLongue();
-                case 5 -> new Fronde();
-                case 6 -> new Masse();
-                case 7 -> new Rapiere();
-                case 8 -> new Epee2Mains();
-                case 9 -> new ArmureEcailles();
-                case 10 -> new CotteDeMailles();
-                case 11 -> new DemiPlate();
-                case 12 -> new Harnois();
-                default -> null;
-            };
-            if (equipementChoisi != null){
-                equipements.add(equipementChoisi);
-            }
+            ArrayList<Equipement> listeEquipements = new ArrayList<>();
+            listeEquipements.addAll(getArmes());
+            listeEquipements.addAll(getArmures());
+            int numero = demandeEntier(1, 12, Affichage.creerEquipementDonjon());
+            equipements.add(listeEquipements.get(numero));
         }
         return equipements;
     }
@@ -93,5 +77,10 @@ public abstract class GestionDonjon {
                 joueur.equiper();
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Gestion du donjon";
     }
 }

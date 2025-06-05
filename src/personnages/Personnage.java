@@ -33,7 +33,7 @@ public abstract class Personnage {
     private final ArrayList<Sort> m_sorts;
     private final TypePersonnage m_type;
 
-    protected Personnage(String nom, String symbol, TypePersonnage type, int pv, int force, int dexterite, int vitesse, int initiative, Arme arme, Armure armure, ArrayList<Equipement> inventaire, ArrayList<Sort> sorts) {
+    public Personnage(String nom, String symbol, TypePersonnage type, int pv, int force, int dexterite, int vitesse, int initiative, Arme arme, Armure armure, ArrayList<Equipement> inventaire, ArrayList<Sort> sorts) {
         m_nom = nom;
         m_symbol = symbol;
         m_type = type;

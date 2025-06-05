@@ -6,4 +6,9 @@ public abstract class De {
     public static int lance(int nbFaces){
         return new Random().nextInt(nbFaces) + 1;
     }
+
+    @Override
+    public String toString() {
+        return "De";
+    }
 }

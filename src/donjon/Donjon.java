@@ -112,8 +112,8 @@ public class Donjon {
         }
     }
 
-    private CasePlateau choisirCase(String object, TypeCase action){
-        return demanderCase(m_plateau, object, action);
+    private CasePlateau choisirCase(String objet, TypeCase action){
+        return demanderCase(m_plateau, objet, action);
     }
 
     private void creerObstacles(){

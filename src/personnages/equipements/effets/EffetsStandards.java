@@ -19,4 +19,9 @@ public abstract class EffetsStandards {
     }
 
     public static final ArrayList<Effet> SANS_EFFET = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Effets Standards";
+    }
 }
