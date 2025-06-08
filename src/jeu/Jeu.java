@@ -13,34 +13,28 @@ import static personnages.races.Race.getRaces;
 import static utils.Demande.demandeEntier;
 import static utils.Demande.demandeString;
 
-public class Jeu {
-    private final ArrayList<Joueur> m_joueurs;
-    private final int m_nbDonjons;
+public abstract class Jeu {
 
-    public Jeu(){
-        m_joueurs = new ArrayList<>();
-        creerJoueur();
-        m_nbDonjons = demandeEntier(1, 5, Affichage.demandeNbCreationDonjon()); //Max 5 donjons par défaut
-        jouer();
-    }
-
-    public void jouer(){
+    public static void jouer(){
         //Lance le jeu
+        ArrayList<Joueur> joueurs = creerJoueur();
+        int nbDonjons = demandeEntier(1, 5, Affichage.demandeNbCreationDonjon()); //Max 5 donjons par défaut
         int i=0;
         boolean pasDefaite = true;
-        while(i<m_nbDonjons && pasDefaite){
-            Donjon d = Donjon.creerDonjon(i+1, m_joueurs);
+        while(i<nbDonjons && pasDefaite){
+            Donjon d = Donjon.creerDonjon(i+1, joueurs);
             pasDefaite = d.jouerDonjon();
             if(pasDefaite){ //Récupérer tous les joueurs
-                m_joueurs.clear();
-                m_joueurs.addAll(d.recupererJoueurs());
+                joueurs.clear();
+                joueurs.addAll(d.recupererJoueurs());
             }
             i++;
         }
     }
 
-    public void creerJoueur(){
+    private static ArrayList<Joueur> creerJoueur(){
         //Demande à créer des joueurs
+        ArrayList<Joueur> joueurs = new ArrayList<>();
         Affichage.afficheCreationJoueur();
         int nbJoueurs = demandeEntier(1, 20, Affichage.demandeNbCreationJoueur()); //Max 20 joueurs par défaut
         for (int i=0; i<nbJoueurs; i++){
@@ -56,10 +50,11 @@ public class Jeu {
 
             if (raceJoueur != null && classeJoueur != null){
                 Joueur j = new Joueur(nom, raceJoueur, classeJoueur);
-                m_joueurs.add(j);
-                Affichage.confimationCreationJoueur(m_joueurs.size(), j.toString());
+                joueurs.add(j);
+                Affichage.confimationCreationJoueur(joueurs.size(), j.toString());
             }
         }
+        return joueurs;
     }
 
     @Override

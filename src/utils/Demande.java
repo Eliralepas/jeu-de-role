@@ -3,6 +3,7 @@ package utils;
 import affichage.Affichage;
 import personnages.Joueur;
 import personnages.Personnage;
+import personnages.TypePersonnage;
 
 import java.util.ArrayList;
 
@@ -54,9 +55,13 @@ public abstract class Demande {
         return persoChoisis;
     }
 
-    public static ArrayList<Personnage> demanderPersonnagesWithoutSelf(ArrayList<Personnage> personnages, int nbPerso, Personnage perso){
-        ArrayList<Personnage> listePersos = new ArrayList<>(personnages);
-        listePersos.remove(perso);
+    public static ArrayList<Personnage> demanderPersonnagesWithoutSelf(ArrayList<Personnage> personnages, int nbPerso, TypePersonnage typeExclu){
+        ArrayList<Personnage> listePersos = new ArrayList<>();
+        for(Personnage p : personnages){
+            if(p.getType() != typeExclu){
+                listePersos.add(p);
+            }
+        }
         return demanderPersonnages(listePersos, nbPerso);
     }
 

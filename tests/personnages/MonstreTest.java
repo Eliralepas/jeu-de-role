@@ -3,7 +3,7 @@ package personnages;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import static utils.TypePersonnage.MONSTRE;
+import static personnages.TypePersonnage.MONSTRE;
 
 class MonstreTest {
     private Monstre monstre1;

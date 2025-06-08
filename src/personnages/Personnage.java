@@ -10,8 +10,7 @@ import personnages.equipements.slots.SlotEquipable;
 import personnages.sorts.Sort;
 import affichage.Affichage;
 import utils.De;
-import utils.TypeEquipement;
-import utils.TypePersonnage;
+import personnages.equipements.TypeEquipement;
 
 import java.util.ArrayList;
 

@@ -3,6 +3,7 @@
 skinparam AttributeIconSize 0
 skinparam classFontStyle Bold
 skinparam style strictuml
+hide empty members
 
 package affichage {
     abstract class Affichage <<abstract>>{
@@ -24,11 +25,11 @@ package affichage {
       + {static} joueurInexistant()
       + {static} aucuneSelection(element: String)
       + {static} nomBaton(): String
-      + {static} contenuInventaire(inventaire: ArrayList<Equipement>): String
+      + {static} contenuInventaire(inventaire: Equipement[*]): String
       + {static} nomGuerrier(): String
       + {static} personnageInexistant()
       + {static} choisirCaseDonjon(element: String)
-      + {static} afficherTour(colonnes: Integer, lignes: Integer, plateau: String[][], numero: Integer, personnages: ArrayList<Personnage>, tour: Integer, perso: Personnage): String
+      + {static} afficherTour(colonnes: Integer, lignes: Integer, plateau: String[][], numero: Integer, personnages: Personnage[*], tour: Integer, perso: Personnage): String
       + {static} caseJoueurAjout(perso: String): String
       + {static} nomNain(): String
       + {static} demandeNbCreationObjet(objetACreer: String): String
@@ -43,7 +44,7 @@ package affichage {
       + {static} armeInexistante()
       + {static} nomArbalete(): String
       + {static} nomArmeMagique(): String
-      + {static} choisirEquipement(equipements: ArrayList<Equipement>): String
+      + {static} choisirEquipement(equipements: Equipement[*]): String
       + {static} nomFronde(): String
       + {static} demandeMonstreDexterite(): String
       + {static} nomHumain(): String
@@ -77,7 +78,7 @@ package affichage {
       + {static} afficheCreationDonjon(numero: Integer)
       + {static} nomHalfelin(): String
       + {static} memePersonnage()
-      + {static} toStringJoueur(nom: String, race: String, classe: String, pv: Integer, pvMax: Integer, force: Integer, dexterite: Integer, vitesse: Integer, inventaire: ArrayList<Equipement>, armure: Armure, arme: Arme): String
+      + {static} toStringJoueur(nom: String, race: String, classe: String, pv: Integer, pvMax: Integer, force: Integer, dexterite: Integer, vitesse: Integer, inventaire: Equipement[*], armure: Armure, arme: Arme): String
       + {static} mjFinTour(persoActuel: String)
       + {static} nomEpee2Mains(): String
       + {static} intervalleEntier(min: Integer, max: Integer): String
@@ -93,7 +94,7 @@ package affichage {
       + {static} caseInvalide()
       + {static} demandeClasse(): String
       + {static} nbCasesDeplacement(distanceMax: Integer)
-      + {static} choisirSort(sorts: ArrayList<Sort>): String
+      + {static} choisirSort(sorts: Sort[*]): String
       + {static} demandeMonstreEspece(): String
       + {static} recupEquipement(equipement: String)
       + {static} mauvaisFormatCase()
@@ -142,8 +143,8 @@ package affichage {
           + {abstract} aucuneArmeEquipee()
           + {abstract} getActionMaitreJeu(): String
           + {abstract} nbCasesDeplacement(distanceMax: Integer)
-          + {abstract} toStringJoueur(nom: String, race: String, classe: String, pv: Integer, pvMax: Integer, force: Integer, dexterite: Integer, vitesse: Integer, inventaire: ArrayList<Equipement>, armure: Armure, arme: Arme): String
-          + {abstract} contenuInventaire(inventaire: ArrayList<Equipement>): String
+          + {abstract} toStringJoueur(nom: String, race: String, classe: String, pv: Integer, pvMax: Integer, force: Integer, dexterite: Integer, vitesse: Integer, inventaire: Equipement[*], armure: Armure, arme: Arme): String
+          + {abstract} contenuInventaire(inventaire: Equipement[*]): String
           + {abstract} nomCotteDeMailles(): String
           + {abstract} demandePersonnageNumero(numero: Integer): String
           + {abstract} demandeNbCreationObstacle(): String
@@ -247,23 +248,21 @@ package donjon
       - m_lignes: Integer
       - m_tour: Integer
       - m_plateau: String[][]
-      - m_equipements: ArrayList<Equipement>
-      - m_personnages: ArrayList<Personnage>
       - m_nbJoueurs: Integer
       - m_colonnes: Integer
-      + <<create>> Donjon(numero: Integer, listeJoueurs: ArrayList<Joueur>)
-      + <<create>> Donjon(numero: Integer, colonnes: Integer, lignes: Integer, listeJoueurs: ArrayList<Joueur>)
-      + <<create>> Donjon(numero: Integer, colonnes: Integer, lignes: Integer, listeJoueurs: ArrayList<Joueur>, genererDefaut: Boolean)
+      + <<create>> Donjon(numero: Integer, listeJoueurs: Joueur[*])
+      + <<create>> Donjon(numero: Integer, colonnes: Integer, lignes: Integer, listeJoueurs: Joueur[*])
+      + <<create>> Donjon(numero: Integer, colonnes: Integer, lignes: Integer, listeJoueurs: Joueur[*], genererDefaut: Boolean)
       + toString(): String
       + jouerDonjon(): Boolean
       + tryLancerSort(personnages: Personnage): Boolean
-      + creerDonjon(numero: Integer, joueurs: ArrayList<Joueur>): Donjon
+      + creerDonjon(numero: Integer, joueurs: Joueur[*]): Donjon
       + getNbPerso(type: TypePersonnage): Integer
-      + recupererJoueurs(): ArrayList<Joueur>
+      + recupererJoueurs(): Joueur[*]
       - tryRamasserEquipement(perso: Personnage)
-      - ajouterPersonnages(personnages: ArrayList<Personnage>)
+      - ajouterPersonnages(personnages: Personnage[*])
       - updatePosPersos()
-      - ajouterEquipements(equipements: ArrayList<Equipement>)
+      - ajouterEquipements(equipements: Equipement[*])
       - affichageTour(perso: Personnage): String
       - getEquipement(p: Pion): Equipement
       - infligerDegats()
@@ -277,7 +276,7 @@ package donjon
       - tryDeplacement(perso: Personnage): Boolean
       - interventionMaitrejeu(persoActuel: Personnage)
       - testMortPerso(perso: Personnage)
-      - lancerInitiative(personnages: ArrayList<Personnage>)
+      - lancerInitiative(personnages: Personnage[*])
       - ajouterObstacle(caseChoisie: CasePlateau)
       - deplacerPerso(perso: Personnage, caseChoisie: CasePlateau)
       - tourDonjon(): EtatDonjon
@@ -290,19 +289,25 @@ package donjon
       - getNbMaxCreation(): Integer
       - positionnerJoueurs()
       - getActionMaitreJeu(): Integer
-      - triParInitiative(personnages: ArrayList<Personnage>)
+      - triParInitiative(personnages: Personnage[*])
       - creerMonstres()
       - tryEquiper(perso: Personnage): Boolean
-      - getPersoVivants(personnages: ArrayList<Personnage>): ArrayList<Personnage>
+      - getPersoVivants(personnages: Personnage[*]): Personnage[*]
     }
 
     abstract class GestionDonjon <<abstract>>{
       + {static} demanderNombreCreation(min: Integer, max: Integer, objetACreerString): Integer
-      + {static} demanderCreationEquipements(max: Integer): ArrayList<Equipement>
-      + {static} demanderCreationMonstres(max: Integer): ArrayList<Personnage>
+      + {static} demanderCreationEquipements(max: Integer): Equipement[*]
+      + {static} demanderCreationMonstres(max: Integer): Personnage[*]
       + {static} demanderCase(plateau String[][], element: String, action: TypeCase): CasePlateau
       + {static} demanderEquiper(joueur: Joueur)
       + toString(): String
+    }
+
+    enum EtatDonjon << enumerate >> {
+      EN_COURS
+      DEFAITE
+      VICTOIRE
     }
 
     package casePlateau
@@ -321,6 +326,11 @@ package donjon
           - estLettre(c: char): Boolean
           - estNombre(s: String): Boolean
           + toString(): String
+        }
+
+        enum TypeCase << enumerate >> {
+          DEPLACEMENT
+          AJOUT
         }
 
         abstract class Symbols <<abstract>>{
@@ -353,17 +363,14 @@ package donjon
 
 package jeu
 {
-    class Jeu {
-      - m_joueurs: ArrayList<Joueur>
-      - m_nbDonjons: Integer
-      + <<create>> Jeu()
-      + jouer()
-      + creerJoueur()
+    abstract class Jeu <<abstract>>{
+      + {static} jouer()
+      - {static} creerJoueur(): Joueur[*]
       + toString(): String
     }
 
     abstract class Initialiseur <<abstract>>{
-      + lancerJeu()
+      + {static} lancerJeu()
       + toString(): String
     }
 }
@@ -372,20 +379,14 @@ package personnages
 {
     abstract class Personnage <<abstract>>{
       - m_pv: Integer
-      - m_inventaire: ArrayList<Equipement>
       - m_initiative: Integer
-      - m_arme: Arme
-      - m_type: TypePersonnage
-      - m_armure: Armure
-      - m_pion: Pion
       - m_nom: String
       - m_symbol: String
       - m_pvMax: Integer
       - m_dexterite: Integer
       - m_vitesse: Integer
       - m_force: Integer
-      - m_sorts: ArrayList<Sort>
-      + <<create>> Personnage(nom: String, sybol: String, type: TypePersonnage, pv: Integer, force: Integer, dexterite: Integer, vitesse: Integer, initiative: Integer, arme: Arme, armure: Armure, inventaire: ArrayList<Equipement>, sorts: ArrayList<Sort>)
+      + <<create>> Personnage(nom: String, sybol: String, type: TypePersonnage, pv: Integer, force: Integer, dexterite: Integer, vitesse: Integer, initiative: Integer, arme: Arme, armure: Armure, inventaire: Equipement[*], sorts: Sort[*])
       + peutAttaquer(): Boolean
       + sePresenter(): String
       + getPortee(): Integer
@@ -400,10 +401,10 @@ package personnages
       + equals(perso: Personnage): Boolean
       + getArmure(): Armure
       + peutLancerSorts(): Boolean
-      + getInventaire(): ArrayList<Equipement>
+      + getInventaire(): Equipement[*]
       + getPion(): Pion
       + getType(): TypePersonnage
-      + lancerSort(personnages: ArrayList<Personnage>): Boolean
+      + lancerSort(personnages: Personnage[*]): Boolean
       + attaquer(perso: Personnage)
       + guerir(pv: Integer)
       + setVitesse(vitesse: Integer)
@@ -428,9 +429,9 @@ package personnages
       + subirAttaque(degats: Integer, attaquant: String)
       - infligerDegats(persoCible: Personnage, degats: Integer)
       - getDegats(): Integer
-      - choisirEquipement(equipements: ArrayList<Equipement>): Equipement
+      - choisirEquipement(equipements: Equipement[*]): Equipement
       - choisirEquipementEquiper(): Equipement
-      - getEquipement(type: TypeEquipement): ArrayList<Equipement>
+      - getEquipement(type: TypeEquipement): Equipement[*]
       - choisirSort(): Sort
     }
 
@@ -441,8 +442,6 @@ package personnages
     }
 
     class Joueur extends Personnage{
-      - m_race: Race
-      - m_classe: Classe
       + <<create>> Joueur(nom: String, race: Race, classe: Classe)
       + getAction(): Integer
       + getClasse(): String
@@ -451,18 +450,21 @@ package personnages
       + toString(): String
     }
 
+    enum TypePersonnage << enumerate >> {
+      MONSTRE
+      JOUEUR
+    }
+
     package classes
     {
         abstract class Classe <<abstract>>{
           - m_nom: String
-          - m_equipements: ArrayList<Equipement>
           - m_pv: Integer
-          - m_sorts: ArrayList<Sort>
-          + <<create>> Classe(nom: String, pv: Integer, equipements: ArrayList<Equipement>, sorts: ArrayList<Sort>)
-          + <<create>> Classe(nom: String, pv: Integer, equipements: ArrayList<Equipement>)
-          + getSorts(): ArrayList<Sort>
-          + getEquipements(): ArrayList<Equipement>
-          + {static} getClasses(): ArrayList<Classe>
+          + <<create>> Classe(nom: String, pv: Integer, equipements: Equipement[*], sorts: Sort[*])
+          + <<create>> Classe(nom: String, pv: Integer, equipements: Equipement[*])
+          + getSorts(): Sort[*]
+          + getEquipements(): Equipement[*]
+          + {static} getClasses(): Classe[*]
           + toString(): String
           + getPv(): Integer
         }
@@ -522,10 +524,7 @@ package personnages
     {
         abstract class Equipement <<abstract>>{
           # m_estLourd: Boolean
-          - m_type: TypeEquipement
-          - m_effets: ArrayList<Effet>
           - m_nom: String
-          - m_pion: Pion
           + <<create>> Equipement(nom: String, estLourd: Boolean, type: TypeEquipement, effet: ArrayList<Effet>)
           + getPion(): Pion
           + toString(): String
@@ -534,6 +533,11 @@ package personnages
           + appliquerEffets(perso: Personnage)
           + pasDefinie(): Boolean
           + setPion(x: Integer, y: Integer)
+        }
+
+        enum TypeEquipement << enumerate >> {
+          ARMURE
+          ARME
         }
 
         package armes
@@ -656,7 +660,6 @@ package personnages
             }
 
             class SlotArme implements SlotEquipable{
-              - m_perso: Personnage
               + <<create>> SlotArme(perso: Personnage)
               + set(equip: Equipement)
               + get(): Equipement
@@ -664,7 +667,6 @@ package personnages
             }
 
             class SlotArmure implements SlotEquipable{
-              - m_perso: Personnage
               + <<create>> SlotArmure(perso: Personnage)
               + get(): Equipement
               + set(equip: Equipement)
@@ -716,27 +718,6 @@ package utils
       + {static} demanderPersonnagesFilter(personnages: ArrayList<Personnage>, nbPerso: Integer): ArrayList<Personnage>
       + toString(): String
     }
-
-    enum EtatDonjon << enumerate >> {
-      EN_COURS
-      DEFAITE
-      VICTOIRE
-    }
-
-    enum TypeCase << enumerate >> {
-      DEPLACEMENT
-      AJOUT
-    }
-
-    enum TypeEquipement << enumerate >> {
-      ARMURE
-      ARME
-    }
-
-    enum TypePersonnage << enumerate >> {
-      MONSTRE
-      JOUEUR
-    }
 }
 
 class Main {
@@ -746,91 +727,172 @@ class Main {
 Arme -|> Equipement
 Armure -|> Equipement
 
-@enduml
-Affichage        ->  Anglais         : "«create»"
-Affichage        ->  Francais        : "«create»"
-Affichage       "1" *-> "m_langue\n1" Langue
-BoogieWoogie     ->  Pion            : "«create»"
-Classe          "1" *-> "m_equipements\n*" Equipement
-Classe          "1" *-> "m_sorts\n*" Sort
-Clerc            ->  Arbalete        : "«create»"
-Clerc            ->  ArmureEcailles  : "«create»"
-Clerc           "1" *-> "m_equipements\n*" Equipement
-Clerc            ->  Guerison        : "«create»"
-Clerc            ->  Masse           : "«create»"
-Clerc           "1" *-> "m_sorts\n*" Sort
-Donjon           ->  Arbalete        : "«create»"
-Donjon           ->  CasePlateau     : "«create»"
-Donjon           ->  CotteDeMailles  : "«create»"
-Donjon           ->  DemiPlate       : "«create»"
-Donjon           ->  Donjon          : "«create»"
-Donjon           ->  EpeeLongue      : "«create»"
-Donjon          "1" *-> "m_equipements\n*" Equipement
-Donjon           ->  Masse           : "«create»"
-Donjon           ->  Monstre         : "«create»"
-Donjon          "1" *-> "m_personnages\n*" Personnage
-Donjon           ->  Pion            : "«create»"
-EffetsStandards "1" *-> "ARMURE_LOURDE\n*" Effet
-EffetsStandards  ->  EffetForce      : "«create»"
-EffetsStandards  ->  EffetVitesse    : "«create»"
-Equipement      "1" *-> "m_effets\n*" Effet
-Equipement       ->  Pion            : "«create»"
-Equipement      "1" *-> "m_pion\n1" Pion
-Equipement      "1" *-> "m_type\n1" TypeEquipement
-GestionDonjon    ->  Arbalete        : "«create»"
-GestionDonjon    ->  Arc             : "«create»"
-GestionDonjon    ->  ArmureEcailles  : "«create»"
-GestionDonjon    ->  Baton           : "«create»"
-GestionDonjon    ->  CasePlateau     : "«create»"
-GestionDonjon    ->  CotteDeMailles  : "«create»"
-GestionDonjon    ->  DemiPlate       : "«create»"
-GestionDonjon    ->  Epee2Mains      : "«create»"
-GestionDonjon    ->  EpeeLongue      : "«create»"
-GestionDonjon    ->  Fronde          : "«create»"
-GestionDonjon    ->  Harnois         : "«create»"
-GestionDonjon    ->  Masse           : "«create»"
-GestionDonjon    ->  Monstre         : "«create»"
-GestionDonjon    ->  Rapiere         : "«create»"
-Guerrier         ->  Arbalete        : "«create»"
-Guerrier         ->  CotteDeMailles  : "«create»"
-Guerrier         ->  EpeeLongue      : "«create»"
-Guerrier        "1" *-> "m_equipements\n*" Equipement
-Initialiseur     ->  Jeu             : "«create»"
-Jeu              ->  Clerc           : "«create»"
-Jeu              ->  Elf             : "«create»"
-Jeu              ->  Guerrier        : "«create»"
-Jeu              ->  Halfelin        : "«create»"
-Jeu              ->  Humain          : "«create»"
-Jeu             "1" *-> "m_joueurs\n*" Joueur
-Jeu              ->  Joueur          : "«create»"
-Jeu              ->  Magicien        : "«create»"
-Jeu              ->  Nain            : "«create»"
-Jeu              ->  Roublard        : "«create»"
-Joueur           ->  Arme            : "«create»"
-Joueur           ->  Armure          : "«create»"
-Joueur          "1" *-> "m_classe\n1" Classe
-Joueur          "1" *-> "m_race\n1" Race
-Magicien         ->  ArmeMagique     : "«create»"
-Magicien         ->  Baton           : "«create»"
-Magicien         ->  BoogieWoogie    : "«create»"
-Magicien        "1" *-> "m_equipements\n*" Equipement
-Magicien         ->  Fronde          : "«create»"
-Magicien         ->  Guerison        : "«create»"
-Magicien        "1" *-> "m_sorts\n*" Sort
-Monstre          ->  Arme            : "«create»"
-Monstre          ->  Armure          : "«create»"
-Personnage      "1" *-> "m_arme\n1" Arme
-Personnage      "1" *-> "m_armure\n1" Armure
-Personnage      "1" *-> "m_inventaire\n*" Equipement
-Personnage       ->  Pion            : "«create»"
-Personnage      "1" *-> "m_pion\n1" Pion
-Personnage       ->  SlotArme        : "«create»"
-Personnage       ->  SlotArmure      : "«create»"
-Personnage      "1" *-> "m_sorts\n*" Sort
-Personnage      "1" *-> "m_type\n1" TypePersonnage
-Roublard         ->  Arc             : "«create»"
-Roublard        "1" *-> "m_equipements\n*" Equipement
-Roublard         ->  Rapiere         : "«create»"
-SlotArme        "1" *-> "m_perso\n1" Personnage
-SlotArmure      "1" *-> "m_perso\n1" Personnage
+Affichage       "1" *-> "m_langue\n1"       Langue:             possède >
+Affichage       .....> Sort                 : <<uses>>
+Affichage       .....> Classe               : <<call>>
+Affichage       .....> Race                 : <<call>>
+
+affichage       .....> Personnage           : <<uses>>
+affichage       .....> Equipement           : <<uses>>
+affichage       .....> EtatDonjon           : <<uses>>
+affichage       .....> Arme                 : <<uses>>
+affichage       .....> Armure               : <<uses>>
+
+langue          .....> Symbols              : <<call>>
+
+CasePlateau     .....> Affichage            : <<call>>
+CasePlateau     .> Symbols                  : <<call>>
+CasePlateau     .> TypeCase                 : <<uses>>
+
+Donjon          "1" *-----> "m_equipements\n*"   Equipement:    stocke >
+Donjon          "1" o-----> "m_personnages\n*"   Personnage:    fait jouer >
+Donjon          ..> CasePlateau             : <<instantiate>>
+Donjon          .....> Monstre              : <<instantiate>>
+Donjon          ..> Pion                    : <<instantiate>>
+Donjon          ..> TypeCase                : <<uses>>
+Donjon          ..> CasePlateau             : <<uses>>
+Donjon          .....> Joueur               : <<uses>>
+Donjon          ..> Pion                    : <<uses>>
+Donjon          .....> TypePersonnage       : <<uses>>
+Donjon          .> EtatDonjon               : <<uses>>
+Donjon          .....> Affichage            : <<call>>
+Donjon          .....> Demande              : <<call>>
+Donjon          .> GestionDonjon            : <<call>>
+Donjon          ..> Symbols                 : <<call>>
+Donjon          .> Pion                     : <<call>>
+Donjon          ..> CasePlateau             : <<call>>
+Donjon          .....> Joueur               : <<call>>
+
+GestionDonjon   ..> CasePlateau             : <<instantiate>>
+GestionDonjon   .....> Monstre              : <<instantiate>>
+GestionDonjon   .....> Equipement           : <<uses>>
+GestionDonjon   ..> TypeCase                : <<uses>>
+GestionDonjon   .....> Personnage           : <<uses>>
+GestionDonjon   .....> Joueur               : <<uses>>
+GestionDonjon   .....> Joueur               : <<call>>
+GestionDonjon   .....> Affichage            : <<call>>
+GestionDonjon   ..> CasePlateau             : <<call>>
+GestionDonjon   .....> Demande              : <<call>>
+GestionDonjon   .....> Arme                 : <<call>>
+GestionDonjon   .....> Armure               : <<call>>
+
+Initialiseur    .> Jeu                      : <<call>>
+Initialiseur    .....> Affichage            : <<call>>
+
+Jeu             .....> Joueur               : <<instantiate>>
+Jeu             .....> Joueur               : <<uses>>
+Jeu             .....> Joueur               : <<call>>
+Jeu             .....> Donjon               : <<call>>
+Jeu             .....> Demande              : <<call>>
+Jeu             .....> Affichage            : <<call>>
+Jeu             .....> Race                 : <<call>>
+Jeu             .....> Classe               : <<call>>
+
+
+Classe          "1" o--> "m_equipements\n*" Equipement:         confère >
+Classe          "*" o-----> "m_sorts\n*"    Sort:               confère >
+Classe          .> Classe                   : <<instantiate>>
+
+Clerc           ...> Sort                   : <<instantiate>>
+
+Magicien        ...> Sort                   : <<instantiate>>
+
+classes         .....> Affichage            : <<call>>
+
+Race            .> Race                     : <<instantiate>>
+
+races           .....> Affichage            : <<call>>
+
+Arme            .> Arme                     : <<instantiate>>
+Arme            ..> Effet                   : <<instantiate>>
+Arme            ..> TypeEquipement          : <<uses>>
+Arme            ..> EffetsStandards         : <<call>>
+Arme            .....> Affichage            : <<call>>
+Arme            .....> De                   : <<call>>
+Arme            ..> Equipement              : <<call>>
+
+armes           .....> Affichage            : <<call>>
+
+Armure          .> Armure                   : <<instantiate>>
+Armure          ..> Effet                   : <<instantiate>>
+Armure          ..> TypeEquipement          : <<uses>>
+Armure          ..> EffetsStandards         : <<call>>
+Armure          .....> Affichage            : <<call>>
+Armure          ..> Equipement              : <<call>>
+
+EffetForce      ...> Personnage             : <<call>>
+
+EffetVitesse    ...> Personnage             : <<call>>
+
+EffetsStandards "1" o-> "ARMURE_LOURDE\n1"  Effet:              prédéfinit >
+EffetsStandards "1" o-> "ARME_LOURDE\n2"    Effet:              prédéfinit >
+EffetsStandards .> EffetForce               : <<instantiate>>
+EffetsStandards .> EffetVitesse             : <<instantiate>>
+
+effets          ...> Personnage             : <<uses>>
+
+Equipement      "1" *-----> "m_pion\n1"     Pion:               est représenté par >
+Equipement      "*" o-> "m_type\n1"         TypeEquipement:     est de type >
+Equipement      "*" o--> "m_effets\n*"      Effet:              applique >
+Equipement      ..> Personnage              : <<uses>>
+
+SlotArme        "1" *--> "m_perso\n1"       Personnage:         appartient à >
+SlotArme        ...> Arme                   : <<uses>>
+
+SlotArmure      "1" *--> "m_perso\n1"       Personnage:         appartient à >
+SlotArmure      ..> Armure                  : <<uses>>
+
+slots           ..> Equipement              : <<uses>>
+
+BoogieWoogie    .....> Pion                 : <<instantiate>>
+BoogieWoogie    .....> Personnage           : <<call>>
+
+ArmeMagique     .....> Joueur               : <<uses>>
+ArmeMagique     .....> Joueur               : <<call>>
+ArmeMagique     .....> Equipement           : <<uses>>
+ArmeMagique     .....> Arme                 : <<uses>>
+ArmeMagique     .....> TypeEquipement       : <<uses>>
+
+Guerison        .....> Personnage           : <<call>>
+Guerison        .....> De                   : <<call>>
+
+sorts           ..> Personnage              : <<uses>>
+sorts           .....> Affichage            : <<call>>
+sorts           ..> Demande                 : <<call>>
+
+Joueur          "*" o-> "m_race\n1"         Race:               est de race >
+Joueur          "*" o-> "m_classe\n1"       Classe:             est de classe >
+Joueur          ..> Arme                    : <<instantiate>>
+Joueur          ..> Armure                  : <<instantiate>>
+Joueur          .> TypePersonnage           : <<uses>>
+Joueur          .....> De                   : <<call>>
+Joueur          .....> Demande              : <<call>>
+Joueur          .....> Affichage            : <<call>>
+
+Monstre         ..> Arme                    : <<instantiate>>
+Monstre         ..> Armure                  : <<instantiate>>
+Monstre         .> TypePersonnage           : <<uses>>
+
+Personnage      "*" o--> "m_arme\n1"        Arme:               équipe >
+Personnage      "*" o--> "m_armure\n1"      Armure:             équipe >
+Personnage      "1" *-----> "m_pion\n1"     Pion:               est représenté par >
+Personnage      "*" o--> "m_inventaire\n*"  Equipement:         possède >
+Personnage      "*" o-----> "m_sorts\n*"    Sort:               peut lancer >
+Personnage      "*" o-> "m_type\n1"         TypePersonnage:     est de type >
+Personnage      ..> SlotArme                : <<instantiate>>
+Personnage      ..> SlotArmure              : <<instantiate>>
+Personnage      ..> TypeEquipement          : <<uses>>
+Personnage      ..> SlotEquipable           : <<call>>
+Personnage      .....> Affichage            : <<call>>
+Personnage      .....> Demande              : <<call>>
+Personnage      .....> De                   : <<call>>
+
+Demande         .....> Joueur               : <<uses>>
+Demande         .....> TypePersonnage       : <<uses>>
+Demande         .....> Personnage           : <<uses>>
+Demande         .....> Personnage           : <<call>>
+Demande         .....> Affichage            : <<call>>
+
+Main            .....> Initialiseur         : <<call>>
+
 @enduml

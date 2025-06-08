@@ -5,7 +5,7 @@ import personnages.Personnage;
 import personnages.equipements.Equipement;
 import personnages.equipements.armes.Arme;
 import personnages.equipements.armures.Armure;
-import utils.EtatDonjon;
+import donjon.EtatDonjon;
 
 import java.util.ArrayList;
 

@@ -6,7 +6,6 @@ import personnages.equipements.armures.Armure;
 import personnages.races.Race;
 import affichage.Affichage;
 import utils.De;
-import utils.TypePersonnage;
 
 import static utils.Demande.demandeEntier;
 

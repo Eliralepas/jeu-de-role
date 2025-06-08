@@ -1,4 +1,4 @@
-package utils;
+package personnages;
 
 public enum TypePersonnage {
     JOUEUR,

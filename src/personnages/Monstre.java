@@ -2,7 +2,6 @@ package personnages;
 
 import personnages.equipements.armes.Arme;
 import personnages.equipements.armures.Armure;
-import utils.TypePersonnage;
 
 import java.util.ArrayList;
 

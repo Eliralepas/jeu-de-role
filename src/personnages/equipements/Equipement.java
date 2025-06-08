@@ -3,7 +3,6 @@ package personnages.equipements;
 import donjon.pion.Pion;
 import personnages.Personnage;
 import personnages.equipements.effets.Effet;
-import utils.TypeEquipement;
 
 import java.util.ArrayList;
 

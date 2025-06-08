@@ -6,7 +6,7 @@ import personnages.Monstre;
 import personnages.Personnage;
 import personnages.equipements.Equipement;
 import affichage.Affichage;
-import utils.TypeCase;
+import donjon.casePlateau.TypeCase;
 
 import java.util.ArrayList;
 
@@ -38,6 +38,7 @@ public abstract class GestionDonjon {
         ArrayList<Personnage> monstres = new ArrayList<>();
         int nbMonstres = demanderNombreCreation(1, max, Affichage.demandeNbCreationMonstre());
         for (int i=0; i<nbMonstres; i++){
+            System.out.println("\n");
             String espece = demandeString(Affichage.demandeMonstreEspece(), 15);
             String symbol = demandeString(Affichage.demandeMonstreSymbol(), 3);
             int pv = demandeEntier(1, 100, Affichage.demandeMonstrePv());
@@ -60,8 +61,8 @@ public abstract class GestionDonjon {
             ArrayList<Equipement> listeEquipements = new ArrayList<>();
             listeEquipements.addAll(getArmes());
             listeEquipements.addAll(getArmures());
-            int numero = demandeEntier(1, 12, Affichage.creerEquipementDonjon());
-            equipements.add(listeEquipements.get(numero));
+            int numero = demandeEntier(1, getArmures().size() + getArmes().size(), Affichage.creerEquipementDonjon());
+            equipements.add(listeEquipements.get(numero-1));
         }
         return equipements;
     }

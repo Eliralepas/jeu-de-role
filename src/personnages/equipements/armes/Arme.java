@@ -5,7 +5,7 @@ import personnages.equipements.effets.Effet;
 import personnages.equipements.effets.EffetsStandards;
 import affichage.Affichage;
 import utils.De;
-import utils.TypeEquipement;
+import personnages.equipements.TypeEquipement;
 
 import java.util.ArrayList;
 

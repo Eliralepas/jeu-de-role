@@ -10,7 +10,7 @@ import personnages.equipements.armes.Arme;
 import personnages.equipements.armures.Armure;
 import personnages.races.Race;
 import personnages.sorts.Sort;
-import utils.EtatDonjon;
+import donjon.EtatDonjon;
 
 import java.util.ArrayList;
 
@@ -141,13 +141,12 @@ public abstract class Affichage {
         int nbEquipements = armes.size() + armures.size();
         StringBuilder msg = new StringBuilder(m_langue.demandeEquipement());
         msg.append(m_langue.demandeArme());
-        int i;
-        for (i = 0; i < armes.size(); i++){
+        for (int i = 0; i < armes.size(); i++){
             msg.append(i + 1).append((" ").repeat(nbEquipements/10)).append("     ").append(armes.get(i).toString()).append("\n");
         }
         msg.append(m_langue.demandeArmure());
-        for(i = i+1; i < armures.size(); i++){
-            msg.append(i + 1).append((" ").repeat(nbEquipements/10)).append("     ").append(armes.get(i-armes.size()).toString()).append("\n");
+        for(int j = armes.size(); j < nbEquipements; j++){
+            msg.append(j + 1).append((" ").repeat(nbEquipements/10)).append("     ").append(armures.get(j-armes.size()).toString()).append("\n");
         }
         return msg.toString();
     }

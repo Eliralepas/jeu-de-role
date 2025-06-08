@@ -1,0 +1,313 @@
+@startuml
+
+skinparam AttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml
+
+package affichage {
+    abstract class Affichage <<abstract>>{
+
+    }
+
+    package langue
+    {
+        interface Langue << interface >> {
+        }
+
+        class Anglais implements Langue{
+        }
+
+        class Francais implements Langue{
+        }
+    }
+}
+
+package donjon
+{
+    class Donjon {
+
+    }
+
+    abstract class GestionDonjon <<abstract>>{
+    }
+
+    enum EtatDonjon << enumerate >> {
+      EN_COURS
+      DEFAITE
+      VICTOIRE
+    }
+
+    package casePlateau
+    {
+        class CasePlateau {
+        }
+
+        abstract class Symbols <<abstract>>{
+        }
+
+        enum TypeCase << enumerate >> {
+          DEPLACEMENT
+          AJOUT
+        }
+    }
+
+    package pion
+    {
+        class Pion {
+        }
+    }
+}
+
+package jeu
+{
+    class Jeu {
+    }
+
+    abstract class Initialiseur <<abstract>>{
+    }
+}
+
+package personnages
+{
+    abstract class Personnage <<abstract>>{
+    }
+
+    class Monstre extends Personnage{
+    }
+
+    class Joueur extends Personnage{
+    }
+
+    enum TypePersonnage << enumerate >> {
+      MONSTRE
+      JOUEUR
+    }
+
+    package classes
+    {
+        abstract class Classe <<abstract>>{
+        }
+
+        class Clerc extends Classe{
+        }
+
+        class Guerrier extends Classe{
+        }
+
+        class Magicien extends Classe{
+        }
+
+        class Roublard extends Classe{
+        }
+    }
+
+    package races
+    {
+        abstract class Race <<abstract>>{
+        }
+
+        class Elf extends Race{
+        }
+
+        class Halfelin extends Race{
+        }
+
+        class Humain extends Race{
+        }
+
+        class Nain extends Race{
+        }
+    }
+
+    package equipements
+    {
+        abstract class Equipement <<abstract>>{
+        }
+
+        enum TypeEquipement << enumerate >> {
+          ARMURE
+          ARME
+        }
+
+        package armes
+        {
+            class Arme{
+
+            }
+
+            class Arbalete extends Arme{
+            }
+
+            class Arc extends Arme{
+            }
+
+            class Baton extends Arme{
+            }
+
+            class Epee2Mains extends Arme{
+            }
+
+            class EpeeLongue extends Arme{
+            }
+
+            class Fronde extends Arme{
+            }
+
+            class Masse extends Arme{
+            }
+
+            class Rapiere extends Arme{
+            }
+        }
+
+        package armures
+        {
+            class Armure{
+            }
+
+            class ArmureEcailles extends Armure{
+            }
+
+            class CotteDeMailles extends Armure{
+            }
+
+            class DemiPlate extends Armure{
+            }
+
+            class Harnois extends Armure{
+            }
+        }
+
+        package effets
+        {
+            interface Effet << interface >> {
+            }
+
+            class EffetForce implements Effet{
+            }
+
+            class EffetVitesse implements Effet{
+            }
+
+            abstract class EffetsStandards <<abstract>>{
+            }
+        }
+
+        package slots
+        {
+            interface SlotEquipable << interface >> {
+            }
+
+            class SlotArme implements SlotEquipable{
+            }
+
+            class SlotArmure implements SlotEquipable{
+            }
+        }
+    }
+
+    package sorts
+    {
+        abstract class Sort <<abstract>>{
+        }
+
+        class ArmeMagique extends Sort{
+        }
+
+        class BoogieWoogie extends Sort{
+        }
+
+        class Guerison extends Sort{
+        }
+    }
+}
+
+package utils
+{
+    abstract class De <<abstract>>{
+
+    }
+
+    abstract class Demande <<abstract>>{
+
+    }
+}
+
+class Main {
+  + main()
+}
+
+Arme -----|> Equipement
+Armure -----|> Equipement
+
+Affichage       "1" *-> "m_langue\n1"       Langue:             possède >
+
+CasePlateau     .....> Symbols                  : <<call>>
+CasePlateau     .....> TypeCase                 : <<uses>>
+
+Donjon          "1" *-----> "m_equipements\n*"   Equipement:    stocke >
+Donjon          "1" o-----> "m_personnages\n*"   Personnage:    fait jouer >
+Donjon          .....> CasePlateau             : <<instantiate + uses + call>>
+Donjon          .....> Monstre              : <<instantiate>>
+Donjon          .....> Pion                    : <<instantiate + uses + call>>
+Donjon          .....> TypeCase                : <<uses>>
+Donjon          .....> TypePersonnage       : <<uses>>
+Donjon          .....> EtatDonjon               : <<uses>>
+Donjon          .....> GestionDonjon            : <<call>>
+Donjon          .....> Symbols                 : <<call>>
+
+GestionDonjon   .....> CasePlateau             : <<instantiate>>
+GestionDonjon   .....> Monstre              : <<instantiate>>
+GestionDonjon   .....> TypeCase                : <<uses>>
+GestionDonjon   .....> CasePlateau             : <<call>>
+
+Initialiseur    .....> Jeu                      : <<call>>
+
+Jeu             .....> Joueur               : <<instantiate + uses + call>>
+
+
+Classe          "1" o-----> "m_equipements\n*" Equipement:         confère >
+Classe          "*" o-----> "m_sorts\n*"    Sort:               confère >
+Classe          .....> Classe                   : <<instantiate>>
+
+Clerc           .....> Sort                   : <<instantiate>>
+
+Magicien        .....> Sort                   : <<instantiate>>
+
+Race            .....> Race                     : <<instantiate>>
+
+Arme            .....> Arme                     : <<instantiate>>
+Arme            .....> Effet                   : <<instantiate>>
+Arme            .....> EffetsStandards         : <<call>>
+
+Armure          .....> Armure                   : <<instantiate>>
+Armure          .....> Effet                   : <<instantiate>>
+Armure          .....> EffetsStandards         : <<call>>
+
+EffetsStandards "1" o-----> "ARMURE_LOURDE\n1"  Effet:              prédéfinit >
+EffetsStandards "1" o-----> "ARME_LOURDE\n2"    Effet:              prédéfinit >
+EffetsStandards .....> EffetForce               : <<instantiate>>
+EffetsStandards .....> EffetVitesse             : <<instantiate>>
+
+Equipement      "1" *-----> "m_pion\n1"     Pion:               est représenté par >
+Equipement      "*" o-----> "m_type\n1"         TypeEquipement:     est de type >
+Equipement      "*" o-----> "m_effets\n*"      Effet:              applique >
+
+SlotArme        "1" *-----> "m_perso\n1"       Personnage:         appartient à >
+
+SlotArmure      "1" *-----> "m_perso\n1"       Personnage:         appartient à >
+
+Joueur          "*" o-----> "m_race\n1"         Race:               est de race >
+Joueur          "*" o-----> "m_classe\n1"       Classe:             est de classe >
+
+Personnage      "*" o-----> "m_arme\n1"        Arme:               équipe >
+Personnage      "*" o-----> "m_armure\n1"      Armure:             équipe >
+Personnage      "1" *-----> "m_pion\n1"     Pion:               est représenté par >
+Personnage      "*" o-----> "m_inventaire\n*"  Equipement:         possède >
+Personnage      "*" o-----> "m_sorts\n*"    Sort:               peut lancer >
+Personnage      "*" o-----> "m_type\n1"         TypePersonnage:     est de type >
+Personnage      .....> SlotEquipable           : <<call>>
+
+Main            .....> Initialiseur         : <<call>>
+
+@enduml

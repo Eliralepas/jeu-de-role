@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static affichage.Affichage.contenuInventaire;
 import static org.junit.jupiter.api.Assertions.*;
-import static utils.TypePersonnage.JOUEUR;
+import static personnages.TypePersonnage.JOUEUR;
 
 import personnages.classes.Guerrier;
 import personnages.equipements.Equipement;
