@@ -10,9 +10,9 @@ public class PionTest {
     private Pion p3;
 
     @BeforeEach
-    void setUp(){
+    void creerPions(){
         p1 = new Pion(1, 3, "ABC");
-        p2 = new Pion(1,3, "DEF");
+        p2 = new Pion(p1);
         p3 = new Pion(10,10,"AAA");
     }
 

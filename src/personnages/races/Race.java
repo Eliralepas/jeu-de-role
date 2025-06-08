@@ -1,5 +1,7 @@
 package personnages.races;
 
+import java.util.ArrayList;
+
 public abstract class Race {
     private final String m_nom;
     private final int m_pv;
@@ -29,6 +31,15 @@ public abstract class Race {
 
     public int getVitesse(){
         return m_vitesse;
+    }
+
+    public static ArrayList<Race> getRaces(){
+        ArrayList<Race> races = new ArrayList<>();
+        races.add(new Elf());
+        races.add(new Halfelin());
+        races.add(new Humain());
+        races.add(new Nain());
+        return races;
     }
 
     @Override

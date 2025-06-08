@@ -5,7 +5,7 @@ import personnages.equipements.effets.Effet;
 import personnages.equipements.effets.EffetsStandards;
 import affichage.Affichage;
 import utils.De;
-import utils.TypeEquipement;
+import personnages.equipements.TypeEquipement;
 
 import java.util.ArrayList;
 
@@ -61,6 +61,19 @@ public class Arme extends Equipement {
     public boolean estArmeDistance(){
         //Renvoie vrai si l'arme est une arme à distance, faux sinon.
         return m_portee > 1;
+    }
+
+    public static ArrayList<Arme> getArmes(){
+        ArrayList<Arme> armes = new ArrayList<>();
+        armes.add(new Arbalete());
+        armes.add(new Arc());
+        armes.add(new Baton());
+        armes.add(new Epee2Mains());
+        armes.add(new EpeeLongue());
+        armes.add(new Fronde());
+        armes.add(new Masse());
+        armes.add(new Rapiere());
+        return armes;
     }
 
     @Override

@@ -2,10 +2,12 @@ package donjon;
 
 import affichage.Affichage;
 import donjon.casePlateau.CasePlateau;
+import donjon.casePlateau.TypeCase;
 import donjon.pion.Pion;
 import personnages.Joueur;
 import personnages.Monstre;
 import personnages.Personnage;
+import personnages.TypePersonnage;
 import personnages.equipements.Equipement;
 import personnages.equipements.armes.*;
 import personnages.equipements.armures.*;
@@ -112,8 +114,8 @@ public class Donjon {
         }
     }
 
-    private CasePlateau choisirCase(String object, TypeCase action){
-        return demanderCase(m_plateau, object, action);
+    private CasePlateau choisirCase(String objet, TypeCase action){
+        return demanderCase(m_plateau, objet, action);
     }
 
     private void creerObstacles(){
@@ -316,7 +318,7 @@ public class Donjon {
         }
         System.out.println(this); //Afficher le plateau
         Affichage.porteeAttaque(perso.getPortee());
-        Personnage persoCible = demanderPersonnagesWithoutSelf(getPersoVivants(m_personnages), 1, perso).getFirst();
+        Personnage persoCible = demanderPersonnagesWithoutSelf(getPersoVivants(m_personnages), 1, perso.getType()).getFirst();
         if (perso.getType() == persoCible.getType()){ //Si un monstre attaque un monstre ou un joueur attaque un joueur
             Affichage.attaqueAllie();
             return false;
@@ -382,7 +384,6 @@ public class Donjon {
 
     private boolean tryEquiper(Personnage perso){
         //Vérifie que le personnage choisi peut équiper un équipement et lui demande quoi équiper
-        System.out.println(Affichage.contenuInventaire(perso.getInventaire()));
         if (perso.getTailleInventaire() < 0){
             Affichage.aucunEquipement();
             return false;

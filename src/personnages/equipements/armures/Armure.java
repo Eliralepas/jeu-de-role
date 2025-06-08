@@ -4,7 +4,7 @@ import personnages.equipements.Equipement;
 import personnages.equipements.effets.Effet;
 import personnages.equipements.effets.EffetsStandards;
 import affichage.Affichage;
-import utils.TypeEquipement;
+import personnages.equipements.TypeEquipement;
 
 import java.util.ArrayList;
 
@@ -20,6 +20,15 @@ public class Armure extends Equipement {
     public int getClasseArmure(){
         //Renvoie la classe d'armure.
         return m_classeArmure;
+    }
+
+    public static ArrayList<Armure> getArmures(){
+        ArrayList<Armure> armures = new ArrayList<>();
+        armures.add(new ArmureEcailles());
+        armures.add(new CotteDeMailles());
+        armures.add(new DemiPlate());
+        armures.add(new Harnois());
+        return armures;
     }
 
     @Override

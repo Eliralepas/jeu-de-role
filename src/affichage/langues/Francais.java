@@ -5,7 +5,7 @@ import personnages.Personnage;
 import personnages.equipements.Equipement;
 import personnages.equipements.armes.Arme;
 import personnages.equipements.armures.Armure;
-import utils.EtatDonjon;
+import donjon.EtatDonjon;
 
 import java.util.ArrayList;
 
@@ -154,24 +154,16 @@ public class Francais implements Langue {
 
     /// Affichage classe GestionDonjon
 
-    public String creerEquipementDonjon(){
-        return """
-                Entrez le numéro correspondant à l'équipement à ajouter:
-                ------ Armes ------
-                Arbalète:           1
-                Arc:                2
-                Bâton:              3
-                Epée Longue:        4
-                Fronde:             5
-                Masse:              6
-                Rapière:            7
-                Epée à 2 mains:     8
-                ----- Armures -----
-                Armure d'écailles:  9
-                Cotte de mailles:   10
-                Demi plate:         11
-                Harnois:            12
-                """;
+    public String demandeEquipement(){
+        return "Entrez le nombre correspondant à l'équipement à ajouter:\n";
+    }
+
+    public String demandeArme(){
+        return "------ Armes ------\n";
+    }
+
+    public String demandeArmure(){
+        return "------ Armures ------\n";
     }
 
     public String demandeNbCreationObjet(String objectACreer){
@@ -386,13 +378,7 @@ public class Francais implements Langue {
     }
 
     public String demandeRace(){
-        return """
-                Entrez le numéro correspondant à la race du personnage:
-                Elf:      1
-                Halfelin: 2
-                Humain:   3
-                Nain:     4
-                """;
+        return "Entrez le numéro correspondant à la race du personnage: \n";
     }
 
     public String demandeNomJoueur(){
@@ -400,13 +386,7 @@ public class Francais implements Langue {
     }
 
     public String demandeClasse(){
-        return """
-                Entrez le numéro correspondant à la classe du personnage:
-                Clerc:    1
-                Guerrier: 2
-                Magicien: 3
-                Roublard: 4
-                """;
+        return "Entrez le numéro correspondant à la classe du personnage: \n";
     }
 
     public void confimationCreationJoueur(int numero, String joueur){

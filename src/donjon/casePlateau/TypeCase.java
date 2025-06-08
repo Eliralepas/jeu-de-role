@@ -1,4 +1,4 @@
-package utils;
+package donjon.casePlateau;
 
 public enum TypeCase {
     AJOUT,

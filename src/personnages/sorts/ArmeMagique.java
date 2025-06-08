@@ -5,7 +5,7 @@ import personnages.Personnage;
 import personnages.equipements.Equipement;
 import personnages.equipements.armes.Arme;
 import affichage.Affichage;
-import utils.TypeEquipement;
+import personnages.equipements.TypeEquipement;
 
 import java.util.ArrayList;
 

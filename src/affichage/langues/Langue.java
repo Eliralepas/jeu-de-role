@@ -4,7 +4,7 @@ import personnages.Personnage;
 import personnages.equipements.Equipement;
 import personnages.equipements.armes.Arme;
 import personnages.equipements.armures.Armure;
-import utils.EtatDonjon;
+import donjon.EtatDonjon;
 
 import java.util.ArrayList;
 
@@ -62,7 +62,11 @@ public interface Langue {
 
     /// Affichage classe GestionDonjon
 
-    String creerEquipementDonjon();
+    String demandeEquipement();
+
+    String demandeArme();
+
+    String demandeArmure();
 
     String demandeNbCreationObjet(String objectACreer);
 

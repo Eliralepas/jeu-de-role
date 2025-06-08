@@ -1,7 +1,6 @@
 package donjon.casePlateau;
 
 import affichage.Affichage;
-import utils.TypeCase;
 
 import static donjon.casePlateau.Symbols.CASE_EQUIPEMENT;
 import static donjon.casePlateau.Symbols.CASE_VIDE;
@@ -82,5 +81,10 @@ public class CasePlateau {
     public int getLigne(){
         //Renvoyer la ligne correspondante.
         return  m_ligne;
+    }
+
+    @Override
+    public String toString() {
+        return m_case;
     }
 }

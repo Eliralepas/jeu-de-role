@@ -4,14 +4,20 @@ import affichage.langues.Anglais;
 import affichage.langues.Francais;
 import affichage.langues.Langue;
 import personnages.Personnage;
+import personnages.classes.Classe;
 import personnages.equipements.Equipement;
 import personnages.equipements.armes.Arme;
 import personnages.equipements.armures.Armure;
+import personnages.races.Race;
 import personnages.sorts.Sort;
-import utils.EtatDonjon;
+import donjon.EtatDonjon;
 
 import java.util.ArrayList;
 
+import static personnages.classes.Classe.getClasses;
+import static personnages.equipements.armes.Arme.getArmes;
+import static personnages.equipements.armures.Armure.getArmures;
+import static personnages.races.Race.getRaces;
 import static utils.Demande.demandeString;
 
 public abstract class Affichage {
@@ -38,7 +44,10 @@ public abstract class Affichage {
         m_langue.afficherLangueChoisie();
     }
 
-
+    @Override
+    public String toString() {
+        return "Affichage";
+    }
 
     /// Affichage classe Joueur
 
@@ -127,7 +136,19 @@ public abstract class Affichage {
     /// Affichage classe GestionDonjon
 
     public static String creerEquipementDonjon(){
-        return m_langue.creerEquipementDonjon();
+        ArrayList<Arme> armes = getArmes();
+        ArrayList<Armure> armures = getArmures();
+        int nbEquipements = armes.size() + armures.size();
+        StringBuilder msg = new StringBuilder(m_langue.demandeEquipement());
+        msg.append(m_langue.demandeArme());
+        for (int i = 0; i < armes.size(); i++){
+            msg.append(i + 1).append((" ").repeat(nbEquipements/10)).append("     ").append(armes.get(i).toString()).append("\n");
+        }
+        msg.append(m_langue.demandeArmure());
+        for(int j = armes.size(); j < nbEquipements; j++){
+            msg.append(j + 1).append((" ").repeat(nbEquipements/10)).append("     ").append(armures.get(j-armes.size()).toString()).append("\n");
+        }
+        return msg.toString();
     }
 
     public static String demandeNbCreationObjet(String objectACreer){
@@ -359,16 +380,8 @@ public abstract class Affichage {
         return m_langue.demandeNbCreationDonjon();
     }
 
-    public static String demandeRace(){
-        return m_langue.demandeRace();
-    }
-
     public static String demandeNomJoueur(){
         return m_langue.demandeNomJoueur();
-    }
-
-    public static String demandeClasse(){
-        return m_langue.demandeClasse();
     }
 
     public static void confimationCreationJoueur(int numero, String joueur){
@@ -523,6 +536,16 @@ public abstract class Affichage {
         return m_langue.nomRoublard();
     }
 
+    public static String demandeClasse(){
+        ArrayList<Classe> classes = getClasses();
+        StringBuilder demande = new StringBuilder(m_langue.demandeClasse());
+        int n = classes.size();
+        for(int i = 0; i < n; i++){
+            demande.append(i + 1).append((" ").repeat(n/10)).append("     ").append(classes.get(i).toString()).append("\n");
+        }
+        return demande.toString();
+    }
+
 
 
     /// Affichage classes qui héritent de Race
@@ -541,6 +564,16 @@ public abstract class Affichage {
 
     public static String nomNain(){
         return m_langue.nomNain();
+    }
+
+    public static String demandeRace(){
+        ArrayList<Race> races = getRaces();
+        StringBuilder demande = new StringBuilder(m_langue.demandeRace());
+        int n = races.size();
+        for(int i = 0; i < n; i++){
+            demande.append(i + 1).append((" ").repeat(n/10)).append("     ").append(races.get(i).toString()).append("\n");
+        }
+        return demande.toString();
     }
 
 

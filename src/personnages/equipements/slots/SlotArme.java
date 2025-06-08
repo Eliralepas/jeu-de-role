@@ -20,4 +20,9 @@ public class SlotArme implements SlotEquipable{
     public void set(Equipement equip) {
         m_perso.setArme((Arme) equip);
     }
+
+    @Override
+    public String toString() {
+        return "Slot Arme";
+    }
 }
