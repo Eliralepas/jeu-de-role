@@ -81,10 +81,10 @@ Caelynn il vous reste 2 actions que souhaitez vous faire ?
     ```bash
     git clone https://github.com/mon-utilisateur/doonjons-et-dragons.git
     cd doonjons-et-dragons/out/production/DOOnjons_et_Dragons
-2. Installer une version de Java supérieure à 23:
+2. **Installer une version de Java supérieure à 23:**
     [Java Archive Downloads](https://www.oracle.com/java/technologies/javase/jdk23-archive-downloads.html)
 
-3. Lancer le jeu :
+3. **Lancer le jeu :**
     ```bash
     java Main
 
