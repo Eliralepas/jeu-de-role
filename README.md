@@ -1,4 +1,4 @@
-# Donjon&Dragon Project
+# Donjon&Dragon Project ![Statut](https://img.shields.io/badge/Statut-Terminé-success)
 
 Pour notre projet en programmation, 2e année de BUT 1, nous devions développer un jeu, **Donjon et Dragon**, jouable sur le terminal.
 Le jeu permet la création de donjons, de personnages et d'équipements, et se joue tour par tour.
